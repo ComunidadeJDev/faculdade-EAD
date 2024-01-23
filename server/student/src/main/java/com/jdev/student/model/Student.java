@@ -71,6 +71,9 @@ public class Student {
     @NotNull
     private String phone;
 
+//    @Column
+//    private String imageProfile;
+
 //    @Column(unique = true)
 //    @NotBlank
 //    private String BulletinEnemFile;
