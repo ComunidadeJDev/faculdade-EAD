@@ -60,6 +60,7 @@ public class StudentService {
         return UUID.randomUUID().toString().substring(0, 10);
     }
 
+    //admin
     public Student findByRegistration(String registration) {
         Optional<Student> student = studentRepository.findByRegistration(registration);
         return student.orElseThrow(() -> new RuntimeException("student not found"));
@@ -74,5 +75,9 @@ public class StudentService {
         }
     }
 
-
+    //admin
+    public Student findById(UUID id) {
+        Optional<Student> student = studentRepository.findById(id);
+        return student.orElseThrow(() -> new RuntimeException("student not found!"));
+    }
 }
