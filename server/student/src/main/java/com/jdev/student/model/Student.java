@@ -44,11 +44,9 @@ public class Student {
 //    private Course course;
 
     @Column(nullable = false)
-    @NotBlank
     private SemesterEnum semester;
 
     @Column(nullable = false)
-    @NotBlank
     @NotNull
     private Date birthday;
 
@@ -66,7 +64,6 @@ public class Student {
     private String nationality;
 
     @Column(nullable = false)
-    @NotBlank
     private EtinyEnum ethnicity;
 
     @Column(nullable = false, unique = true, length = 15)
@@ -74,21 +71,21 @@ public class Student {
     @NotNull
     private String phone;
 
-    @Column(nullable = false, unique = true)
-    @NotBlank
-    private String BulletinEnemFile;
-
-    @Column(nullable = false, unique = true)
-    @NotBlank
-    private String cpfFile;
-
-    @Column(nullable = false, unique = true)
-    @NotBlank
-    private String rgFile;
-
-    @Column(nullable = false, unique = true)
-    @NotBlank
-    private String certificateOfCompletionFile;
+//    @Column(unique = true)
+//    @NotBlank
+//    private String BulletinEnemFile;
+//
+//    @Column(unique = true)
+//    @NotBlank
+//    private String cpfFile;
+//
+//    @Column(unique = true)
+//    @NotBlank
+//    private String rgFile;
+//
+//    @Column(unique = true)
+//    @NotBlank
+//    private String certificateOfCompletionFile;
 
     @Column(nullable = false, length = 80)
     @NotBlank
