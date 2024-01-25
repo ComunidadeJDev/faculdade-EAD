@@ -1,6 +1,7 @@
 package com.jdev.student.service;
 
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
+import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.SemesterEnum;
 import com.jdev.student.repository.StudentRepository;
@@ -96,5 +97,20 @@ public class StudentService {
     public Boolean findByUsernameForRegistration(String username) {
         Optional<Student> student = studentRepository.findByUsername(username);
         return (student != null) ? true : false;
+    }
+
+    public Student updateStudent(StudentUpdateDTO studentUpdate) {
+        Student student = this.findByRegistration(studentUpdate.registration());
+        student.setCompleteName(studentUpdate.completeName());
+        student.setEmail(studentUpdate.email());
+        student.setCpf(studentUpdate.cpf());
+        student.setBirthday(studentUpdate.birthday());
+        student.setCity(studentUpdate.city());
+        student.setNationality(studentUpdate.nationatily());
+        student.setEthnicity(studentUpdate.ethnicity());
+        student.setPhone(studentUpdate.phone());
+        student.setAddress(studentUpdate.address());
+        student.setNumberHouse(studentUpdate.numberHouse());
+        return studentRepository.save(student);
     }
 }
