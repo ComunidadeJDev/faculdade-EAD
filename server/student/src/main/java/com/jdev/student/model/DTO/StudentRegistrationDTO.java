@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 
 public record StudentRegistrationDTO(
-        String name,
+        String completeName,
         String email,
         String password,
         String cpf,

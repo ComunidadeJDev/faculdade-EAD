@@ -30,7 +30,8 @@ public class StudentService {
 
     private Student modelingNewStudent(StudentRegistrationDTO student) {
         Student studentForSave = new Student();
-        studentForSave.setName(student.name());
+        studentForSave.setCompleteName(student.completeName());
+        studentForSave.setUsername(generateRandomUsername());
         studentForSave.setEmail(student.email());
         studentForSave.setPassword(student.password());
         studentForSave.setCpf(student.cpf());
@@ -46,8 +47,18 @@ public class StudentService {
         return studentForSave;
     }
 
+    private String generateRandomUsername() {
+        String username = this.generateRandomUUID();
+        Boolean confirm = findByUsernameForRegistration(username);
+        if(confirm != null) {
+            return username;
+        } else {
+            return username + UUID.randomUUID().toString().substring(0,1);
+        }
+    }
+
     private String generateRegistration() {
-        String registration = this.generateRandomId();
+        String registration = this.generateRandomUUID();
         Boolean confirm = findByRegistrationForGenerateRegistration(registration);
         if (confirm != null) {
             return registration;
@@ -56,7 +67,7 @@ public class StudentService {
         }
     }
 
-    private String generateRandomId() {
+    private String generateRandomUUID() {
         return UUID.randomUUID().toString().substring(0, 10);
     }
 
@@ -79,5 +90,11 @@ public class StudentService {
     public Student findById(UUID id) {
         Optional<Student> student = studentRepository.findById(id);
         return student.orElseThrow(() -> new RuntimeException("student not found!"));
+    }
+
+    //admin
+    public Boolean findByUsernameForRegistration(String username) {
+        Optional<Student> student = studentRepository.findByUsername(username);
+        return (student != null) ? true : false;
     }
 }
