@@ -23,7 +23,11 @@ public class Student {
 
     @Column(nullable = false, length = 80)
     @NotBlank
-    private String name;
+    private String completeName;
+
+    @Column(nullable = false, length = 50)
+    @NotBlank
+    private String username;
 
     @Email
     @Column(nullable = false, unique = true, length = 60)
