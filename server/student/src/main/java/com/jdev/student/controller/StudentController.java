@@ -1,6 +1,7 @@
 package com.jdev.student.controller;
 
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
+import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.Student;
 import com.jdev.student.service.StudentService;
 import jakarta.validation.Valid;
@@ -40,5 +41,10 @@ public class StudentController {
     @GetMapping("/search/id/{id}")
     public ResponseEntity<Student> findById(@PathVariable UUID id) throws RuntimeException {
         return ResponseEntity.ok().body(studentService.findById(id));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Student> updateStudent(@RequestBody StudentUpdateDTO studentUpdate) {
+        return ResponseEntity.ok().body(studentService.updateStudent(studentUpdate));
     }
 }
