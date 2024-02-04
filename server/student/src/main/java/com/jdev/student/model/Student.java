@@ -1,5 +1,7 @@
 package com.jdev.student.model;
 
+import com.jdev.student.model.Materials.FilesByStudents;
+import com.jdev.student.model.Materials.ImagesByStudents;
 import com.jdev.student.model.enums.EtinyEnum;
 import com.jdev.student.model.enums.SemesterEnum;
 import com.jdev.student.model.externalClasses.Course;
@@ -76,24 +78,17 @@ public class Student {
     @NotNull
     private String phone;
 
-//    @Column
-//    private String imageProfile;
+    @OneToOne(mappedBy = "student_id")
+    private ImagesByStudents imageProfile;
 
-//    @Column(unique = true)
-//    @NotBlank
-//    private String BulletinEnemFile;
-//
-//    @Column(unique = true)
-//    @NotBlank
-//    private String cpfFile;
-//
-//    @Column(unique = true)
-//    @NotBlank
-//    private String rgFile;
-//
-//    @Column(unique = true)
-//    @NotBlank
-//    private String certificateOfCompletionFile;
+    @OneToOne(mappedBy = "student_id")
+    private FilesByStudents cpfFile;
+
+    @OneToOne(mappedBy = "student_id")
+    private FilesByStudents rgFile;
+
+    @OneToOne(mappedBy = "student_id")
+    private FilesByStudents certificateOfCompletionFile;
 
     @Column(nullable = false, length = 80)
     @NotBlank
