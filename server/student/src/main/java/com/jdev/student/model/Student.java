@@ -2,6 +2,7 @@ package com.jdev.student.model;
 
 import com.jdev.student.model.enums.EtinyEnum;
 import com.jdev.student.model.enums.SemesterEnum;
+import com.jdev.student.model.externalClasses.Course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Date;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -43,9 +45,8 @@ public class Student {
     @NotBlank
     private String cpf;
 
-//    @Column(nullable = false)
-//    @NotBlank
-//    private Course course;
+    @ManyToMany(mappedBy = "student_id")
+    private Set<Course> course;
 
     @Column(nullable = false)
     private SemesterEnum semester;

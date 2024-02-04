@@ -4,6 +4,7 @@ import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.SemesterEnum;
+import com.jdev.student.model.externalClasses.Course;
 import com.jdev.student.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,7 @@ public class StudentService {
         studentForSave.setEmail(student.email());
         studentForSave.setPassword(student.password());
         studentForSave.setCpf(student.cpf());
+        studentForSave.setCourse(null);
         studentForSave.setSemester(SemesterEnum.PRIMEIRO);
         studentForSave.setBirthday(student.birthday());
         studentForSave.setRegistration(generateRegistration());
