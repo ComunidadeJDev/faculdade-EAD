@@ -81,13 +81,13 @@ public class Student {
     @OneToOne(mappedBy = "student_id")
     private ImagesByStudents imageProfile;
 
-    @OneToOne(mappedBy = "student_id")
+    @OneToOne(mappedBy = "cpfFile")
     private FilesByStudents cpfFile;
 
-    @OneToOne(mappedBy = "student_id")
+    @OneToOne(mappedBy = "rgFile")
     private FilesByStudents rgFile;
 
-    @OneToOne(mappedBy = "student_id")
+    @OneToOne(mappedBy = "completionFile")
     private FilesByStudents certificateOfCompletionFile;
 
     @Column(nullable = false, length = 80)
