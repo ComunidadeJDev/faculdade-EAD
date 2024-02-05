@@ -1,6 +1,8 @@
 package com.jdev.student.model.Materials;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jdev.student.model.Student;
+import com.jdev.student.model.enums.FilesType;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,12 +18,33 @@ public class FilesByStudents {
     private UUID id;
 
     @Column(nullable = false)
-    private String Reference;
+    private String reference;
 
     @Column(nullable = false)
-    private String Register;
+    private String register;
 
+    @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "student_id")
-    private Student student_id;
+    @JoinColumn(name = "cpfFile")
+    private Student cpfFile;
+
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "rgFile")
+    private Student rgFile;
+
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "completionFile")
+    private Student completionFile;
+
+    public FilesByStudents(){}
+
+    public FilesByStudents(String newFileName, String register, Student cpf, Student rg, Student completion) {
+        this.reference = newFileName;
+        this.register = register;
+        this.cpfFile = cpf;
+        this.rgFile = rg;
+        this.completionFile = completion;
+    }
 }

@@ -3,12 +3,15 @@ package com.jdev.student.controller;
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.Student;
+import com.jdev.student.model.enums.FilesType;
+import com.jdev.student.service.FilesByStudentsService;
 import com.jdev.student.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +22,9 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private FilesByStudentsService filesByStudentsService;
 
     //admin
     @GetMapping
@@ -46,5 +52,13 @@ public class StudentController {
     @PutMapping("/update")
     public ResponseEntity<Student> updateStudent(@RequestBody StudentUpdateDTO studentUpdate) {
         return ResponseEntity.ok().body(studentService.updateStudent(studentUpdate));
+    }
+
+    @PostMapping("/upload/file")
+    public ResponseEntity<Object> updateFile(@RequestParam("file")MultipartFile file,
+                                             String username,
+                                             FilesType fileType) {
+        filesByStudentsService.saveFile(file, username, fileType);
+        return ResponseEntity.ok().body("file saved");
     }
 }
