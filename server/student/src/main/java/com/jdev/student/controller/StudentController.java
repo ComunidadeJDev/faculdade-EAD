@@ -60,10 +60,11 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
   
-  @PostMapping("/upload/file")
+    @PostMapping("/upload/file")
     public ResponseEntity<Object> updateFile(@RequestParam("file")MultipartFile file,
                                              String username,
                                              FilesType fileType) {
         filesByStudentsService.saveFile(file, username, fileType);
         return ResponseEntity.ok().body("file saved");
+    }
 }
