@@ -115,4 +115,10 @@ public class StudentService {
         student.setNumberHouse(studentUpdate.numberHouse());
         return studentRepository.save(student);
     }
+
+
+    public void deleteStudent(UUID id) {
+        studentRepository.deleteById(id);
+    }
 }
+

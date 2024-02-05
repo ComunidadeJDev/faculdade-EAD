@@ -53,12 +53,17 @@ public class StudentController {
     public ResponseEntity<Student> updateStudent(@RequestBody StudentUpdateDTO studentUpdate) {
         return ResponseEntity.ok().body(studentService.updateStudent(studentUpdate));
     }
-
-    @PostMapping("/upload/file")
+ 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Student> deleteStudent(@PathVariable UUID id){
+        studentService.deleteStudent(id);
+        return ResponseEntity.noContent().build();
+    }
+  
+  @PostMapping("/upload/file")
     public ResponseEntity<Object> updateFile(@RequestParam("file")MultipartFile file,
                                              String username,
                                              FilesType fileType) {
         filesByStudentsService.saveFile(file, username, fileType);
         return ResponseEntity.ok().body("file saved");
-    }
 }
