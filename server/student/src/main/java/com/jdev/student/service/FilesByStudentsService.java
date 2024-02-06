@@ -5,6 +5,8 @@ import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.FilesType;
 import com.jdev.student.repository.FilesByStudentsRepository;
 import com.jdev.student.repository.StudentRepository;
+import com.jdev.student.service.exceptions.UserNotFoundException;
+import com.jdev.student.utils.GenerateNewFileName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -38,7 +40,7 @@ public class FilesByStudentsService {
             Student studentForSave = student.get();
             writeFileInDirectory(file, studentForSave, fileType);
         } else {
-            throw new RuntimeException("Student Not found!");
+            throw new UserNotFoundException();
         }
     }
 
@@ -76,15 +78,11 @@ public class FilesByStudentsService {
     }
 
     private String generateNewFileName(MultipartFile file, Student student) {
-        String randomId = generateRandomId();
-        String originalFileName = file.getOriginalFilename();
-        String fileExtension = originalFileName.substring(originalFileName.lastIndexOf('.'));
-        String newFileName = student.getUsername() + "_" + randomId + fileExtension;
-
+        String newFileName = GenerateNewFileName.generateFileName(file, student);
         if (filesByStudentsRepository.findByReference(newFileName).isEmpty()) {
             return newFileName;
         } else {
-            return newFileName + UUID.randomUUID().toString().substring(0, 5);
+            return GenerateNewFileName.addCharactersToFileName(newFileName);
         }
     }
 
