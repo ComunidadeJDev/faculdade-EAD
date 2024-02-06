@@ -5,8 +5,10 @@ import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.FilesType;
 import com.jdev.student.service.FilesByStudentsService;
+import com.jdev.student.service.ImagesByStudentsService;
 import com.jdev.student.service.StudentService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,9 @@ public class StudentController {
 
     @Autowired
     private FilesByStudentsService filesByStudentsService;
+
+    @Autowired
+    private ImagesByStudentsService imagesByStudentsService;
 
     //admin
     @GetMapping
@@ -61,10 +66,16 @@ public class StudentController {
     }
   
     @PostMapping("/upload/file")
-    public ResponseEntity<Object> updateFile(@RequestParam("file")MultipartFile file,
+    public ResponseEntity<Object> uploadFile(@RequestParam("file")MultipartFile file,
                                              String username,
                                              FilesType fileType) {
         filesByStudentsService.saveFile(file, username, fileType);
-        return ResponseEntity.ok().body("file saved");
+        return ResponseEntity.ok().body("file saved!");
+    }
+
+    @PostMapping("/upload/image")
+    public ResponseEntity<Object> uploadImage(@RequestParam("image") MultipartFile image, String username) {
+        imagesByStudentsService.saveImage(image, username);
+        return ResponseEntity.ok().body("image saved!");
     }
 }

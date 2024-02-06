@@ -1,8 +1,7 @@
-package com.jdev.student.model.Materials;
+package com.jdev.student.model.FilesAndImages;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jdev.student.model.Student;
-import com.jdev.student.model.enums.FilesType;
 import jakarta.persistence.*;
 import lombok.Data;
 

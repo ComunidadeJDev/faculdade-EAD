@@ -1,6 +1,6 @@
 package com.jdev.student.repository;
 
-import com.jdev.student.model.Materials.FilesByStudents;
+import com.jdev.student.model.FilesAndImages.FilesByStudents;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
