@@ -1,7 +1,7 @@
 package com.jdev.student.model;
 
-import com.jdev.student.model.Materials.FilesByStudents;
-import com.jdev.student.model.Materials.ImagesByStudents;
+import com.jdev.student.model.FilesAndImages.FilesByStudents;
+import com.jdev.student.model.FilesAndImages.ImagesByStudents;
 import com.jdev.student.model.enums.EtinyEnum;
 import com.jdev.student.model.enums.SemesterEnum;
 import com.jdev.student.model.externalClasses.Course;

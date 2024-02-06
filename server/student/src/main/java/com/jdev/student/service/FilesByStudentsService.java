@@ -1,19 +1,19 @@
 package com.jdev.student.service;
 
-import com.jdev.student.model.Materials.FilesByStudents;
+import com.jdev.student.model.FilesAndImages.FilesByStudents;
 import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.FilesType;
 import com.jdev.student.repository.FilesByStudentsRepository;
 import com.jdev.student.repository.StudentRepository;
 import com.jdev.student.service.exceptions.UserNotFoundException;
 import com.jdev.student.utils.GenerateNewFileName;
+import com.jdev.student.utils.GenerateRegister;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,6 +23,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class FilesByStudentsService {
 
     @Autowired
@@ -31,8 +32,8 @@ public class FilesByStudentsService {
     @Autowired
     private StudentRepository studentRepository;
 
-    @Value("${images-students-path}")
-    private String pathImages;
+    @Value("${files-students-path}")
+    private String filesImages;
 
     public void saveFile(MultipartFile file, String username, FilesType fileType) {
         Optional<Student> student = studentRepository.findByUsername(username);
@@ -49,8 +50,8 @@ public class FilesByStudentsService {
     private void writeFileInDirectory(MultipartFile file, Student student, FilesType fileType) {
         try {
             byte[] bytes = file.getBytes();
-            String newFileName = generateNewFileName(file, student);
-            Path path = Paths.get(pathImages + "/" + newFileName);
+            String newFileName = generateFileName(file, student);
+            Path path = Paths.get(filesImages + "/" + newFileName);
             Files.write(path, bytes);
             saveFileReferenceInDatabase(newFileName, student, fileType);
 
@@ -60,7 +61,7 @@ public class FilesByStudentsService {
     }
 
     private void saveFileReferenceInDatabase(String newFileName, Student student, FilesType fileType) {
-        String register = generateRegister();
+        String register = GenerateRegister.newRegister();
         FilesByStudents file = null;
 
         if (Objects.equals(fileType, FilesType.CPF)) {
@@ -73,11 +74,7 @@ public class FilesByStudentsService {
         filesByStudentsRepository.save(file);
     }
 
-    private String generateRegister() {
-        return UUID.randomUUID().toString().substring(0,10);
-    }
-
-    private String generateNewFileName(MultipartFile file, Student student) {
+    private String generateFileName(MultipartFile file, Student student) {
         String newFileName = GenerateNewFileName.generateFileName(file, student);
         if (filesByStudentsRepository.findByReference(newFileName).isEmpty()) {
             return newFileName;

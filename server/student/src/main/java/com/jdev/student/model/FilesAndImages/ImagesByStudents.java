@@ -1,5 +1,6 @@
-package com.jdev.student.model.Materials;
+package com.jdev.student.model.FilesAndImages;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jdev.student.model.Student;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -16,12 +17,19 @@ public class ImagesByStudents {
     private UUID id;
 
     @Column(nullable = false)
-    private String Reference;
+    private String reference;
 
     @Column(nullable = false)
-    private String Register;
+    private String register;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "student_id")
     private Student student_id;
+
+    public ImagesByStudents(String fileName, String register, Student student) {
+        this.reference = fileName;
+        this.register = register;
+        this.student_id = student;
+    }
 }
