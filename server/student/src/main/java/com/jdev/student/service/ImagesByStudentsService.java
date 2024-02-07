@@ -2,7 +2,6 @@ package com.jdev.student.service;
 
 import com.jdev.student.model.FilesAndImages.ImagesByStudents;
 import com.jdev.student.model.Student;
-import com.jdev.student.model.enums.FilesType;
 import com.jdev.student.repository.ImagesByStudentsRepository;
 import com.jdev.student.repository.StudentRepository;
 import com.jdev.student.service.exceptions.IOException;

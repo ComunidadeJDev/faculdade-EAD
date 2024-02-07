@@ -3,12 +3,11 @@ package com.jdev.student.controller;
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.Student;
-import com.jdev.student.model.enums.FilesType;
+import com.jdev.student.model.enums.FilesTypeEnum;
 import com.jdev.student.service.FilesByStudentsService;
 import com.jdev.student.service.ImagesByStudentsService;
 import com.jdev.student.service.StudentService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,7 +67,7 @@ public class StudentController {
     @PostMapping("/upload/file")
     public ResponseEntity<Object> uploadFile(@RequestParam("file")MultipartFile file,
                                              String username,
-                                             FilesType fileType) {
+                                             FilesTypeEnum fileType) {
         filesByStudentsService.saveFile(file, username, fileType);
         return ResponseEntity.ok().body("file saved!");
     }

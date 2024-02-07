@@ -1,6 +1,6 @@
 package com.jdev.student.model.enums;
 
-public enum FilesType {
+public enum FilesTypeEnum {
     CPF,
     RG,
     COMPLETION

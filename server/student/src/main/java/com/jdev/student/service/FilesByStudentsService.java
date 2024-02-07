@@ -2,7 +2,7 @@ package com.jdev.student.service;
 
 import com.jdev.student.model.FilesAndImages.FilesByStudents;
 import com.jdev.student.model.Student;
-import com.jdev.student.model.enums.FilesType;
+import com.jdev.student.model.enums.FilesTypeEnum;
 import com.jdev.student.repository.FilesByStudentsRepository;
 import com.jdev.student.repository.StudentRepository;
 import com.jdev.student.service.exceptions.UserNotFoundException;
@@ -35,7 +35,7 @@ public class FilesByStudentsService {
     @Value("${files-students-path}")
     private String filesImages;
 
-    public void saveFile(MultipartFile file, String username, FilesType fileType) {
+    public void saveFile(MultipartFile file, String username, FilesTypeEnum fileType) {
         Optional<Student> student = studentRepository.findByUsername(username);
         if (student.isPresent()) {
             Student studentForSave = student.get();
@@ -47,7 +47,7 @@ public class FilesByStudentsService {
 
     //preparations for save file in folder and database
 
-    private void writeFileInDirectory(MultipartFile file, Student student, FilesType fileType) {
+    private void writeFileInDirectory(MultipartFile file, Student student, FilesTypeEnum fileType) {
         try {
             byte[] bytes = file.getBytes();
             String newFileName = generateFileName(file, student);
@@ -60,11 +60,11 @@ public class FilesByStudentsService {
         }
     }
 
-    private void saveFileReferenceInDatabase(String newFileName, Student student, FilesType fileType) {
+    private void saveFileReferenceInDatabase(String newFileName, Student student, FilesTypeEnum fileType) {
         String register = GenerateRegister.newRegister();
         FilesByStudents file = null;
 
-        if (Objects.equals(fileType, FilesType.CPF)) {
+        if (Objects.equals(fileType, FilesTypeEnum.CPF)) {
             file = new FilesByStudents(newFileName, register, student, null, null);
         } else if (Objects.equals(fileType.name(), "RG")) {
             file = new FilesByStudents(newFileName, register, null, student, null);
