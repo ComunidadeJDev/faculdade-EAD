@@ -9,6 +9,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -19,6 +21,8 @@ import java.util.UUID;
 @Entity
 @Table
 @Data
+@AllArgsConstructor
+@Builder
 public class Student {
 
     @Id
@@ -98,4 +102,7 @@ public class Student {
     @NotBlank
     @NotNull
     private String numberHouse;
+
+    public Student() {
+    }
 }
