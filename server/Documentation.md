@@ -5,8 +5,10 @@
 - Folders to create before starting:
   - C:/faculty/images-students
   - C:/faculty/files-students
+
+# _ports_
+- Eureka interface: Http://localhost:8761
  
-  - 
 # _Student microservice_:
 ## endpoints:
 ### * Find all students - (GET) host/student _ 200
