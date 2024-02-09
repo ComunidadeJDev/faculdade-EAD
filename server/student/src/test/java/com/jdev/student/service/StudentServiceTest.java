@@ -1,5 +1,6 @@
 package com.jdev.student.service;
 
+import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.FilesAndImages.FilesByStudents;
 import com.jdev.student.model.FilesAndImages.ImagesByStudents;
 import com.jdev.student.model.Student;
@@ -7,28 +8,29 @@ import com.jdev.student.model.enums.EtinyEnum;
 import com.jdev.student.model.enums.SemesterEnum;
 import com.jdev.student.model.externalClasses.Course;
 import com.jdev.student.repository.StudentRepository;
+import static org.junit.jupiter.api.Assertions.*;
+
+import jakarta.validation.constraints.Email;
+import org.hibernate.mapping.Any;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class StudentServiceTest {
 
-    public static final String ID = "1";
+    public static final String ID = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
     public static final String COMPLETE_NAME = "Gabriel Cruz Rodrigues";
     public static final String USERNAME = "3c2363a5-9";
     public static final String MAIL = "gabriel@gmail.com";
@@ -55,6 +57,7 @@ class StudentServiceTest {
     private StudentRepository studentRepository;
 
     private Student student;
+    private StudentRegistrationDTO studentRegistrationDTO;
 
     @BeforeEach
     void setUp() {
@@ -63,11 +66,53 @@ class StudentServiceTest {
     }
 
     @Test
-    void findAllStudents() {
+    void mustReturnAListOfStudents_whenCallingToFindAllStudents() {
+        when(studentRepository.findAll()).thenReturn(List.of(student));
+        List<Student> response = studentService.findAllStudents();
+        assertNotNull(response);
+        assertEquals(Student.class, response.get(0).getClass());
+        assertEquals(1, response.size());
+        assertEquals(ID, response.get(0).getId().toString());
+        assertEquals(COMPLETE_NAME, response.get(0).getCompleteName());
+        assertEquals(USERNAME, response.get(0).getUsername());
+        assertEquals(MAIL, response.get(0).getEmail());
+        assertEquals(PASSWORD, response.get(0).getPassword());
+        assertEquals(SEMESTER, response.get(0).getSemester());
+        assertEquals(REGISTRATION, response.get(0).getRegistration());
+        assertEquals(CITY, response.get(0).getCity());
+        assertEquals(NATIONALITY, response.get(0).getNationality());
+        assertEquals(ETHNICITY, response.get(0).getEthnicity());
+        assertEquals(PHONE, response.get(0).getPhone());
+        assertEquals(IMAGE_PROFILE, response.get(0).getImageProfile());
+        assertEquals(CPF_FILE, response.get(0).getCpfFile());
+        assertEquals(RG_FILE, response.get(0).getRgFile());
+        assertEquals(CERTIFICATE, response.get(0).getCertificateOfCompletionFile());
+        assertEquals(ADDRESS, response.get(0).getAddress());
+        assertEquals(NUMBER_HOUSE, response.get(0).getNumberHouse());
     }
 
     @Test
-    void create() {
+    void mustReturnANewStudent_whenCallingToCreate() {
+        when(studentRepository.save(any())).thenReturn(student);
+        Student response = studentService.create(studentRegistrationDTO);
+        assertEquals(ID, response.getId().toString());
+        assertEquals(Student.class, response.getClass());
+        assertEquals(COMPLETE_NAME, response.getCompleteName());
+        assertEquals(USERNAME, response.getUsername());
+        assertEquals(MAIL, response.getEmail());
+        assertEquals(PASSWORD, response.getPassword());
+        assertEquals(SEMESTER, response.getSemester());
+        assertEquals(REGISTRATION, response.getRegistration());
+        assertEquals(CITY, response.getCity());
+        assertEquals(NATIONALITY, response.getNationality());
+        assertEquals(ETHNICITY, response.getEthnicity());
+        assertEquals(PHONE, response.getPhone());
+        assertEquals(IMAGE_PROFILE, response.getImageProfile());
+        assertEquals(CPF_FILE, response.getCpfFile());
+        assertEquals(RG_FILE, response.getRgFile());
+        assertEquals(CERTIFICATE, response.getCertificateOfCompletionFile());
+        assertEquals(ADDRESS, response.getAddress());
+        assertEquals(NUMBER_HOUSE, response.getNumberHouse());
     }
 
     @Test
@@ -115,6 +160,27 @@ class StudentServiceTest {
                     .address(ADDRESS)
                     .numberHouse(NUMBER_HOUSE)
                     .build();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+
+        try {
+            studentRegistrationDTO = new StudentRegistrationDTO(
+                    COMPLETE_NAME,
+                    MAIL,
+                    PASSWORD,
+                    CPF,
+                    dateFormat.parse("2002-01-22"),
+                    CITY,
+                    NATIONALITY,
+                    ETHNICITY,
+                    PHONE,
+                    (MultipartFile) CPF_FILE,
+                    (MultipartFile) RG_FILE,
+                    (MultipartFile) CERTIFICATE,
+                    ADDRESS,
+                    NUMBER_HOUSE
+            );
         } catch (Exception ex) {
             throw new RuntimeException(ex.getMessage());
         }
