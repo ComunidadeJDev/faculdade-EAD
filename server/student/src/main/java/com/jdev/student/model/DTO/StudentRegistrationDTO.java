@@ -16,7 +16,6 @@ public record StudentRegistrationDTO(
         String nationatily,
         EtinyEnum ethnicity,
         String phone,
-        MultipartFile BulletinEnemFile,
         MultipartFile cpfFile,
         MultipartFile rgFile,
         MultipartFile certificateOfCompletionFile,

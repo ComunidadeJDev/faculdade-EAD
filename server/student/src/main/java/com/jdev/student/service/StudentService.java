@@ -26,8 +26,7 @@ public class StudentService {
 
     public Student create(StudentRegistrationDTO studentDTO) {
         Student studentSave = modelingNewStudent(studentDTO);
-        Student save = studentRepository.save(studentSave);
-        return save;
+        return studentRepository.save(studentSave);
     }
 
     private Student modelingNewStudent(StudentRegistrationDTO student) {
