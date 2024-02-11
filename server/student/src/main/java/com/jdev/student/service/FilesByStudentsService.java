@@ -66,9 +66,9 @@ public class FilesByStudentsService {
 
         if (Objects.equals(fileType, FilesTypeEnum.CPF)) {
             file = new FilesByStudents(newFileName, register, student, null, null);
-        } else if (Objects.equals(fileType.name(), "RG")) {
+        } else if (Objects.equals(fileType, FilesTypeEnum.RG)) {
             file = new FilesByStudents(newFileName, register, null, student, null);
-        } else if (Objects.equals(fileType.name(), "COMPLETION")) {
+        } else if (Objects.equals(fileType, FilesTypeEnum.COMPLETION)) {
             file = new FilesByStudents(newFileName, register, null, null, student);
         }
         filesByStudentsRepository.save(file);

@@ -26,7 +26,7 @@ public class Modules {
     @NotNull
     private Integer duration;
 
-    @OneToMany
+    @OneToOne(mappedBy = "module_id")
     private List<Teacher> teachers;
 
     //@OneToMany
