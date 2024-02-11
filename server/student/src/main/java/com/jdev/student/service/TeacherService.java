@@ -3,6 +3,7 @@ package com.jdev.student.service;
 import com.jdev.student.model.DTO.TeacherRegistrationDTO;
 import com.jdev.student.model.externalClasses.Teacher;
 import com.jdev.student.repository.TeacherRepository;
+import com.jdev.student.utils.GenerateNewFileName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.stylesheets.LinkStyle;
@@ -43,7 +44,7 @@ public List<Teacher> findAllTeachers(){
     }
 
     private String generateNumRegistrationTeacher() {
-        String registration = this.generateRandomUUID();
+        String registration = GenerateNewFileName.generateRandomId();
         Boolean confirm = findByRegistrationForGenerateRegistration(registration);
         if (confirm != null) {
             return registration;
@@ -55,9 +56,4 @@ public List<Teacher> findAllTeachers(){
     private Boolean findByRegistrationForGenerateRegistration(String registration) {
         return null;
     }
-
-    private String generateRandomUUID() {
-        return UUID.randomUUID().toString().substring(0, 10);
-    }
-
 }

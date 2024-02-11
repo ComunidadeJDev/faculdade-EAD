@@ -6,6 +6,7 @@ import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.SemesterEnum;
 import com.jdev.student.model.externalClasses.Course;
 import com.jdev.student.repository.StudentRepository;
+import com.jdev.student.service.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,7 +77,7 @@ public class StudentService {
     //admin
     public Student findByRegistration(String registration) {
         Optional<Student> student = studentRepository.findByRegistration(registration);
-        return student.orElseThrow(() -> new RuntimeException("student not found"));
+        return student.orElseThrow(UserNotFoundException::new);
     }
 
     private Boolean findByRegistrationForGenerateRegistration(String registration) {

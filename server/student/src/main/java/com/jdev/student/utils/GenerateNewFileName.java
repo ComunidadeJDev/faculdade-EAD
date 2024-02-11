@@ -14,7 +14,7 @@ public class GenerateNewFileName {
         return student.getUsername() + "_" + randomId + fileExtension;
     }
 
-    private static String generateRandomId() {
+    public static String generateRandomId() {
         return UUID.randomUUID().toString().substring(0, 30);
     }
 
