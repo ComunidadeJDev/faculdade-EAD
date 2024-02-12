@@ -25,6 +25,7 @@ public class TeacherController {
         return ResponseEntity.ok().body(teacherService.createTeacher(teacher));
     }
 
+    //listar
     @GetMapping
     public ResponseEntity<List<Teacher>> findAllTeachers(){
         return ResponseEntity.ok().body(teacherService.findAllTeachers());

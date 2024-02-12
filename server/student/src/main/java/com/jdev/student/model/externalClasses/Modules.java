@@ -26,20 +26,19 @@ public class Modules {
     @NotNull
     private Integer duration;
 
-    @OneToMany
-    private List<Teacher> teachers;
+    @OneToOne(mappedBy = "module_teacher")
+    private List<Teacher> teacher;
 
-    //@OneToMany
-    //private List<Themes> themes;
+    @OneToMany(mappedBy = "module_themes")
+    private List<Themes> themes;
 
-   // @OneToMany
+    //@OneToOne
     //private List<MaterialSupport> supportMaterial;
 
-    //@OneToMany
-    //private List<Material> material;
+    @OneToOne(mappedBy = "module_material")
+    private List<Material> material;
 
     private boolean finished;
 
-    public Modules() {
-    }
+
 }
