@@ -1,6 +1,6 @@
 spring:
   application:
-    name: msstudent
+    name: STUDENT-MS
   servlet:
     multipart:
       max-file-size: 600MB

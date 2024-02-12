@@ -27,16 +27,10 @@ public class Modules {
     private Integer duration;
 
     @OneToOne(mappedBy = "module_id")
-    private List<Teacher> teachers;
+    private Teacher teachers;
 
     //@OneToMany
     //private List<Themes> themes;
-
-   // @OneToMany
-    //private List<MaterialSupport> supportMaterial;
-
-    //@OneToMany
-    //private List<Material> material;
 
     private boolean finished;
 
