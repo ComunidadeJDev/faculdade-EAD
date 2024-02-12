@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.util.UUID;
 
 @Entity
-@Table
-@AllArgsConstructor
+@Data
+@Table(name = "material_course")
 public class Material {
 
 

@@ -13,6 +13,7 @@ public class StudentApplication {
 		SpringApplication.run(StudentApplication.class, args);
 	}
 
+	//config para conectar no eureka
 	@Autowired
 	private EurekaClient discoveryClient;
 

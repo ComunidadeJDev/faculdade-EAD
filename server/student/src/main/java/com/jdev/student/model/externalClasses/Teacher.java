@@ -1,5 +1,6 @@
 package com.jdev.student.model.externalClasses;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jdev.student.model.enums.EtinyEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -61,7 +62,6 @@ public class Teacher {
     @NotNull
     private Date birthdayTeacher;
 
-
     @Column(nullable = false)
     @NotBlank
     private String cityTeacher;
@@ -70,9 +70,11 @@ public class Teacher {
     @NotBlank
     private String numRegistrationTeacher;
 
+
+    @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "module_teacher")
-    private Modules module_teacher;
+    @JoinColumn(name = "module_id")
+    private Modules module_id;
 
     public Teacher() {
     }
