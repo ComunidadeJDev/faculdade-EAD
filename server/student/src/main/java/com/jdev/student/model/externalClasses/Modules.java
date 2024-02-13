@@ -31,8 +31,5 @@ public class Modules {
     @OneToMany(mappedBy = "module_themes")
     private List<Themes> themes;
 
-    @OneToOne(mappedBy = "module_material")
-    private List<Material> material;
-
     private boolean finished;
 }

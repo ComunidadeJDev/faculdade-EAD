@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,7 +34,7 @@ public class FilesByStudentsService {
     private StudentRepository studentRepository;
 
     @Value("${files-students-path}")
-    private String filesImages;
+    private String filesPath;
 
     public void saveFile(MultipartFile file, String username, FilesTypeEnum fileType) {
         Optional<Student> student = studentRepository.findByUsername(username);
@@ -51,7 +52,7 @@ public class FilesByStudentsService {
         try {
             byte[] bytes = file.getBytes();
             String newFileName = generateFileName(file, student);
-            Path path = Paths.get(filesImages + "/" + newFileName);
+            Path path = Paths.get(filesPath + "/" + newFileName);
             Files.write(path, bytes);
             saveFileReferenceInDatabase(newFileName, student, fileType);
 
@@ -92,4 +93,21 @@ public class FilesByStudentsService {
     public List<FilesByStudents> findAll() {
         return filesByStudentsRepository.findAll();
     }
+
+    public FilesByStudents findByReference(String reference) {
+        Optional<FilesByStudents> file = filesByStudentsRepository.findByReference(reference);
+        return file.orElseThrow(() -> new FileSystemNotFoundException("File not found!"));
+    }
+
+    public void deleteByReference(String reference) {
+        FilesByStudents file = this.findByReference(reference);
+        try {
+            Path path = Paths.get(filesPath + "/" + file.getReference());
+            Files.delete(path);
+            this.filesByStudentsRepository.delete(file);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
 }

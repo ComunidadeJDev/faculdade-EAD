@@ -14,17 +14,15 @@ import lombok.Data;
 
 public class Themes {
 
-@Id
-@GeneratedValue(strategy = GenerationType.AUTO)
-private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-@Column(name = "name", nullable = false)
-private String name;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-@JsonIgnore
-@ManyToOne
-@JoinColumn(name = "module_themes")
-private Modules module_themes;
-
-
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "module_themes")
+    private Modules module_themes;
 }

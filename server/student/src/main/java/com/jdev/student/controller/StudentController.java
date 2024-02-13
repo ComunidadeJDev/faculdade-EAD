@@ -2,6 +2,8 @@ package com.jdev.student.controller;
 
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
+import com.jdev.student.model.FilesAndImages.FilesByStudents;
+import com.jdev.student.model.FilesAndImages.ImagesByStudents;
 import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.FilesTypeEnum;
 import com.jdev.student.service.FilesByStudentsService;
@@ -30,7 +32,7 @@ public class StudentController {
     @Autowired
     private ImagesByStudentsService imagesByStudentsService;
 
-    //admin
+    // -------------------------------------------- Student --------------------------------------------
     @GetMapping
     public ResponseEntity<List<Student>> findAllStudents() {
         return ResponseEntity.status(HttpStatus.OK).body(studentService.findAllStudents());
@@ -63,8 +65,27 @@ public class StudentController {
         studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();
     }
-  
-    @PostMapping("/upload/file")
+
+    // -------------------------------------------- Files by Student --------------------------------------------
+
+    //ADM
+    @GetMapping("/files")
+    public ResponseEntity<List<FilesByStudents>> findAllFiles() {
+        return ResponseEntity.ok().body(filesByStudentsService.findAll());
+    }
+
+    @GetMapping("/files/{reference}")
+    public ResponseEntity<FilesByStudents> findByReferenceFile(@PathVariable String reference) {
+        return ResponseEntity.ok().body(filesByStudentsService.findByReference(reference));
+    }
+
+    @DeleteMapping("/files/{reference}")
+    public ResponseEntity<Object> deleteByReference(@PathVariable String reference) {
+        filesByStudentsService.deleteByReference(reference);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/files/upload")
     public ResponseEntity<Object> uploadFile(@RequestParam("file")MultipartFile file,
                                              String username,
                                              FilesTypeEnum fileType) {
@@ -72,7 +93,15 @@ public class StudentController {
         return ResponseEntity.ok().body("file saved!");
     }
 
-    @PostMapping("/upload/image")
+    // -------------------------------------------- Images by Student --------------------------------------------
+
+    //ADM
+    @GetMapping("/images")
+    public ResponseEntity<List<ImagesByStudents>> findAllImages() {
+        return ResponseEntity.ok().body(imagesByStudentsService.findAll());
+    }
+
+    @PostMapping("/images/upload")
     public ResponseEntity<Object> uploadImage(@RequestParam("image") MultipartFile image, String username) {
         imagesByStudentsService.saveImage(image, username);
         return ResponseEntity.ok().body("image saved!");
