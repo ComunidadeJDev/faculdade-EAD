@@ -1,10 +1,12 @@
 package com.jdev.student.service;
 
+import com.jdev.student.model.FilesAndImages.FilesByStudents;
 import com.jdev.student.model.FilesAndImages.ImagesByStudents;
 import com.jdev.student.model.Student;
 import com.jdev.student.repository.ImagesByStudentsRepository;
 import com.jdev.student.repository.StudentRepository;
 import com.jdev.student.service.exceptions.IOException;
+import com.jdev.student.service.exceptions.ImageNotFoundException;
 import com.jdev.student.service.exceptions.UserNotFoundException;
 import com.jdev.student.utils.GenerateNewFileName;
 import com.jdev.student.utils.GenerateRegister;
@@ -73,7 +75,24 @@ public class ImagesByStudentsService {
     }
 
     //ADM
+
     public List<ImagesByStudents> findAll() {
         return imagesByStudentsRepository.findAll();
+    }
+
+    public ImagesByStudents findByReference(String reference) {
+        Optional<ImagesByStudents> image = imagesByStudentsRepository.findByReference(reference);
+        return image.orElseThrow(ImageNotFoundException::new);
+    }
+
+    public void deleteByReference(String reference) {
+        ImagesByStudents image = this.findByReference(reference);
+        try {
+            Path path = Paths.get(pathImages + "/" + image.getReference());
+            Files.delete(path);
+            imagesByStudentsRepository.delete(image);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
     }
 }
