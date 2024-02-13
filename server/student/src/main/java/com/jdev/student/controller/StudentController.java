@@ -2,13 +2,16 @@ package com.jdev.student.controller;
 
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
+import com.jdev.student.model.DTO.TeacherRegistrationDTO;
 import com.jdev.student.model.FilesAndImages.FilesByStudents;
 import com.jdev.student.model.FilesAndImages.ImagesByStudents;
 import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.FilesTypeEnum;
+import com.jdev.student.model.externalClasses.Teacher;
 import com.jdev.student.service.FilesByStudentsService;
 import com.jdev.student.service.ImagesByStudentsService;
 import com.jdev.student.service.StudentService;
+import com.jdev.student.service.externalClasses.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +34,9 @@ public class StudentController {
 
     @Autowired
     private ImagesByStudentsService imagesByStudentsService;
+
+    @Autowired
+    private TeacherService teacherService;
 
     // -------------------------------------------- Student --------------------------------------------
     @GetMapping
@@ -115,5 +121,17 @@ public class StudentController {
     public ResponseEntity<Object> uploadImage(@RequestParam("image") MultipartFile image, String username) {
         imagesByStudentsService.saveImage(image, username);
         return ResponseEntity.ok().body("image saved!");
+    }
+
+    // -------------------------------------------- Teacher --------------------------------------------
+
+    @PostMapping
+    public ResponseEntity<Teacher> create(@RequestBody @Valid TeacherRegistrationDTO teacher){
+        return ResponseEntity.ok().body(teacherService.create(teacher));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Teacher>> findAllTeachers(){
+        return ResponseEntity.ok().body(teacherService.findAllTeachers());
     }
 }

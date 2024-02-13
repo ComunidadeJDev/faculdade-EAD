@@ -24,5 +24,5 @@ public class Themes {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "module_themes")
-    private Modules module_themes;
+    private Module module_themes;
 }
