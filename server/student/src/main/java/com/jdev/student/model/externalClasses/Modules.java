@@ -11,8 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-@AllArgsConstructor
-@Table
+@Table(name = "modules_course" )
 public class Modules {
 
     @Id
@@ -29,11 +28,11 @@ public class Modules {
     @OneToOne(mappedBy = "module_id")
     private Teacher teachers;
 
-    //@OneToMany
-    //private List<Themes> themes;
+    @OneToMany(mappedBy = "module_themes")
+    private List<Themes> themes;
+
+    @OneToOne(mappedBy = "module_material")
+    private List<Material> material;
 
     private boolean finished;
-
-    public Modules() {
-    }
 }
