@@ -11,7 +11,7 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "modules_course" )
-public class Module {
+public class Module {   //verify
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

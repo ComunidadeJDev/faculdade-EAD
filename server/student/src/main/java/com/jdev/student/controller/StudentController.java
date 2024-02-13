@@ -125,13 +125,13 @@ public class StudentController {
 
     // -------------------------------------------- Teacher --------------------------------------------
 
-    @PostMapping
+    @PostMapping("/teacher")
     public ResponseEntity<Teacher> create(@RequestBody @Valid TeacherRegistrationDTO teacher){
         return ResponseEntity.ok().body(teacherService.create(teacher));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Teacher>> findAllTeachers(){
+    @GetMapping("/teacher")
+    public ResponseEntity<List<Teacher>> findAllTeachers() {
         return ResponseEntity.ok().body(teacherService.findAllTeachers());
     }
 }

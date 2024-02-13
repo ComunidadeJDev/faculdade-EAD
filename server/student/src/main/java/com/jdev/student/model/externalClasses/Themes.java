@@ -11,7 +11,7 @@ import lombok.Data;
 @Entity
 @Table(name = "theme_course")
 @Data
-
+// verify
 public class Themes {
 
     @Id
