@@ -1,30 +1,22 @@
+server:
+  port: 8080
+
 spring:
   application:
-    name: mscloudgateway
+    name: gateway
   cloud:
     gateway:
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
-
-server:
-  port: 8080
+      routes:
+        - id: student-ms
+          uri: lb://student-ms
+          predicates:
+            - Path=/student/**
 
 eureka:
   client:
-    fetch-registry: true
-    register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
-
-#actuator config
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-
-logging:
-  file:
-    name: ./logs/log-file.log
+      defaultZone: http://user:user@localhost:8761/eureka
