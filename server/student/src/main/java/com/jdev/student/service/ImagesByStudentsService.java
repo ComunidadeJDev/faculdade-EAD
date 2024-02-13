@@ -1,13 +1,14 @@
 package com.jdev.student.service;
 
-import com.jdev.student.model.FilesAndImages.FilesByStudents;
 import com.jdev.student.model.FilesAndImages.ImagesByStudents;
 import com.jdev.student.model.Student;
 import com.jdev.student.repository.ImagesByStudentsRepository;
 import com.jdev.student.repository.StudentRepository;
+import com.jdev.student.service.exceptions.FileErrorException;
 import com.jdev.student.service.exceptions.IOException;
 import com.jdev.student.service.exceptions.ImageNotFoundException;
 import com.jdev.student.service.exceptions.UserNotFoundException;
+import com.jdev.student.utils.FileTypeCheck;
 import com.jdev.student.utils.GenerateNewFileName;
 import com.jdev.student.utils.GenerateRegister;
 import jakarta.transaction.Transactional;
@@ -36,12 +37,16 @@ public class ImagesByStudentsService {
     private String pathImages;
 
     public void saveImage(MultipartFile image, String username) {
-        Optional<Student> student = studentRepository.findByUsername(username);
-        if (student.isPresent()) {
-            Student studentForSave = student.get();
-            writeFileInDirectory(image, studentForSave);
+        if (FileTypeCheck.verifyIfIsAImage(image)) {
+            Optional<Student> student = studentRepository.findByUsername(username);
+            if (student.isPresent()) {
+                Student studentForSave = student.get();
+                writeFileInDirectory(image, studentForSave);
+            } else {
+                throw new UserNotFoundException();
+            }
         } else {
-            throw new UserNotFoundException();
+            throw new FileErrorException("This is not image!");
         }
     }
 

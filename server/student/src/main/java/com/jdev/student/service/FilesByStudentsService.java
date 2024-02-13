@@ -5,7 +5,10 @@ import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.FilesTypeEnum;
 import com.jdev.student.repository.FilesByStudentsRepository;
 import com.jdev.student.repository.StudentRepository;
+import com.jdev.student.service.exceptions.FileErrorException;
+import com.jdev.student.service.exceptions.FileNullContentException;
 import com.jdev.student.service.exceptions.UserNotFoundException;
+import com.jdev.student.utils.FileTypeCheck;
 import com.jdev.student.utils.GenerateNewFileName;
 import com.jdev.student.utils.GenerateRegister;
 import jakarta.transaction.Transactional;
@@ -37,12 +40,16 @@ public class FilesByStudentsService {
     private String filesPath;
 
     public void saveFile(MultipartFile file, String username, FilesTypeEnum fileType) {
-        Optional<Student> student = studentRepository.findByUsername(username);
-        if (student.isPresent()) {
-            Student studentForSave = student.get();
-            writeFileInDirectory(file, studentForSave, fileType);
+        if (FileTypeCheck.verifyIfIsAFile(file)) {
+            Optional<Student> student = studentRepository.findByUsername(username);
+            if (student.isPresent()) {
+                Student studentForSave = student.get();
+                writeFileInDirectory(file, studentForSave, fileType);
+            } else {
+                throw new UserNotFoundException();
+            }
         } else {
-            throw new UserNotFoundException();
+            throw new FileErrorException("this is not pdf file!");
         }
     }
 
