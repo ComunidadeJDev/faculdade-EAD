@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @Table
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Teacher {
 
@@ -29,56 +31,9 @@ public class Teacher {
     @NotBlank
     private String completeNameTeacher;
 
-    @Email
-    @Column(nullable = false,unique = true, length = 60)
-    @NotBlank
-    private String emailTeacher;
-
-    @CPF
-    @Column(nullable = false,unique = true, length = 20)
-    @NotBlank
-    private String cpfTeacher;
-
-    @Column(nullable = false, length = 80)
-    @NotBlank
-    private String numberHouseTeacher;
-
-    @Column(nullable = false, length = 80)
-    @NotBlank
-    private String addressTeacher;
-
-    @Column(nullable = false ,  length = 11)
-    @NotBlank
-    private String phoneTeacher;
-
-    @Column(nullable = false)
-    private EtinyEnum ethnicityTeacher;
-
-    @Column(nullable = false)
-    @NotBlank
-    private String nationalityTeacher;
-
-    @Column(nullable = false)
-    @NotNull
-    private Date birthdayTeacher;
-
-    @Column(nullable = false)
-    @NotBlank
-    private String cityTeacher;
-
-    @Column(nullable = false, unique = true, length = 20)
-    @NotBlank
-    private String numRegistrationTeacher;
-
-
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "module_id")
     private Modules module_id;
-
-    public Teacher() {
-    }
-
-
 }
 

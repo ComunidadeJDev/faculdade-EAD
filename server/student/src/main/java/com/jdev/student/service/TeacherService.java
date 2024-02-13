@@ -30,16 +30,6 @@ public List<Teacher> findAllTeachers(){
     private Teacher modellingNewTeacher(TeacherRegistrationDTO teacher) {
         Teacher teacherForSave = new Teacher();
         teacherForSave.setCompleteNameTeacher(teacher.completeNameTeacher());
-        teacherForSave.setEmailTeacher(teacher.emailTeacher());
-        teacherForSave.setCpfTeacher(teacher.cpfTeacher());
-        teacherForSave.setNumberHouseTeacher(teacher.numberHouseTeacher());
-        teacherForSave.setAddressTeacher(teacher.addressTeacher());
-        teacherForSave.setPhoneTeacher(teacher.phoneTeacher());
-        teacherForSave.setEthnicityTeacher(teacher.ethnicityTeacher());
-        teacherForSave.setNationalityTeacher(teacher.nationalityTeacher());
-        teacherForSave.setBirthdayTeacher(teacher.birthdayTeacher());
-        teacherForSave.setCityTeacher(teacher.cityTeacher());
-        teacherForSave.setNumRegistrationTeacher(generateNumRegistrationTeacher());
         return teacherForSave;
     }
 
