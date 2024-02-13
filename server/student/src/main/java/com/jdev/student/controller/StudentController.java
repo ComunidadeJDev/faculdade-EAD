@@ -80,7 +80,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/files/{reference}")
-    public ResponseEntity<Object> deleteByReference(@PathVariable String reference) {
+    public ResponseEntity<Object> deleteByReferenceFile(@PathVariable String reference) {
         filesByStudentsService.deleteByReference(reference);
         return ResponseEntity.noContent().build();
     }
@@ -95,10 +95,20 @@ public class StudentController {
 
     // -------------------------------------------- Images by Student --------------------------------------------
 
-    //ADM
     @GetMapping("/images")
     public ResponseEntity<List<ImagesByStudents>> findAllImages() {
         return ResponseEntity.ok().body(imagesByStudentsService.findAll());
+    }
+
+    @GetMapping("/images/{reference}")
+    public ResponseEntity<ImagesByStudents> findByReferenceImage(@PathVariable String reference) {
+        return ResponseEntity.ok().body(imagesByStudentsService.findByReference(reference));
+    }
+
+    @DeleteMapping("/images/{reference}")
+    public ResponseEntity<Object> deleteByReferenceImage(@PathVariable String reference) {
+        imagesByStudentsService.deleteByReference(reference);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/images/upload")

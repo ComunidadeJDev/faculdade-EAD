@@ -1,6 +1,7 @@
 package com.jdev.student.exceptions;
 
 import com.jdev.student.service.exceptions.IOException;
+import com.jdev.student.service.exceptions.ImageNotFoundException;
 import com.jdev.student.service.exceptions.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
@@ -131,8 +132,14 @@ public class MainExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
-
-
-
-
+    @ExceptionHandler(ImageNotFoundException.class)
+    public ResponseEntity<StandardError> imageNotFoundException(ImageNotFoundException ex, HttpServletRequest request) {
+        StandardError error = new StandardError(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                request.getRequestURI(),
+                "ImageNotFoundException");
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }

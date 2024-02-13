@@ -104,7 +104,7 @@ public class FilesByStudentsService {
         try {
             Path path = Paths.get(filesPath + "/" + file.getReference());
             Files.delete(path);
-            this.filesByStudentsRepository.delete(file);
+            filesByStudentsRepository.delete(file);
         } catch (Exception ex) {
             throw new RuntimeException(ex.getMessage());
         }
