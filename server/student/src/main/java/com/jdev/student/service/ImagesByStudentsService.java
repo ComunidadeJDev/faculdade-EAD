@@ -9,7 +9,7 @@ import com.jdev.student.service.exceptions.IOException;
 import com.jdev.student.service.exceptions.ImageNotFoundException;
 import com.jdev.student.service.exceptions.UserNotFoundException;
 import com.jdev.student.utils.FileTypeCheck;
-import com.jdev.student.utils.GenerateNewFileName;
+import com.jdev.student.utils.GenerateNewName;
 import com.jdev.student.utils.GenerateRegister;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,11 +71,11 @@ public class ImagesByStudentsService {
     }
 
     private String generateFileName(MultipartFile file, Student student) {
-        String newFileName = GenerateNewFileName.generateFileName(file, student);
+        String newFileName = GenerateNewName.generateFileName(file, student);
         if (imagesByStudentsRepository.findByReference(newFileName).isEmpty()) {
             return newFileName;
         } else {
-            return GenerateNewFileName.addCharactersToFileName(newFileName);
+            return GenerateNewName.addCharactersToFileName(newFileName);
         }
     }
 

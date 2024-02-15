@@ -6,10 +6,9 @@ import com.jdev.student.model.enums.FilesTypeEnum;
 import com.jdev.student.repository.FilesByStudentsRepository;
 import com.jdev.student.repository.StudentRepository;
 import com.jdev.student.service.exceptions.FileErrorException;
-import com.jdev.student.service.exceptions.FileNullContentException;
 import com.jdev.student.service.exceptions.UserNotFoundException;
 import com.jdev.student.utils.FileTypeCheck;
-import com.jdev.student.utils.GenerateNewFileName;
+import com.jdev.student.utils.GenerateNewName;
 import com.jdev.student.utils.GenerateRegister;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,11 +82,11 @@ public class FilesByStudentsService {
     }
 
     private String generateFileName(MultipartFile file, Student student) {
-        String newFileName = GenerateNewFileName.generateFileName(file, student);
+        String newFileName = GenerateNewName.generateFileName(file, student);
         if (filesByStudentsRepository.findByReference(newFileName).isEmpty()) {
             return newFileName;
         } else {
-            return GenerateNewFileName.addCharactersToFileName(newFileName);
+            return GenerateNewName.addCharactersToFileName(newFileName);
         }
     }
 

@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Date;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @Table
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Student {
 
@@ -102,7 +104,4 @@ public class Student {
     @NotBlank
     @NotNull
     private String numberHouse;
-
-    public Student() {
-    }
 }
