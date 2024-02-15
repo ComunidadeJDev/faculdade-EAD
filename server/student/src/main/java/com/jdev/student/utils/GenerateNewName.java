@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
-public class GenerateNewFileName {
+public class GenerateNewName {
 
     public static String generateFileName(MultipartFile file, Student student) {
         String randomId = generateRandomId();

@@ -4,12 +4,10 @@ import com.jdev.student.model.DTO.TeacherRegistrationDTO;
 import com.jdev.student.model.externalClasses.Module;
 import com.jdev.student.model.externalClasses.Teacher;
 import com.jdev.student.repository.TeacherRepository;
-import com.jdev.student.utils.GenerateNewFileName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class TeacherService {

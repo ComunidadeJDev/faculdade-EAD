@@ -4,9 +4,10 @@ import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.SemesterEnum;
-import com.jdev.student.model.externalClasses.Course;
 import com.jdev.student.repository.StudentRepository;
 import com.jdev.student.service.exceptions.UserNotFoundException;
+import com.jdev.student.utils.GenerateNewName;
+import com.jdev.student.utils.GenerateRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,9 +52,10 @@ public class StudentService {
     }
 
     private String generateRandomUsername() {
-        String username = this.generateRandomUUID();
+        String codec = GenerateNewName.generateRandomId();
+        String username = codec.replaceAll("-", "0");
         Boolean confirm = findByUsernameForRegistration(username);
-        if(confirm != null) {
+        if (confirm != null) {
             return username;
         } else {
             return username + UUID.randomUUID().toString().substring(0,1);
@@ -61,17 +63,14 @@ public class StudentService {
     }
 
     private String generateRegistration() {
-        String registration = this.generateRandomUUID();
+        String codec = GenerateRegister.newRegister();
+        String registration = codec.replaceAll("-", "0");
         Boolean confirm = findByRegistrationForGenerateRegistration(registration);
         if (confirm != null) {
             return registration;
         } else {
             return registration + UUID.randomUUID().toString().substring(0, 5);
         }
-    }
-
-    private String generateRandomUUID() {
-        return UUID.randomUUID().toString().substring(0, 10);
     }
 
     //admin
@@ -82,11 +81,7 @@ public class StudentService {
 
     private Boolean findByRegistrationForGenerateRegistration(String registration) {
         Optional<Student> student = studentRepository.findByRegistration(registration);
-        if (student != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return student != null;
     }
 
     //admin
@@ -115,7 +110,6 @@ public class StudentService {
         student.setNumberHouse(studentUpdate.numberHouse());
         return studentRepository.save(student);
     }
-
 
     public void deleteStudent(UUID id) {
         studentRepository.deleteById(id);
