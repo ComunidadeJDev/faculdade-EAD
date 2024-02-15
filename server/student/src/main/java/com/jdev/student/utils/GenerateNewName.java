@@ -15,7 +15,7 @@ public class GenerateNewName {
     }
 
     public static String generateRandomId() {
-        return UUID.randomUUID().toString().substring(0, 30);
+        return UUID.randomUUID().toString().substring(0, 10);
     }
 
     public static String addCharactersToFileName(String fileName) {
