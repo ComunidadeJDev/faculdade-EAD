@@ -16,6 +16,11 @@ spring:
           predicates:
             - Path=/student/**
 
+        - id: course-ms
+          uri: lb://course-ms
+          predicates:
+            - Path=/course/**
+
 eureka:
   client:
     service-url:
