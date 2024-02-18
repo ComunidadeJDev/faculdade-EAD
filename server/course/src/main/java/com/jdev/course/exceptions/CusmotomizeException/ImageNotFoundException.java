@@ -1,4 +1,4 @@
-package com.jdev.course.exceptions.customizeExceptions;
+package com.jdev.course.exceptions.CusmotomizeException;
 
 public class ImageNotFoundException extends RuntimeException {
     public ImageNotFoundException() {

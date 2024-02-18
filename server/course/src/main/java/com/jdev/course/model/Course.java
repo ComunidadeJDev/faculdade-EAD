@@ -1,8 +1,12 @@
 package com.jdev.course.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +14,9 @@ import java.util.UUID;
 @Entity
 @Table
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Course {
 
     @Id
@@ -24,7 +31,7 @@ public class Course {
     private List<Module> modules;
 
     @Column(nullable = false)
-    private Date created;
+    private LocalDate created;
 
     @Column(nullable = false)
     private int quantityMaterials;
@@ -33,5 +40,8 @@ public class Course {
     private int quantityModules;
 
     @Column(nullable = false)
-    private UUID registration;
+    private String registration;
+
+    @Column(nullable = false)
+    private Boolean active;
 }

@@ -1,4 +1,4 @@
-package com.jdev.course.exceptions.customizeExceptions;
+package com.jdev.course.exceptions.CusmotomizeException;
 
 public class ModuleNotFoundException extends RuntimeException {
     public ModuleNotFoundException() {
