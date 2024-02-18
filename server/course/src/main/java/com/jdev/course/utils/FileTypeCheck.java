@@ -1,6 +1,6 @@
 package com.jdev.course.utils;
 
-import com.jdev.course.exceptions.customizeExceptions.FileNullContentException;
+import com.jdev.course.exceptions.CusmotomizeException.FileNullContentException;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileTypeCheck {

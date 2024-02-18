@@ -1,4 +1,4 @@
-package com.jdev.course.exceptions.customizeExceptions;
+package com.jdev.course.exceptions.CusmotomizeException;
 
 public class FileNullContentException extends RuntimeException {
     public FileNullContentException() {

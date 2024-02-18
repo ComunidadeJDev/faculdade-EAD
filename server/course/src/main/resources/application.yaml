@@ -13,6 +13,8 @@ eureka:
       instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 pdf-material-path: "C:/faculty/course-pdf-material"
+image-material-path: "C:/faculty/course-image-material"
+video-material-path: "C:/faculty/course-video-material"
 
 #actuator config
 management:
