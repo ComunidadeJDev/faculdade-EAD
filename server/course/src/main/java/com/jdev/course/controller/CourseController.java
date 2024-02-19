@@ -42,6 +42,11 @@ public class CourseController {
         return ResponseEntity.ok().body(courseService.findAll());
     }
 
+    @GetMapping("/list/active")
+    public ResponseEntity<List<Course>> findAllActiveCourses() {
+        return ResponseEntity.ok().body(courseService.findAllActiveCourses());
+    }
+
     @GetMapping("/list/{registration}")
     public ResponseEntity<Course> findCourseByRegistration(@PathVariable String registration) {
         return ResponseEntity.ok().body(courseService.findByCourseWithRegistration(registration));
@@ -63,6 +68,11 @@ public class CourseController {
     @GetMapping("/module/list")
     public ResponseEntity<List<Module>> findAllModules() {
         return ResponseEntity.ok().body(moduleService.findAllModules());
+    }
+
+    @GetMapping("module/list/active")
+    public ResponseEntity<List<Module>> findAllActiveModules() {
+        return ResponseEntity.ok().body(moduleService.findAllActiveCourses());
     }
 
     @PostMapping("/module/create")
