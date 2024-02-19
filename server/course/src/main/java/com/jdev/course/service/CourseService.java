@@ -56,7 +56,7 @@ public class CourseService {
                 return courseRepository.save(course.get());
             }
         } else {
-            throw new CourseErrorException("Course not found!");
+            throw new CourseNotFoundException();
         }
     }
 
