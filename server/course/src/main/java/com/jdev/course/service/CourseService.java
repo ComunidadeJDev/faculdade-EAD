@@ -25,6 +25,10 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
+    public List<Course> findAllActiveCourses() {
+        return courseRepository.findAllActiveCourses(true);
+    }
+
     public Course create(CourseCreateDTO courseDTO) {
         if (courseRepository.findByName(courseDTO.name()).isEmpty()) {
             Course courseForSave = this.modelingNewCourseForSave(courseDTO);

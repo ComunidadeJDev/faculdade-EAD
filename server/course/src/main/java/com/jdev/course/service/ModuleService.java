@@ -30,6 +30,10 @@ public class ModuleService {
         return moduleRepository.findAll();
     }
 
+    public List<Module> findAllActiveCourses() {
+        return moduleRepository.findAllActiveCourses(true);
+    }
+
     public Module create(ModuleCreateDTO moduleDTO) {
         if (moduleRepository.findByName(moduleDTO.name()).isEmpty()) {
             Module module = this.modelingNewModuleForSave(moduleDTO);
