@@ -1,7 +1,7 @@
 package com.jdev.student.model;
 
-import com.jdev.student.model.Materials.FilesByStudents;
-import com.jdev.student.model.Materials.ImagesByStudents;
+import com.jdev.student.model.FilesAndImages.FilesByStudents;
+import com.jdev.student.model.FilesAndImages.ImagesByStudents;
 import com.jdev.student.model.enums.EtinyEnum;
 import com.jdev.student.model.enums.SemesterEnum;
 import com.jdev.student.model.externalClasses.Course;
@@ -9,7 +9,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Date;
@@ -19,6 +22,9 @@ import java.util.UUID;
 @Entity
 @Table
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Student {
 
     @Id
@@ -81,13 +87,13 @@ public class Student {
     @OneToOne(mappedBy = "student_id")
     private ImagesByStudents imageProfile;
 
-    @OneToOne(mappedBy = "student_id")
+    @OneToOne(mappedBy = "cpfFile")
     private FilesByStudents cpfFile;
 
-    @OneToOne(mappedBy = "student_id")
+    @OneToOne(mappedBy = "rgFile")
     private FilesByStudents rgFile;
 
-    @OneToOne(mappedBy = "student_id")
+    @OneToOne(mappedBy = "completionFile")
     private FilesByStudents certificateOfCompletionFile;
 
     @Column(nullable = false, length = 80)

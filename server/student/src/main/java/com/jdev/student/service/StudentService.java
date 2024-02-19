@@ -4,8 +4,10 @@ import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.SemesterEnum;
-import com.jdev.student.model.externalClasses.Course;
 import com.jdev.student.repository.StudentRepository;
+import com.jdev.student.service.exceptions.UserNotFoundException;
+import com.jdev.student.utils.GenerateNewName;
+import com.jdev.student.utils.GenerateRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +28,7 @@ public class StudentService {
 
     public Student create(StudentRegistrationDTO studentDTO) {
         Student studentSave = modelingNewStudent(studentDTO);
-        Student save = studentRepository.save(studentSave);
-        return save;
+        return studentRepository.save(studentSave);
     }
 
     private Student modelingNewStudent(StudentRegistrationDTO student) {
@@ -51,9 +52,10 @@ public class StudentService {
     }
 
     private String generateRandomUsername() {
-        String username = this.generateRandomUUID();
+        String codec = GenerateNewName.generateRandomId();
+        String username = codec.replaceAll("-", "0");
         Boolean confirm = findByUsernameForRegistration(username);
-        if(confirm != null) {
+        if (confirm != null) {
             return username;
         } else {
             return username + UUID.randomUUID().toString().substring(0,1);
@@ -61,7 +63,8 @@ public class StudentService {
     }
 
     private String generateRegistration() {
-        String registration = this.generateRandomUUID();
+        String codec = GenerateRegister.newRegister();
+        String registration = codec.replaceAll("-", "0");
         Boolean confirm = findByRegistrationForGenerateRegistration(registration);
         if (confirm != null) {
             return registration;
@@ -70,23 +73,15 @@ public class StudentService {
         }
     }
 
-    private String generateRandomUUID() {
-        return UUID.randomUUID().toString().substring(0, 10);
-    }
-
     //admin
     public Student findByRegistration(String registration) {
         Optional<Student> student = studentRepository.findByRegistration(registration);
-        return student.orElseThrow(() -> new RuntimeException("student not found"));
+        return student.orElseThrow(UserNotFoundException::new);
     }
 
     private Boolean findByRegistrationForGenerateRegistration(String registration) {
         Optional<Student> student = studentRepository.findByRegistration(registration);
-        if (student != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return student != null;
     }
 
     //admin
@@ -115,4 +110,9 @@ public class StudentService {
         student.setNumberHouse(studentUpdate.numberHouse());
         return studentRepository.save(student);
     }
+
+    public void deleteStudent(UUID id) {
+        studentRepository.deleteById(id);
+    }
 }
+
