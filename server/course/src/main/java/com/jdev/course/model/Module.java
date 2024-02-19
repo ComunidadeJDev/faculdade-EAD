@@ -6,6 +6,7 @@ import com.jdev.course.model.materials.Material;
 import com.jdev.course.model.materials.SupportMaterial;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Entity
 @Table
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Module {
@@ -27,6 +29,9 @@ public class Module {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    public String registration;
 
     @Column(nullable = false)
     private int duration;
@@ -47,4 +52,7 @@ public class Module {
     @ManyToOne
     @JoinColumn(name = "id_course")
     private Course id_course;
+
+    @Column(nullable = false)
+    private Boolean active;
 }
