@@ -2,7 +2,7 @@ package com.jdev.course.service;
 
 import com.jdev.course.exceptions.CusmotomizeException.CourseErrorException;
 import com.jdev.course.exceptions.CusmotomizeException.CourseNotFoundException;
-import com.jdev.course.exceptions.CusmotomizeException.courseAlreadyExistsException;
+import com.jdev.course.exceptions.CusmotomizeException.CourseAlreadyExistsException;
 import com.jdev.course.model.Course;
 import com.jdev.course.model.DTO.CourseCreateDTO;
 import com.jdev.course.model.DTO.CourseUpdateDTO;
@@ -34,7 +34,7 @@ public class CourseService {
             Course courseForSave = this.modelingNewCourseForSave(courseDTO);
             return this.courseRepository.save(courseForSave);
         } else {
-            throw new courseAlreadyExistsException();
+            throw new CourseAlreadyExistsException();
         }
     }
 
