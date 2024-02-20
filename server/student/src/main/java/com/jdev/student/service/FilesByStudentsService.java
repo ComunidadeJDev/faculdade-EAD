@@ -63,7 +63,7 @@ public class FilesByStudentsService {
             saveFileReferenceInDatabase(newFileName, student, fileType);
 
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            throw new FileErrorException(ex.getMessage());
         }
     }
 
