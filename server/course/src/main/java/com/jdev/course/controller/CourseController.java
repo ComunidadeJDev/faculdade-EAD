@@ -1,19 +1,19 @@
 package com.jdev.course.controller;
 
 import com.jdev.course.model.Course;
-import com.jdev.course.model.DTO.CourseCreateDTO;
-import com.jdev.course.model.DTO.CourseUpdateDTO;
-import com.jdev.course.model.DTO.ModuleCreateDTO;
-import com.jdev.course.model.DTO.ModuleUpdateDTO;
+import com.jdev.course.model.DTO.*;
 import com.jdev.course.model.Module;
+import com.jdev.course.model.enums.MaterialTypeEnum;
+import com.jdev.course.model.materials.Material;
 import com.jdev.course.service.CourseService;
+import com.jdev.course.service.MaterialService;
 import com.jdev.course.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("course")
@@ -25,9 +25,12 @@ public class CourseController {
     @Autowired
     private ModuleService moduleService;
 
+    @Autowired
+    private MaterialService materialService;
+
     @GetMapping
     public String test() {
-        return "oi";
+        return "connected";
     }
 
     //------------------------------------------- Course -------------------------------------------
@@ -96,4 +99,19 @@ public class CourseController {
         return ResponseEntity.noContent().build();
     }
 
+    //------------------------------------------- Material -------------------------------------------
+
+    @GetMapping("/material/list")
+    public ResponseEntity<List<Material>> findAllMaterials() {
+        return ResponseEntity.ok().body(materialService.findAllMaterials());
+    }
+
+    @PostMapping("/material/create")
+    public ResponseEntity<Object> createMaterial(@RequestParam("file") MultipartFile file,
+                                                 @RequestParam("name") String name,
+                                                 @RequestParam("registrationModule") String registrationModule) {
+        CreateMaterialDTO materialCreateDTO = new CreateMaterialDTO(name, file, registrationModule);
+        materialService.createMaterial(materialCreateDTO);
+        return ResponseEntity.noContent().build();
+    }
 }

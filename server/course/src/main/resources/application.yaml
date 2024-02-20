@@ -1,6 +1,10 @@
 spring:
   application:
     name: course-ms
+  servlet:
+    multipart:
+      max-file-size: 600MB
+      max-request-size: 600MB
 
 server:
   port: 0
@@ -12,9 +16,7 @@ eureka:
     instance:
       instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
-pdf-material-path: "C:/faculty/course-pdf-material"
-image-material-path: "C:/faculty/course-image-material"
-video-material-path: "C:/faculty/course-video-material"
+material-module: "C:/faculty/material-module"
 
 #actuator config
 management:

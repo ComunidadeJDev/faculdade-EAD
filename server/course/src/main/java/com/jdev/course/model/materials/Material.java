@@ -2,8 +2,10 @@ package com.jdev.course.model.materials;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jdev.course.model.Module;
+import com.jdev.course.model.enums.MaterialTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +17,7 @@ import java.util.UUID;
 @Entity
 @Table
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Material {
@@ -29,14 +32,14 @@ public class Material {
     @Column(nullable = false)
     private String register;
 
-    @OneToMany(mappedBy = "material_id")
-    private List<PdfMaterials> pdfMaterials;
+    @Column(nullable = false)
+    private String reference;
 
-    @OneToMany(mappedBy = "material_id")
-    private List<ImagesMaterials> imagesMaterials;
+    @Column(nullable = false)
+    private MaterialTypeEnum type;
 
-    @OneToMany(mappedBy = "material_id")
-    private List<VideosMaterials> videosMaterials;
+    @Column(nullable = false)
+    private Boolean active;
 
     @JsonIgnore
     @ManyToMany

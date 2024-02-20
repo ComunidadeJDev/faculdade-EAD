@@ -1,7 +1,7 @@
 package com.jdev.course.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jdev.course.model.enums.Themes;
+import com.jdev.course.model.enums.ThemesEnum;
 import com.jdev.course.model.materials.Material;
 import com.jdev.course.model.materials.SupportMaterial;
 import jakarta.persistence.*;
@@ -40,7 +40,7 @@ public class Module {
     private Set<Teacher> teachers = new HashSet<>();
 
     @Column(nullable = false)
-    private List<Themes> themes;
+    private List<ThemesEnum> themes;
 
     @OneToMany(mappedBy = "module_id")
     private List<SupportMaterial> supportMaterials;
