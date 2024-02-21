@@ -20,7 +20,7 @@ public class GenerateNewName {
         return randomId + fileExtension;
     }
 
-    public static String generateRandomId10() {
+    private static String generateRandomId10() {
         return UUID.randomUUID().toString().substring(0, 10);
     }
 

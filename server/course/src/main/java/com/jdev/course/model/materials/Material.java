@@ -42,12 +42,7 @@ public class Material {
     private Boolean active;
 
     @JsonIgnore
-    @ManyToMany
-    @JoinTable (
-            name = "material_module",
-            joinColumns = @JoinColumn(name = "module_id"),
-            inverseJoinColumns = @JoinColumn(name = "material_id")
-    )
-    private Set<Module> module_id = new HashSet<>();
-
+    @ManyToOne
+    @JoinColumn(name = "module_id")
+    private Module module_id;
 }
