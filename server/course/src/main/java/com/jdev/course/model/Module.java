@@ -45,14 +45,16 @@ public class Module {
     @OneToMany(mappedBy = "module_id")
     private List<SupportMaterial> supportMaterials;
 
-    @ManyToMany(mappedBy = "module_id")
-    private Set<Material> materials = new HashSet<>();
+    @Column(nullable = false)
+    private Boolean active;
+
+    @OneToMany(mappedBy = "module_id")
+    private List<Material> materials;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_course")
     private Course id_course;
 
-    @Column(nullable = false)
-    private Boolean active;
+
 }

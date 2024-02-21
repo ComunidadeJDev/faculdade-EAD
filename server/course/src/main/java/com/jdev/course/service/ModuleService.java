@@ -53,7 +53,7 @@ public class ModuleService {
                     .teachers(Set.of())
                     .themes(List.of())
                     .supportMaterials(List.of())
-                    .materials(Set.of())
+                    .materials(List.of())
                     .id_course(course)
                     .active(true)
                     .build();

@@ -3,7 +3,6 @@ package com.jdev.course.controller;
 import com.jdev.course.model.Course;
 import com.jdev.course.model.DTO.*;
 import com.jdev.course.model.Module;
-import com.jdev.course.model.enums.MaterialTypeEnum;
 import com.jdev.course.model.materials.Material;
 import com.jdev.course.service.CourseService;
 import com.jdev.course.service.MaterialService;
@@ -106,12 +105,34 @@ public class CourseController {
         return ResponseEntity.ok().body(materialService.findAllMaterials());
     }
 
+    @GetMapping("/material/list/active")
+    public ResponseEntity<List<Material>> findAllActiveMaterials() {
+        return ResponseEntity.ok().body(materialService.findAllActiveMaterials());
+    }
+
+    @GetMapping("/material/search/{register}")
+    public ResponseEntity<Material> findMaterialByRegister(@PathVariable String register) {
+        return ResponseEntity.ok().body(materialService.findByRegister(register));
+    }
+
     @PostMapping("/material/create")
     public ResponseEntity<Object> createMaterial(@RequestParam("file") MultipartFile file,
                                                  @RequestParam("name") String name,
                                                  @RequestParam("registrationModule") String registrationModule) {
         CreateMaterialDTO materialCreateDTO = new CreateMaterialDTO(name, file, registrationModule);
         materialService.createMaterial(materialCreateDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/material/update")
+    public ResponseEntity<Object> updateMaterial(@RequestBody MaterialUpdateDTO updateDTO) {
+        materialService.updateMaterial(updateDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/material/disable/{register}")
+    public ResponseEntity<Object> setMaterialNotActive(@PathVariable String register) {
+        materialService.setWithNotActive(register);
         return ResponseEntity.noContent().build();
     }
 }
