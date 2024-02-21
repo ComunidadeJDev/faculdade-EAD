@@ -79,4 +79,14 @@ public class CourseService {
         course.setActive(false);
         courseRepository.save(course);
     }
+
+    public void addModulesUnit(Course course) {
+        course.setQuantityModules(course.getQuantityModules() + 1);
+        courseRepository.save(course);
+    }
+
+    public void addMaterialUnit(Course course) {
+        course.setQuantityMaterials(course.getQuantityMaterials() + 1);
+        courseRepository.save(course);
+    }
 }
