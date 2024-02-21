@@ -2,6 +2,7 @@ package com.jdev.course.service;
 
 import com.jdev.course.exceptions.CusmotomizeException.FileErrorException;
 import com.jdev.course.exceptions.CusmotomizeException.FileNullContentException;
+import com.jdev.course.exceptions.CusmotomizeException.InvalidFileFormatException;
 import com.jdev.course.exceptions.CusmotomizeException.MaterialNotFoundException;
 import com.jdev.course.model.DTO.CreateMaterialDTO;
 import com.jdev.course.model.DTO.MaterialUpdateDTO;
@@ -43,6 +44,9 @@ public class MaterialService {
     @Autowired
     private VideoMaterialsService videoMaterialsService;
 
+    @Autowired
+    private CourseService courseService;
+
     @Value("${material-module}")
     private String materialPath;
 
@@ -60,14 +64,13 @@ public class MaterialService {
         if (!materialDTO.file().isEmpty()) {
             if (FileTypeCheck.verifyIfIsAImage(materialDTO.file())) {
                 preparingToSaveImageMaterial(materialDTO, module);
-            }
-            if (FileTypeCheck.verifyIfIsAPdf(materialDTO.file())) {
+            } else if (FileTypeCheck.verifyIfIsAPdf(materialDTO.file())) {
                 preparingToSavePdfMaterial(materialDTO, module);
-            }
-            if (FileTypeCheck.verifyIfIsAVideo(materialDTO.file())) {
+            } else if (FileTypeCheck.verifyIfIsAVideo(materialDTO.file())) {
                 preparingToSaveVideoMaterial(materialDTO, module);
+            } else {
+                throw new InvalidFileFormatException();
             }
-            // incluir erro de tipo de arquivo
         } else {
             throw new FileNullContentException();
         }
@@ -102,6 +105,7 @@ public class MaterialService {
                 .active(true)
                 .build();
         materialRepository.save(material);
+        this.addMaterialInCourse(material);
     }
 
     private void preparingToSavePdfMaterial(CreateMaterialDTO materialDTO, Module module) {
@@ -116,6 +120,7 @@ public class MaterialService {
                 .active(true)
                 .build();
         materialRepository.save(material);
+        this.addMaterialInCourse(material);
     }
 
     private void preparingToSaveImageMaterial(CreateMaterialDTO materialDTO, Module module) {
@@ -130,6 +135,11 @@ public class MaterialService {
                 .active(true)
                 .build();
         materialRepository.save(material);
+        this.addMaterialInCourse(material);
+    }
+
+    private void addMaterialInCourse(Material material) {
+        courseService.addMaterialUnit(material.getModule_id().getId_course());
     }
 
     private String writeFileInDirectory(CreateMaterialDTO materialDTO, Module module) {

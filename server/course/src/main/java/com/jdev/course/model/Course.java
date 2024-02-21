@@ -26,10 +26,6 @@ public class Course {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "id_course")
-    @Column(nullable = false)
-    private List<Module> modules;
-
     @Column(nullable = false)
     private LocalDate created;
 
@@ -44,4 +40,8 @@ public class Course {
 
     @Column(nullable = false)
     private Boolean active;
+
+    @OneToMany(mappedBy = "id_course")
+    @Column(nullable = false)
+    private List<Module> modules;
 }

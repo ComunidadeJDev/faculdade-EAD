@@ -2,6 +2,7 @@ package com.jdev.course.service;
 
 import com.jdev.course.exceptions.CusmotomizeException.CourseErrorException;
 import com.jdev.course.exceptions.CusmotomizeException.CourseNotFoundException;
+import com.jdev.course.exceptions.CusmotomizeException.ModuleAlreadyExistsException;
 import com.jdev.course.exceptions.CusmotomizeException.ModuleNotFoundException;
 import com.jdev.course.model.Course;
 import com.jdev.course.model.DTO.CourseUpdateDTO;
@@ -36,10 +37,12 @@ public class ModuleService {
 
     public Module create(ModuleCreateDTO moduleDTO) {
         if (moduleRepository.findByName(moduleDTO.name()).isEmpty()) {
-            Module module = this.modelingNewModuleForSave(moduleDTO);
-            return this.moduleRepository.save(module);
+            Module moduleForSave = this.modelingNewModuleForSave(moduleDTO);
+            Module module = this.moduleRepository.save(moduleForSave);
+            courseService.addModulesUnit(module.getId_course());
+            return module;
         } else {
-            throw new ModuleNotFoundException();
+            throw new ModuleAlreadyExistsException();
         }
     }
 
@@ -92,5 +95,7 @@ public class ModuleService {
         module.setActive(false);
         moduleRepository.save(module);
     }
+
+
 
 }

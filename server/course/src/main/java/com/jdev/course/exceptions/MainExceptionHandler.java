@@ -13,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import java.time.LocalDateTime;
@@ -192,12 +193,12 @@ public class MainExceptionHandler {
     public ResponseEntity<StandardError> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
         StandardError error = StandardError.builder()
                 .timeStamp(LocalDateTime.now())
-                .status(HttpStatus.NOT_FOUND.value())
+                .status(HttpStatus.BAD_REQUEST.value())
                 .fieldError(ex.getLocalizedMessage())
                 .path(request.getRequestURI())
                 .error("MethodArgumentTypeMismatchException")
                 .build();
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MaterialNotFoundException.class)
@@ -210,5 +211,53 @@ public class MainExceptionHandler {
                 .error("MaterialNotFoundException")
                 .build();
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MultipartException.class)
+    public ResponseEntity<StandardError> multipartException(MultipartException ex, HttpServletRequest request) {
+        StandardError error = StandardError.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .fieldError(ex.getLocalizedMessage())
+                .path(request.getRequestURI())
+                .error("MultipartException")
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileErrorException.class)
+    public ResponseEntity<StandardError> fileErrorException(FileErrorException ex, HttpServletRequest request) {
+        StandardError error = StandardError.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .fieldError(ex.getLocalizedMessage())
+                .path(request.getRequestURI())
+                .error("FileErrorException")
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidFileFormatException.class)
+    public ResponseEntity<StandardError> invalidFileFormatException(InvalidFileFormatException ex, HttpServletRequest request) {
+        StandardError error = StandardError.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .fieldError(ex.getLocalizedMessage())
+                .path(request.getRequestURI())
+                .error("InvalidFileFormatException")
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ModuleAlreadyExistsException.class)
+    public ResponseEntity<StandardError> moduleAlreadyExistsException(ModuleAlreadyExistsException ex, HttpServletRequest request) {
+        StandardError error = StandardError.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .fieldError(ex.getLocalizedMessage())
+                .path(request.getRequestURI())
+                .error("ModuleAlreadyExistsException")
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }
