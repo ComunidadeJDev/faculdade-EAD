@@ -9,6 +9,7 @@ import com.jdev.course.model.DTO.CourseUpdateDTO;
 import com.jdev.course.model.DTO.ModuleCreateDTO;
 import com.jdev.course.model.DTO.ModuleUpdateDTO;
 import com.jdev.course.model.Module;
+import com.jdev.course.model.materials.Material;
 import com.jdev.course.repository.ModuleRepository;
 import com.jdev.course.utils.GenerateRegister;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,7 @@ public class ModuleService {
                     .name(moduleDTO.name())
                     .registration(GenerateRegister.newRegister())
                     .duration(0)
+                    .quantityMaterials(0)
                     .teachers(Set.of())
                     .themes(List.of())
                     .supportMaterials(List.of())
@@ -96,6 +98,8 @@ public class ModuleService {
         moduleRepository.save(module);
     }
 
-
-
+    public void addMaterialUnit(Module Module) {
+        Module.setQuantityMaterials(Module.getQuantityMaterials() + 1);
+        moduleRepository.save(Module);
+    }
 }
