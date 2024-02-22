@@ -36,6 +36,9 @@ public class Module {
     @Column(nullable = false)
     private int duration;
 
+    @Column(nullable = false)
+    private int quantityMaterials;
+
     @ManyToMany(mappedBy = "module_id")
     private Set<Teacher> teachers = new HashSet<>();
 

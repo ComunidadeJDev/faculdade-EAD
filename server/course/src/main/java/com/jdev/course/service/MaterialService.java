@@ -18,15 +18,12 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.swing.text.html.Option;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -105,7 +102,7 @@ public class MaterialService {
                 .active(true)
                 .build();
         materialRepository.save(material);
-        this.addMaterialInCourse(material);
+        this.addMaterialUnitInCourseAndModule(material);
     }
 
     private void preparingToSavePdfMaterial(CreateMaterialDTO materialDTO, Module module) {
@@ -120,7 +117,7 @@ public class MaterialService {
                 .active(true)
                 .build();
         materialRepository.save(material);
-        this.addMaterialInCourse(material);
+        this.addMaterialUnitInCourseAndModule(material);
     }
 
     private void preparingToSaveImageMaterial(CreateMaterialDTO materialDTO, Module module) {
@@ -135,11 +132,12 @@ public class MaterialService {
                 .active(true)
                 .build();
         materialRepository.save(material);
-        this.addMaterialInCourse(material);
+        this.addMaterialUnitInCourseAndModule(material);
     }
 
-    private void addMaterialInCourse(Material material) {
+    private void addMaterialUnitInCourseAndModule(Material material) {
         courseService.addMaterialUnit(material.getModule_id().getId_course());
+        moduleService.addMaterialUnit(material.getModule_id());
     }
 
     private String writeFileInDirectory(CreateMaterialDTO materialDTO, Module module) {
