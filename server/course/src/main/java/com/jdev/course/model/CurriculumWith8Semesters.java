@@ -22,11 +22,11 @@ public class CurriculumWith8Semesters {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-//    @ManyToMany(mappedBy = "curriculum_id")
-//    private Set<Discipline> semester1;
-//
-//    @ManyToMany(mappedBy = "curriculum_id")
-//    private Set<Discipline> semester2;
+    @ManyToMany(mappedBy = "curriculum_id")
+    private Set<Discipline> semester1;
+
+    @ManyToMany(mappedBy = "curriculum_id")
+    private Set<Discipline> semester2;
 
 //    @Column
 //    private Set<Discipline> semester3;

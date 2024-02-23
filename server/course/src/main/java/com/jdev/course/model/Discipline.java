@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
 
 import java.util.HashSet;
 import java.util.List;
@@ -53,4 +54,10 @@ public class Discipline {
 
     @OneToMany(mappedBy = "discipline_id")
     private List<Material> materials;
+
+    @ManyToMany
+    @JoinTable(name = "curriculum_discipline",
+                joinColumns = @JoinColumn(name = "discipline_fk"),
+                inverseJoinColumns = @JoinColumn(name = "curriculum_fk"))
+    private List<CurriculumWith8Semesters> curriculum_id;
 }

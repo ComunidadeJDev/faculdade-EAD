@@ -7,6 +7,7 @@ import com.jdev.course.model.materials.Material;
 import com.jdev.course.service.CourseService;
 import com.jdev.course.service.MaterialService;
 import com.jdev.course.service.DisciplineService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,6 +66,12 @@ public class CourseController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/add/discipline")
+    public ResponseEntity<Object> addDisciplineToTheCourse(@RequestBody AddDisciplineToTheCourseDTO data) {
+        courseService.addDisciplineToTheCourse(data);
+        return ResponseEntity.noContent().build();
+    }
+
     //------------------------------------------- Discipline -------------------------------------------
 
     @GetMapping("/discipline/list")
@@ -77,10 +84,10 @@ public class CourseController {
         return ResponseEntity.ok().body(disciplineService.findAllActiveCourses());
     }
 
-//    @PostMapping("/discipline/create")
-//    public ResponseEntity<Discipline> createDiscipline(@RequestBody DisciplineCreateDTO moduleDTO) {
-//        return ResponseEntity.ok().body(disciplineService.create(moduleDTO));
-//    }
+    @PostMapping("/discipline/create")
+    public ResponseEntity<Discipline> createDiscipline(@RequestBody DisciplineCreateDTO moduleDTO) {
+        return ResponseEntity.ok().body(disciplineService.create(moduleDTO));
+    }
 
     @GetMapping("/discipline/list/{registration}")
     public ResponseEntity<Discipline> findDisciplineByRegistration(@PathVariable String registration) {

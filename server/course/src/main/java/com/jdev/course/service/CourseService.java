@@ -5,18 +5,25 @@ import com.jdev.course.exceptions.CusmotomizeException.CourseNotFoundException;
 import com.jdev.course.exceptions.CusmotomizeException.CourseAlreadyExistsException;
 import com.jdev.course.model.Course;
 import com.jdev.course.model.CurriculumWith8Semesters;
+import com.jdev.course.model.DTO.AddDisciplineToTheCourseDTO;
 import com.jdev.course.model.DTO.CourseCreateDTO;
 import com.jdev.course.model.DTO.CourseUpdateDTO;
+import com.jdev.course.model.Discipline;
+import com.jdev.course.model.enums.SemesterEnum;
 import com.jdev.course.repository.CourseRepository;
+import com.jdev.course.repository.DisciplineRepository;
 import com.jdev.course.utils.GenerateRegister;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
+@Transactional
 public class CourseService {
 
     @Autowired
@@ -24,6 +31,9 @@ public class CourseService {
 
     @Autowired
     private CurriculumWith8SemestersService curriculumService;
+
+    @Autowired
+    private DisciplineRepository disciplineRepository;
 
     public List<Course> findAll() {
         return courseRepository.findAll();
@@ -41,6 +51,19 @@ public class CourseService {
             return courseSaved;
         } else {
             throw new CourseAlreadyExistsException();
+        }
+    }
+
+    public void addDisciplineToTheCourse(AddDisciplineToTheCourseDTO data) {
+        Optional<Discipline> discipline = disciplineRepository.findByRegistration(data.registerDiscipline());
+        if (discipline.isPresent()) {
+            Course course = this.findByCourseWithRegistration(data.registerCourse());
+            Set<Discipline> disciplines = course.getCurriculum().getSemester1();
+            disciplines.add(discipline.get());
+            course.getCurriculum().setSemester1(disciplines);
+            courseRepository.save(course);
+        } else {
+            throw new RuntimeException("discipline not found");
         }
     }
 

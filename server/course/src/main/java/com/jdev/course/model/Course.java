@@ -40,6 +40,6 @@ public class Course {
     @Column(nullable = false)
     private Boolean active;
 
-    @OneToOne(mappedBy = "course_id")
+    @OneToOne(mappedBy = "course_id", fetch = FetchType.EAGER)
     private CurriculumWith8Semesters curriculum;
 }
