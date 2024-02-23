@@ -177,8 +177,8 @@ public class MainExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ModuleNotFoundException.class)
-    public ResponseEntity<StandardError> ModuleNotFoundException(ModuleNotFoundException ex, HttpServletRequest request) {
+    @ExceptionHandler(DisciplineNotFoundException.class)
+    public ResponseEntity<StandardError> ModuleNotFoundException(DisciplineNotFoundException ex, HttpServletRequest request) {
         StandardError error = StandardError.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(HttpStatus.NOT_FOUND.value())
@@ -249,8 +249,8 @@ public class MainExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ModuleAlreadyExistsException.class)
-    public ResponseEntity<StandardError> moduleAlreadyExistsException(ModuleAlreadyExistsException ex, HttpServletRequest request) {
+    @ExceptionHandler(DisciplineAlreadyExistsException.class)
+    public ResponseEntity<StandardError> moduleAlreadyExistsException(DisciplineAlreadyExistsException ex, HttpServletRequest request) {
         StandardError error = StandardError.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(HttpStatus.BAD_REQUEST.value())

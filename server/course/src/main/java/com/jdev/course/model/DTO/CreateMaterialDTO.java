@@ -6,6 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 public record CreateMaterialDTO (
         String name,
         MultipartFile file,
-        String registrationModule
+        String registrationDiscipline
 ) {
 }

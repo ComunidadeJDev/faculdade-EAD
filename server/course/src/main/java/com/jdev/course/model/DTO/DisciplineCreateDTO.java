@@ -1,6 +1,6 @@
 package com.jdev.course.model.DTO;
 
-public record ModuleCreateDTO(
+public record DisciplineCreateDTO(
         String name,
         String registrationCourse
 ) {

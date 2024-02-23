@@ -21,7 +21,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Module {
+public class Discipline {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,19 +39,19 @@ public class Module {
     @Column(nullable = false)
     private int quantityMaterials;
 
-    @ManyToMany(mappedBy = "module_id")
+    @ManyToMany(mappedBy = "discipline_id")
     private Set<Teacher> teachers = new HashSet<>();
 
     @Column(nullable = false)
     private List<ThemesEnum> themes;
 
-    @OneToMany(mappedBy = "module_id")
+    @OneToMany(mappedBy = "discipline_id")
     private List<SupportMaterial> supportMaterials;
 
     @Column(nullable = false)
     private Boolean active;
 
-    @OneToMany(mappedBy = "module_id")
+    @OneToMany(mappedBy = "discipline_id")
     private List<Material> materials;
 
     @JsonIgnore

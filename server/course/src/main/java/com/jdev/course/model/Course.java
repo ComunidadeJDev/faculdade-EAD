@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,5 +42,5 @@ public class Course {
 
     @OneToMany(mappedBy = "id_course")
     @Column(nullable = false)
-    private List<Module> modules;
+    private List<Discipline> disciplines;
 }
