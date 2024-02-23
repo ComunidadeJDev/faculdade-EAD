@@ -7,6 +7,7 @@ import com.jdev.course.model.materials.Material;
 import com.jdev.course.service.CourseService;
 import com.jdev.course.service.MaterialService;
 import com.jdev.course.service.DisciplineService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,6 +63,12 @@ public class CourseController {
     @DeleteMapping("/disable/{registration}")
     public ResponseEntity<Object> disableCourse(@PathVariable String registration) {
         courseService.setWithNotActive(registration);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/add/discipline")
+    public ResponseEntity<Object> addDisciplineToTheCourse(@RequestBody AddDisciplineToTheCourseDTO data) {
+        courseService.addDisciplineToTheCourse(data);
         return ResponseEntity.noContent().build();
     }
 

@@ -56,7 +56,7 @@ public class MaterialService {
     }
 
     public void createMaterial(CreateMaterialDTO materialDTO) {
-        Discipline discipline = disciplineService.findByModuleWithRegistration(materialDTO.registrationModule());
+        Discipline discipline = disciplineService.findByModuleWithRegistration(materialDTO.registrationDiscipline());
 
         if (!materialDTO.file().isEmpty()) {
             if (FileTypeCheck.verifyIfIsAImage(materialDTO.file())) {
@@ -102,7 +102,7 @@ public class MaterialService {
                 .active(true)
                 .build();
         materialRepository.save(material);
-        this.addMaterialUnitInCourseAndModule(material);
+        disciplineService.addMaterialUnit(discipline);
     }
 
     private void preparingToSavePdfMaterial(CreateMaterialDTO materialDTO, Discipline discipline) {
@@ -117,7 +117,7 @@ public class MaterialService {
                 .active(true)
                 .build();
         materialRepository.save(material);
-        this.addMaterialUnitInCourseAndModule(material);
+        disciplineService.addMaterialUnit(discipline);
     }
 
     private void preparingToSaveImageMaterial(CreateMaterialDTO materialDTO, Discipline discipline) {
@@ -132,13 +132,9 @@ public class MaterialService {
                 .active(true)
                 .build();
         materialRepository.save(material);
-        this.addMaterialUnitInCourseAndModule(material);
+        disciplineService.addMaterialUnit(discipline);
     }
 
-    private void addMaterialUnitInCourseAndModule(Material material) {
-        courseService.addMaterialUnit(material.getDiscipline_id().getId_course());
-        disciplineService.addMaterialUnit(material.getDiscipline_id());
-    }
 
     private String writeFileInDirectory(CreateMaterialDTO materialDTO, Discipline discipline) {
         try {

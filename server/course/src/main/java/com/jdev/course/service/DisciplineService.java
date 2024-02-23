@@ -37,17 +37,13 @@ public class DisciplineService {
     public Discipline create(DisciplineCreateDTO moduleDTO) {
         if (disciplineRepository.findByName(moduleDTO.name()).isEmpty()) {
             Discipline disciplineForSave = this.modelingNewModuleForSave(moduleDTO);
-            Discipline discipline = this.disciplineRepository.save(disciplineForSave);
-            courseService.addModulesUnit(discipline.getId_course());
-            return discipline;
+            return this.disciplineRepository.save(disciplineForSave);
         } else {
             throw new DisciplineAlreadyExistsException();
         }
     }
 
     private Discipline modelingNewModuleForSave(DisciplineCreateDTO moduleDTO) {
-        Course course = courseService.findByCourseWithRegistration(moduleDTO.registrationCourse());
-        if (course != null) {
             return Discipline.builder()
                     .name(moduleDTO.name())
                     .registration(GenerateRegister.newRegister())
@@ -57,12 +53,8 @@ public class DisciplineService {
                     .themes(List.of())
                     .supportMaterials(List.of())
                     .materials(List.of())
-                    .id_course(course)
                     .active(true)
                     .build();
-        } else {
-            throw new CourseNotFoundException();
-        }
     }
 
     public Discipline update(DisciplineUpdateDTO updateDTO) {
@@ -96,8 +88,8 @@ public class DisciplineService {
         disciplineRepository.save(discipline);
     }
 
-    public void addMaterialUnit(Discipline Discipline) {
-        Discipline.setQuantityMaterials(Discipline.getQuantityMaterials() + 1);
-        disciplineRepository.save(Discipline);
+    public void addMaterialUnit(Discipline discipline) {
+        discipline.setQuantityMaterials(discipline.getQuantityMaterials() + 1);
+        disciplineRepository.save(discipline);
     }
 }

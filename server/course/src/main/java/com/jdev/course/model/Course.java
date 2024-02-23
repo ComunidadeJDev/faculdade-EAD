@@ -40,7 +40,6 @@ public class Course {
     @Column(nullable = false)
     private Boolean active;
 
-    @OneToMany(mappedBy = "id_course")
-    @Column(nullable = false)
-    private List<Discipline> disciplines;
+    @OneToOne(mappedBy = "course_id", fetch = FetchType.EAGER)
+    private CurriculumWith8Semesters curriculum;
 }
