@@ -41,7 +41,7 @@ public class CourseService {
     private Course modelingNewCourseForSave(CourseCreateDTO CourseDTO) {
         return Course.builder()
                 .name(CourseDTO.name())
-                .modules(List.of())
+                .disciplines(List.of())
                 .created(LocalDate.now())
                 .quantityMaterials(0)
                 .quantityModules(0)

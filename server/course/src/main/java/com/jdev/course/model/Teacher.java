@@ -28,7 +28,7 @@ public class Teacher {
     @JoinTable(
             name = "teacher_module",
             joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name = "module_id")
+            inverseJoinColumns = @JoinColumn(name = "discipline_id")
     )
-    private Set<Module> module_id = new HashSet<>();
+    private Set<Discipline> discipline_id = new HashSet<>();
 }

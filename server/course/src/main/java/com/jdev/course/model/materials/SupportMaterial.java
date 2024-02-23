@@ -1,7 +1,7 @@
 package com.jdev.course.model.materials;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jdev.course.model.Module;
+import com.jdev.course.model.Discipline;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +25,6 @@ public class SupportMaterial {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "module_id")
-    private Module module_id;
+    @JoinColumn(name = "discipline_id")
+    private Discipline discipline_id;
 }

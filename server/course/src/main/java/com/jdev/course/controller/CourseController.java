@@ -2,11 +2,11 @@ package com.jdev.course.controller;
 
 import com.jdev.course.model.Course;
 import com.jdev.course.model.DTO.*;
-import com.jdev.course.model.Module;
+import com.jdev.course.model.Discipline;
 import com.jdev.course.model.materials.Material;
 import com.jdev.course.service.CourseService;
 import com.jdev.course.service.MaterialService;
-import com.jdev.course.service.ModuleService;
+import com.jdev.course.service.DisciplineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ public class CourseController {
     private CourseService courseService;
 
     @Autowired
-    private ModuleService moduleService;
+    private DisciplineService disciplineService;
 
     @Autowired
     private MaterialService materialService;
@@ -65,36 +65,36 @@ public class CourseController {
         return ResponseEntity.noContent().build();
     }
 
-    //------------------------------------------- Module -------------------------------------------
+    //------------------------------------------- Discipline -------------------------------------------
 
-    @GetMapping("/module/list")
-    public ResponseEntity<List<Module>> findAllModules() {
-        return ResponseEntity.ok().body(moduleService.findAllModules());
+    @GetMapping("/discipline/list")
+    public ResponseEntity<List<Discipline>> findAllDisciplines() {
+        return ResponseEntity.ok().body(disciplineService.findAllModules());
     }
 
-    @GetMapping("module/list/active")
-    public ResponseEntity<List<Module>> findAllActiveModules() {
-        return ResponseEntity.ok().body(moduleService.findAllActiveCourses());
+    @GetMapping("discipline/list/active")
+    public ResponseEntity<List<Discipline>> findAllActiveDisciplines() {
+        return ResponseEntity.ok().body(disciplineService.findAllActiveCourses());
     }
 
-    @PostMapping("/module/create")
-    public ResponseEntity<Module> createModule(@RequestBody ModuleCreateDTO moduleDTO) {
-        return ResponseEntity.ok().body(moduleService.create(moduleDTO));
+    @PostMapping("/discipline/create")
+    public ResponseEntity<Discipline> createDiscipline(@RequestBody DisciplineCreateDTO moduleDTO) {
+        return ResponseEntity.ok().body(disciplineService.create(moduleDTO));
     }
 
-    @GetMapping("/module/list/{registration}")
-    public ResponseEntity<Module> findModuleByRegistration(@PathVariable String registration) {
-        return ResponseEntity.ok().body(moduleService.findByModuleWithRegistration(registration));
+    @GetMapping("/discipline/list/{registration}")
+    public ResponseEntity<Discipline> findDisciplineByRegistration(@PathVariable String registration) {
+        return ResponseEntity.ok().body(disciplineService.findByModuleWithRegistration(registration));
     }
 
-    @PutMapping("/module/update")
-    public ResponseEntity<Module> updateModule(@RequestBody ModuleUpdateDTO updateDTO) {
-        return ResponseEntity.ok().body(moduleService.update(updateDTO));
+    @PutMapping("/discipline/update")
+    public ResponseEntity<Discipline> updateDiscipline(@RequestBody DisciplineUpdateDTO updateDTO) {
+        return ResponseEntity.ok().body(disciplineService.update(updateDTO));
     }
 
-    @DeleteMapping("/module/disable/{registration}")
-    public ResponseEntity<Object> disableModule(@PathVariable String registration) {
-        moduleService.setWithNotActive(registration);
+    @DeleteMapping("/discipline/disable/{registration}")
+    public ResponseEntity<Object> disableDiscipline(@PathVariable String registration) {
+        disciplineService.setWithNotActive(registration);
         return ResponseEntity.noContent().build();
     }
 
@@ -118,8 +118,8 @@ public class CourseController {
     @PostMapping("/material/create")
     public ResponseEntity<Object> createMaterial(@RequestParam("file") MultipartFile file,
                                                  @RequestParam("name") String name,
-                                                 @RequestParam("registrationModule") String registrationModule) {
-        CreateMaterialDTO materialCreateDTO = new CreateMaterialDTO(name, file, registrationModule);
+                                                 @RequestParam("registrationDiscipline") String registrationDiscipline) {
+        CreateMaterialDTO materialCreateDTO = new CreateMaterialDTO(name, file, registrationDiscipline);
         materialService.createMaterial(materialCreateDTO);
         return ResponseEntity.noContent().build();
     }
