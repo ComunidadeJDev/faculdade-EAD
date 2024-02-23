@@ -53,11 +53,4 @@ public class Discipline {
 
     @OneToMany(mappedBy = "discipline_id")
     private List<Material> materials;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "id_course")
-    private Course id_course;
-
-
 }

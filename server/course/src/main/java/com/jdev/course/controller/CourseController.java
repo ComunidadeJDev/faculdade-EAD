@@ -77,10 +77,10 @@ public class CourseController {
         return ResponseEntity.ok().body(disciplineService.findAllActiveCourses());
     }
 
-    @PostMapping("/discipline/create")
-    public ResponseEntity<Discipline> createDiscipline(@RequestBody DisciplineCreateDTO moduleDTO) {
-        return ResponseEntity.ok().body(disciplineService.create(moduleDTO));
-    }
+//    @PostMapping("/discipline/create")
+//    public ResponseEntity<Discipline> createDiscipline(@RequestBody DisciplineCreateDTO moduleDTO) {
+//        return ResponseEntity.ok().body(disciplineService.create(moduleDTO));
+//    }
 
     @GetMapping("/discipline/list/{registration}")
     public ResponseEntity<Discipline> findDisciplineByRegistration(@PathVariable String registration) {

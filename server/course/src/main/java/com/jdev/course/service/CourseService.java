@@ -4,6 +4,7 @@ import com.jdev.course.exceptions.CusmotomizeException.CourseErrorException;
 import com.jdev.course.exceptions.CusmotomizeException.CourseNotFoundException;
 import com.jdev.course.exceptions.CusmotomizeException.CourseAlreadyExistsException;
 import com.jdev.course.model.Course;
+import com.jdev.course.model.CurriculumWith8Semesters;
 import com.jdev.course.model.DTO.CourseCreateDTO;
 import com.jdev.course.model.DTO.CourseUpdateDTO;
 import com.jdev.course.repository.CourseRepository;
@@ -21,6 +22,9 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
+    @Autowired
+    private CurriculumWith8SemestersService curriculumService;
+
     public List<Course> findAll() {
         return courseRepository.findAll();
     }
@@ -32,16 +36,20 @@ public class CourseService {
     public Course create(CourseCreateDTO courseDTO) {
         if (courseRepository.findByName(courseDTO.name()).isEmpty()) {
             Course courseForSave = this.modelingNewCourseForSave(courseDTO);
-            return this.courseRepository.save(courseForSave);
+            Course courseSaved = this.courseRepository.save(courseForSave);
+            curriculumService.setCourseIdInCurriculum(courseSaved);
+            return courseSaved;
         } else {
             throw new CourseAlreadyExistsException();
         }
     }
 
     private Course modelingNewCourseForSave(CourseCreateDTO CourseDTO) {
+        CurriculumWith8Semesters curriculum = curriculumService.createCurriculum();
+
         return Course.builder()
                 .name(CourseDTO.name())
-                .disciplines(List.of())
+                .curriculum(curriculum)
                 .created(LocalDate.now())
                 .quantityMaterials(0)
                 .quantityModules(0)
