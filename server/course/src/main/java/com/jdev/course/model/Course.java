@@ -1,10 +1,9 @@
 package com.jdev.course.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,8 +11,9 @@ import java.util.UUID;
 
 @Entity
 @Table
-@Data
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Course {
@@ -41,5 +41,13 @@ public class Course {
     private Boolean active;
 
     @OneToOne(mappedBy = "course_id", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private CurriculumWith8Semesters curriculum;
+
+    public String toString() {
+        UUID var10000 = this.getId();
+        return "Course(id=" + var10000 + ", name=" + this.getName() + ", created=" + this.getCreated() + ", quantityMaterials="
+                + this.getQuantityMaterials() + ", quantityModules=" + this.getQuantityModules() + ", registration="
+                + this.getRegistration() + ", active=" + this.getActive() + ", curriculum=" + this.getCurriculum() + ")";
+    }
 }
