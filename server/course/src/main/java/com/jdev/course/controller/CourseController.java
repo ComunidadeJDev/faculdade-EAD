@@ -9,7 +9,6 @@ import com.jdev.course.service.CourseService;
 import com.jdev.course.service.CurriculumWith8SemestersService;
 import com.jdev.course.service.MaterialService;
 import com.jdev.course.service.DisciplineService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -77,6 +76,12 @@ public class CourseController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/remove/discipline")
+    public ResponseEntity<Object> removeDisciplineToTheCourse(@RequestBody RemoveDisciplineToTheCourseDTO data) {
+        courseService.removeDisciplineToTheCourse(data);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/curriculum/list")
     public ResponseEntity<List<CurriculumWith8Semesters>> findAllCurriculums() {
         return ResponseEntity.ok().body(curriculumService.findAll());
@@ -86,12 +91,12 @@ public class CourseController {
 
     @GetMapping("/discipline/list")
     public ResponseEntity<List<Discipline>> findAllDisciplines() {
-        return ResponseEntity.ok().body(disciplineService.findAllModules());
+        return ResponseEntity.ok().body(disciplineService.findAllDisciplines());
     }
 
     @GetMapping("discipline/list/active")
     public ResponseEntity<List<Discipline>> findAllActiveDisciplines() {
-        return ResponseEntity.ok().body(disciplineService.findAllActiveCourses());
+        return ResponseEntity.ok().body(disciplineService.findAllActiveDisciplines());
     }
 
     @PostMapping("/discipline/create")
@@ -101,7 +106,7 @@ public class CourseController {
 
     @GetMapping("/discipline/list/{registration}")
     public ResponseEntity<Discipline> findDisciplineByRegistration(@PathVariable String registration) {
-        return ResponseEntity.ok().body(disciplineService.findByModuleWithRegistration(registration));
+        return ResponseEntity.ok().body(disciplineService.findByDisciplineWithRegistration(registration));
     }
 
     @PutMapping("/discipline/update")

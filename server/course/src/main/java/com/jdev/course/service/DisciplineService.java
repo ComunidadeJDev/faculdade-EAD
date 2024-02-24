@@ -1,10 +1,8 @@
 package com.jdev.course.service;
 
 import com.jdev.course.exceptions.CusmotomizeException.CourseErrorException;
-import com.jdev.course.exceptions.CusmotomizeException.CourseNotFoundException;
 import com.jdev.course.exceptions.CusmotomizeException.DisciplineAlreadyExistsException;
 import com.jdev.course.exceptions.CusmotomizeException.DisciplineNotFoundException;
-import com.jdev.course.model.Course;
 import com.jdev.course.model.DTO.DisciplineCreateDTO;
 import com.jdev.course.model.DTO.DisciplineUpdateDTO;
 import com.jdev.course.model.Discipline;
@@ -26,24 +24,24 @@ public class DisciplineService {
     @Autowired
     private CourseService courseService;
 
-    public List<Discipline> findAllModules() {
+    public List<Discipline> findAllDisciplines() {
         return disciplineRepository.findAll();
     }
 
-    public List<Discipline> findAllActiveCourses() {
+    public List<Discipline> findAllActiveDisciplines() {
         return disciplineRepository.findAllActiveCourses(true);
     }
 
     public Discipline create(DisciplineCreateDTO moduleDTO) {
         if (disciplineRepository.findByName(moduleDTO.name()).isEmpty()) {
-            Discipline disciplineForSave = this.modelingNewModuleForSave(moduleDTO);
+            Discipline disciplineForSave = this.modelingNewDisciplineForSave(moduleDTO);
             return this.disciplineRepository.save(disciplineForSave);
         } else {
             throw new DisciplineAlreadyExistsException();
         }
     }
 
-    private Discipline modelingNewModuleForSave(DisciplineCreateDTO moduleDTO) {
+    private Discipline modelingNewDisciplineForSave(DisciplineCreateDTO moduleDTO) {
             return Discipline.builder()
                     .name(moduleDTO.name())
                     .registration(GenerateRegister.newRegister())
@@ -72,18 +70,18 @@ public class DisciplineService {
         }
     }
 
-    public Discipline findByModuleWithName(String name) {
+    public Discipline findByDisciplineWithName(String name) {
         Optional<Discipline> module = disciplineRepository.findByName(name);
         return module.orElseThrow(DisciplineNotFoundException::new);
     }
 
-    public Discipline findByModuleWithRegistration(String registration) {
+    public Discipline findByDisciplineWithRegistration(String registration) {
         Optional<Discipline> module = disciplineRepository.findByRegistration(registration);
         return module.orElseThrow(DisciplineNotFoundException::new);
     }
 
     public void setWithNotActive(String registration) {
-        Discipline discipline = this.findByModuleWithRegistration(registration);
+        Discipline discipline = this.findByDisciplineWithRegistration(registration);
         discipline.setActive(false);
         disciplineRepository.save(discipline);
     }
