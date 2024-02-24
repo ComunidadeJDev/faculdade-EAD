@@ -1,10 +1,12 @@
 package com.jdev.course.controller;
 
 import com.jdev.course.model.Course;
+import com.jdev.course.model.CurriculumWith8Semesters;
 import com.jdev.course.model.DTO.*;
 import com.jdev.course.model.Discipline;
 import com.jdev.course.model.materials.Material;
 import com.jdev.course.service.CourseService;
+import com.jdev.course.service.CurriculumWith8SemestersService;
 import com.jdev.course.service.MaterialService;
 import com.jdev.course.service.DisciplineService;
 import org.apache.coyote.Response;
@@ -27,6 +29,9 @@ public class CourseController {
 
     @Autowired
     private MaterialService materialService;
+
+    @Autowired
+    private CurriculumWith8SemestersService curriculumService;
 
     @GetMapping
     public String test() {
@@ -70,6 +75,11 @@ public class CourseController {
     public ResponseEntity<Object> addDisciplineToTheCourse(@RequestBody AddDisciplineToTheCourseDTO data) {
         courseService.addDisciplineToTheCourse(data);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/curriculum/list")
+    public ResponseEntity<List<CurriculumWith8Semesters>> findAllCurriculums() {
+        return ResponseEntity.ok().body(curriculumService.findAll());
     }
 
     //------------------------------------------- Discipline -------------------------------------------

@@ -55,9 +55,10 @@ public class Discipline {
     @OneToMany(mappedBy = "discipline_id")
     private List<Material> materials;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "curriculum_discipline",
                 joinColumns = @JoinColumn(name = "discipline_fk"),
                 inverseJoinColumns = @JoinColumn(name = "curriculum_fk"))
-    private List<CurriculumWith8Semesters> curriculum_id;
+    private Set<CurriculumWith8Semesters> curriculum_id;
 }
