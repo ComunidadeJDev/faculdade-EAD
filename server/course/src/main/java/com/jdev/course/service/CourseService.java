@@ -79,21 +79,24 @@ public class CourseService {
             Set<Discipline> semester1 = curriculum.getSemester1();
             semester1.add(discipline);
             curriculum.setSemester1(semester1);
-            curriculumRepository.save(curriculum);
+            CurriculumWith8Semesters CurriculumSaved = curriculumRepository.save(curriculum);
 
-            Set<CurriculumWith8Semesters> curriculum1 = new HashSet<>();
-            curriculum1.add(curriculum);
-            discipline.setCurriculum_id(curriculum1);
+            Set<CurriculumWith8Semesters> curriculumForSave = new HashSet<>();
+            curriculumForSave.add(CurriculumSaved);
+            discipline.setCurriculum_id_semester1(curriculumForSave);
+            disciplineRepository.save(discipline);
+
+        } else if (data.semester() == SemesterEnum.SEGUNDO) {
+            Set<Discipline> semester2 = curriculum.getSemester2();
+            semester2.add(discipline);
+            curriculum.setSemester2(semester2);
+            CurriculumWith8Semesters CurriculumSaved = curriculumRepository.save(curriculum);
+
+            Set<CurriculumWith8Semesters> curriculumForSave = new HashSet<>();
+            curriculumForSave.add(CurriculumSaved);
+            discipline.setCurriculum_id_semester2(curriculumForSave);
             disciplineRepository.save(discipline);
         }
-//        } else if (data.semester() == SemesterEnum.SEGUNDO) {
-//            CurriculumWith8Semesters curriculum = course.getCurriculum();
-//            Set<Discipline> semester2 = curriculum.getSemester2();
-//            semester2.add(discipline);
-//            curriculum.setSemester1(semester2);
-//
-//            curriculumRepository.save(curriculum);
-//        }
     }
 
     private Course modelingNewCourseForSave(CourseCreateDTO CourseDTO) {

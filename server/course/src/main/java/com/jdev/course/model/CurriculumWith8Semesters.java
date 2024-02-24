@@ -22,29 +22,29 @@ public class CurriculumWith8Semesters {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @ManyToMany(mappedBy = "curriculum_id")
+    @ManyToMany(mappedBy = "curriculum_id_semester1")
     private Set<Discipline> semester1 = new HashSet<>();
 
-    @ManyToMany(mappedBy = "curriculum_id")
+    @ManyToMany(mappedBy = "curriculum_id_semester2")
     private Set<Discipline> semester2 = new HashSet<>();
 
-//    @Column
-//    private Set<Discipline> semester3;
-//
-//    @Column
-//    private Set<Discipline> semester4;
-//
-//    @Column
-//    private Set<Discipline> semester5;
-//
-//    @Column
-//    private Set<Discipline> semester6;
-//
-//    @Column
-//    private Set<Discipline> semester7;
-//
-//    @Column
-//    private Set<Discipline> semester8;
+    @ManyToMany(mappedBy = "curriculum_id_semester3")
+    private Set<Discipline> semester3 = new HashSet<>();
+
+    @ManyToMany(mappedBy = "curriculum_id_semester4")
+    private Set<Discipline> semester4 = new HashSet<>();
+
+    @ManyToMany(mappedBy = "curriculum_id_semester5")
+    private Set<Discipline> semester5 = new HashSet<>();
+
+    @ManyToMany(mappedBy = "curriculum_id_semester6")
+    private Set<Discipline> semester6 = new HashSet<>();
+
+    @ManyToMany(mappedBy = "curriculum_id_semester7")
+    private Set<Discipline> semester7 = new HashSet<>();
+
+    @ManyToMany(mappedBy = "curriculum_id_semester8")
+    private Set<Discipline> semester8 = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "course_id")
