@@ -66,6 +66,7 @@ public class CourseService {
         curriculumRepository.save(curriculum);
     }
 
+    //----------- need urgent refactoring -----------
     public void addDisciplineToTheCourse(AddDisciplineToTheCourseDTO data) {
         Discipline discipline = disciplineRepository.findByRegistration(data.registerDiscipline())
                 .orElseThrow(DisciplineNotFoundException::new);
@@ -95,6 +96,72 @@ public class CourseService {
             Set<CurriculumWith8Semesters> curriculumForSave = new HashSet<>();
             curriculumForSave.add(CurriculumSaved);
             discipline.setCurriculum_id_semester2(curriculumForSave);
+            disciplineRepository.save(discipline);
+
+        } else if (data.semester() == SemesterEnum.TERCEIRO) {
+            Set<Discipline> semester3 = curriculum.getSemester3();
+            semester3.add(discipline);
+            curriculum.setSemester3(semester3);
+            CurriculumWith8Semesters CurriculumSaved = curriculumRepository.save(curriculum);
+
+            Set<CurriculumWith8Semesters> curriculumForSave = new HashSet<>();
+            curriculumForSave.add(CurriculumSaved);
+            discipline.setCurriculum_id_semester3(curriculumForSave);
+            disciplineRepository.save(discipline);
+
+        } else if (data.semester() == SemesterEnum.QUARTO) {
+            Set<Discipline> semester4 = curriculum.getSemester4();
+            semester4.add(discipline);
+            curriculum.setSemester4(semester4);
+            CurriculumWith8Semesters CurriculumSaved = curriculumRepository.save(curriculum);
+
+            Set<CurriculumWith8Semesters> curriculumForSave = new HashSet<>();
+            curriculumForSave.add(CurriculumSaved);
+            discipline.setCurriculum_id_semester4(curriculumForSave);
+            disciplineRepository.save(discipline);
+
+        } else if (data.semester() == SemesterEnum.QUINTO) {
+            Set<Discipline> semester5 = curriculum.getSemester5();
+            semester5.add(discipline);
+            curriculum.setSemester5(semester5);
+            CurriculumWith8Semesters CurriculumSaved = curriculumRepository.save(curriculum);
+
+            Set<CurriculumWith8Semesters> curriculumForSave = new HashSet<>();
+            curriculumForSave.add(CurriculumSaved);
+            discipline.setCurriculum_id_semester5(curriculumForSave);
+            disciplineRepository.save(discipline);
+
+        } else if (data.semester() == SemesterEnum.SEXTO) {
+            Set<Discipline> semester6 = curriculum.getSemester6();
+            semester6.add(discipline);
+            curriculum.setSemester6(semester6);
+            CurriculumWith8Semesters CurriculumSaved = curriculumRepository.save(curriculum);
+
+            Set<CurriculumWith8Semesters> curriculumForSave = new HashSet<>();
+            curriculumForSave.add(CurriculumSaved);
+            discipline.setCurriculum_id_semester6(curriculumForSave);
+            disciplineRepository.save(discipline);
+
+        } else if (data.semester() == SemesterEnum.SETIMO) {
+            Set<Discipline> semester7 = curriculum.getSemester7();
+            semester7.add(discipline);
+            curriculum.setSemester7(semester7);
+            CurriculumWith8Semesters CurriculumSaved = curriculumRepository.save(curriculum);
+
+            Set<CurriculumWith8Semesters> curriculumForSave = new HashSet<>();
+            curriculumForSave.add(CurriculumSaved);
+            discipline.setCurriculum_id_semester7(curriculumForSave);
+            disciplineRepository.save(discipline);
+
+        } else if (data.semester() == SemesterEnum.OITAVO) {
+            Set<Discipline> semester8 = curriculum.getSemester8();
+            semester8.add(discipline);
+            curriculum.setSemester8(semester8);
+            CurriculumWith8Semesters CurriculumSaved = curriculumRepository.save(curriculum);
+
+            Set<CurriculumWith8Semesters> curriculumForSave = new HashSet<>();
+            curriculumForSave.add(CurriculumSaved);
+            discipline.setCurriculum_id_semester8(curriculumForSave);
             disciplineRepository.save(discipline);
         }
     }
