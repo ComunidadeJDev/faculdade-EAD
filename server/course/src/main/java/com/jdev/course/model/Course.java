@@ -29,7 +29,7 @@ public class Course {
     @Column(nullable = false)
     private int quantityDisciplines;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String registration;
 
     @Column(nullable = false)
