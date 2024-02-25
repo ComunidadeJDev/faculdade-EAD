@@ -1,0 +1,15 @@
+@use '../../app/variables' as global
+@use '../../app/_mixin' 
+
+.header
+  display: flex
+  background-color: global.$bg-cards
+  font-family: global.$font-family
+  color: global.$font-color
+
+.logo
+  margin-right: 4px
+  padding: 1rem
+
+.btn
+  @include mixin.btn
