@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table
@@ -23,28 +21,28 @@ public class CurriculumWith8Semesters {
     private UUID id;
 
     @ManyToMany(mappedBy = "curriculum_id_semester1")
-    private Set<Discipline> semester1 = new HashSet<>();
+    private List<Discipline> semester1 = new ArrayList<>();
 
     @ManyToMany(mappedBy = "curriculum_id_semester2")
-    private Set<Discipline> semester2 = new HashSet<>();
+    private List<Discipline> semester2 = new ArrayList<>();
 
     @ManyToMany(mappedBy = "curriculum_id_semester3")
-    private Set<Discipline> semester3 = new HashSet<>();
+    private List<Discipline> semester3 = new ArrayList<>();
 
     @ManyToMany(mappedBy = "curriculum_id_semester4")
-    private Set<Discipline> semester4 = new HashSet<>();
+    private List<Discipline> semester4 = new ArrayList<>();
 
     @ManyToMany(mappedBy = "curriculum_id_semester5")
-    private Set<Discipline> semester5 = new HashSet<>();
+    private List<Discipline> semester5 = new ArrayList<>();
 
     @ManyToMany(mappedBy = "curriculum_id_semester6")
-    private Set<Discipline> semester6 = new HashSet<>();
+    private List<Discipline> semester6 = new ArrayList<>();
 
     @ManyToMany(mappedBy = "curriculum_id_semester7")
-    private Set<Discipline> semester7 = new HashSet<>();
+    private List<Discipline> semester7 = new ArrayList<>();
 
     @ManyToMany(mappedBy = "curriculum_id_semester8")
-    private Set<Discipline> semester8 = new HashSet<>();
+    private List<Discipline> semester8 = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "course_id")

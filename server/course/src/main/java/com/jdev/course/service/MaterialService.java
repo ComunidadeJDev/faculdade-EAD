@@ -56,7 +56,7 @@ public class MaterialService {
     }
 
     public void createMaterial(CreateMaterialDTO materialDTO) {
-        Discipline discipline = disciplineService.findByModuleWithRegistration(materialDTO.registrationDiscipline());
+        Discipline discipline = disciplineService.findByDisciplineWithRegistration(materialDTO.registrationDiscipline());
 
         if (!materialDTO.file().isEmpty()) {
             if (FileTypeCheck.verifyIfIsAImage(materialDTO.file())) {

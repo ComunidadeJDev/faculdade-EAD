@@ -260,4 +260,16 @@ public class MainExceptionHandler {
                 .build();
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ThemeException.class)
+    public ResponseEntity<StandardError> themeException(ThemeException ex, HttpServletRequest request) {
+        StandardError error = StandardError.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .fieldError(ex.getLocalizedMessage())
+                .path(request.getRequestURI())
+                .error("ThemeException")
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }

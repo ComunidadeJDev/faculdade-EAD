@@ -21,5 +21,4 @@ public class CourseApplication {
 		InstanceInfo instance = discoveryClient.getNextServerFromEureka("STORES", false);
 		return instance.getHomePageUrl();
 	}
-
 }

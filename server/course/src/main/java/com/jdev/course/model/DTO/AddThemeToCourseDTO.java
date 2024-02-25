@@ -4,7 +4,8 @@ import com.jdev.course.model.enums.ThemesEnum;
 
 import java.util.List;
 
-public record DisciplineCreateDTO(
-        String name
+public record AddThemeToCourseDTO(
+        List<ThemesEnum> themes,
+        String registerDiscipline
 ) {
 }
