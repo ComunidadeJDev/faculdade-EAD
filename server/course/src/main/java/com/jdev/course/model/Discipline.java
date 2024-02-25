@@ -3,13 +3,11 @@ package com.jdev.course.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jdev.course.model.enums.ThemesEnum;
 import com.jdev.course.model.materials.Material;
-import com.jdev.course.model.materials.SupportMaterial;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
 
 import java.util.HashSet;
 import java.util.List;
@@ -45,9 +43,6 @@ public class Discipline {
 
     @Column(nullable = false)
     private List<ThemesEnum> themes;
-
-    @OneToMany(mappedBy = "discipline_id")
-    private List<SupportMaterial> supportMaterials;
 
     @Column(nullable = false)
     private Boolean active;
@@ -115,8 +110,7 @@ public class Discipline {
         UUID var10000 = this.getId();
         return "Discipline(id=" + var10000 + ", name=" + this.getName() + ", registration=" + this.getRegistration() + ", duration="
                 + this.getDuration() + ", quantityMaterials=" + this.getQuantityMaterials() + ", teachers=" + this.getTeachers()
-                + ", themes=" + this.getThemes() + ", supportMaterials=" + this.getSupportMaterials() + ", active=" + this.getActive()
-                + ", materials=" + this.getMaterials() + ")";
+                + ", themes=" + this.getThemes() + ", supportMaterials=" + ", active=" + this.getActive() + ", materials=" + this.getMaterials() + ")";
             /*    + ", curriculum_id_semester1=" + this.getCurriculum_id_semester1()
                 + ", curriculum_id_semester2=" + this.getCurriculum_id_semester2() + ", curriculum_id_semester3="
                 + this.getCurriculum_id_semester3() + ", curriculum_id_semester4=" + this.getCurriculum_id_semester4()

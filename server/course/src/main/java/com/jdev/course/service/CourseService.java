@@ -68,8 +68,7 @@ public class CourseService {
         Course course = Course.builder()
                 .name(CourseDTO.name())
                 .created(LocalDate.now())
-                .quantityMaterials(0)
-                .quantityModules(0)
+                .quantityDisciplines(0)
                 .registration(GenerateRegister.newRegister())
                 .active(true)
                 .build();
@@ -107,13 +106,8 @@ public class CourseService {
         courseRepository.save(course);
     }
 
-    public void addModulesUnit(Course course) {
-        course.setQuantityModules(course.getQuantityModules() + 1);
-        courseRepository.save(course);
-    }
-
-    public void addMaterialUnit(Course course) {
-        course.setQuantityMaterials(course.getQuantityMaterials() + 1);
+    public void addDisciplineUnit(Course course) {
+        course.setQuantityDisciplines(course.getQuantityDisciplines() + 1);
         courseRepository.save(course);
     }
 
@@ -292,6 +286,7 @@ public class CourseService {
             discipline.getCurriculum_id_semester8().add(curriculumSaved);
             disciplineRepository.save(discipline);
         }
+        this.addDisciplineUnit(course);
     }
     //---------------------- need urgent refactoring ----------------------
 }

@@ -3,9 +3,13 @@ package com.jdev.course.service;
 import com.jdev.course.exceptions.CusmotomizeException.CourseErrorException;
 import com.jdev.course.exceptions.CusmotomizeException.DisciplineAlreadyExistsException;
 import com.jdev.course.exceptions.CusmotomizeException.DisciplineNotFoundException;
+import com.jdev.course.exceptions.CusmotomizeException.ThemeException;
+import com.jdev.course.model.DTO.AddThemeToCourseDTO;
 import com.jdev.course.model.DTO.DisciplineCreateDTO;
 import com.jdev.course.model.DTO.DisciplineUpdateDTO;
+import com.jdev.course.model.DTO.RemoveThemeFromDisciplineDTO;
 import com.jdev.course.model.Discipline;
+import com.jdev.course.model.enums.ThemesEnum;
 import com.jdev.course.repository.DisciplineRepository;
 import com.jdev.course.utils.GenerateRegister;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +53,6 @@ public class DisciplineService {
                     .quantityMaterials(0)
                     .teachers(Set.of())
                     .themes(List.of())
-                    .supportMaterials(List.of())
                     .materials(List.of())
                     .active(true)
                     .build();
@@ -67,6 +70,31 @@ public class DisciplineService {
             }
         } else {
             throw new DisciplineNotFoundException();
+        }
+    }
+
+    public void addThemesToTheDiscipline(AddThemeToCourseDTO data) {
+        if (!data.themes().isEmpty()) {
+            Discipline discipline = this.findByDisciplineWithRegistration(data.registerDiscipline());
+            discipline.getThemes().addAll(data.themes());
+            this.disciplineRepository.save(discipline);
+        } else {
+            throw new ThemeException("themes null content!");
+        }
+    }
+
+    public void removeThemeFromDiscipline(RemoveThemeFromDisciplineDTO data) {
+        if (data.theme() != null) {
+            Discipline discipline = this.findByDisciplineWithRegistration(data.registerDiscipline());
+            List<ThemesEnum> themeDiscipline = discipline.getThemes();
+            if (themeDiscipline.contains(data.theme())) {
+                discipline.getThemes().remove(data.theme());
+                disciplineRepository.save(discipline);
+            } else {
+                throw new ThemeException("Theme not exist in discipline!");
+            }
+        } else {
+            throw new ThemeException("themes null content!");
         }
     }
 

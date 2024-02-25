@@ -120,6 +120,18 @@ public class CourseController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/discipline/theme/add")
+    public ResponseEntity<Object> addThemeToTheDiscipline(@RequestBody AddThemeToCourseDTO data) {
+        disciplineService.addThemesToTheDiscipline(data);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/discipline/theme/remove")
+    public ResponseEntity<Object> removeThemeToTheDiscipline(@RequestBody RemoveThemeFromDisciplineDTO data) {
+        disciplineService.removeThemeFromDiscipline(data);
+        return ResponseEntity.noContent().build();
+    }
+
     //------------------------------------------- Material -------------------------------------------
 
     @GetMapping("/material/list")

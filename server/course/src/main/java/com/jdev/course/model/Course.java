@@ -1,12 +1,10 @@
 package com.jdev.course.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,10 +27,7 @@ public class Course {
     private LocalDate created;
 
     @Column(nullable = false)
-    private int quantityMaterials;
-
-    @Column(nullable = false)
-    private int quantityModules;
+    private int quantityDisciplines;
 
     @Column(nullable = false)
     private String registration;
@@ -47,7 +42,7 @@ public class Course {
     public String toString() {
         UUID var10000 = this.getId();
         return "Course(id=" + var10000 + ", name=" + this.getName() + ", created=" + this.getCreated() + ", quantityMaterials="
-                + this.getQuantityMaterials() + ", quantityModules=" + this.getQuantityModules() + ", registration="
+                + ", quantityModules=" + this.getQuantityDisciplines() + ", registration="
                 + this.getRegistration() + ", active=" + this.getActive() + ", curriculum=" + this.getCurriculum() + ")";
     }
 }
