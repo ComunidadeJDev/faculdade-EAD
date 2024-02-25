@@ -35,7 +35,7 @@ public class Student {
     @NotBlank
     private String completeName;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, unique = true, length = 50)
     @NotBlank
     private String username;
 
@@ -104,4 +104,10 @@ public class Student {
     @NotBlank
     @NotNull
     private String numberHouse;
+
+    @Column(nullable = false)
+    private boolean active;
+
+    @Column(nullable = false)
+    private boolean access;
 }

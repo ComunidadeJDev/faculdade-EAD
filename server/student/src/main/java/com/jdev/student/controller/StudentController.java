@@ -66,9 +66,9 @@ public class StudentController {
         return ResponseEntity.ok().body(studentService.updateStudent(studentUpdate));
     }
  
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Student> deleteStudent(@PathVariable UUID id){
-        studentService.deleteStudent(id);
+    @DeleteMapping("/disable/{id}")
+    public ResponseEntity<Student> setAsNotActive(@PathVariable UUID id){
+        studentService.setAsNotActive(id);
         return ResponseEntity.noContent().build();
     }
 

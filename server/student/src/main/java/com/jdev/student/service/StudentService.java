@@ -32,23 +32,25 @@ public class StudentService {
     }
 
     private Student modelingNewStudent(StudentRegistrationDTO student) {
-        Student studentForSave = new Student();
-        studentForSave.setCompleteName(student.completeName());
-        studentForSave.setUsername(generateRandomUsername());
-        studentForSave.setEmail(student.email());
-        studentForSave.setPassword(student.password());
-        studentForSave.setCpf(student.cpf());
-        studentForSave.setCourse(null);
-        studentForSave.setSemester(SemesterEnum.PRIMEIRO);
-        studentForSave.setBirthday(student.birthday());
-        studentForSave.setRegistration(generateRegistration());
-        studentForSave.setCity(student.city());
-        studentForSave.setNationality(student.nationatily());
-        studentForSave.setEthnicity(student.ethnicity());
-        studentForSave.setPhone(student.phone());
-        studentForSave.setAddress(student.address());
-        studentForSave.setNumberHouse(student.numberHouse());
-        return studentForSave;
+        return Student.builder()
+                .completeName(student.completeName())
+                .username(this.generateRandomUsername())
+                .email(student.email())
+                .password(student.password())
+                .cpf(student.cpf())
+                .course(null)
+                .semester(SemesterEnum.PRIMEIRO)
+                .birthday(student.birthday())
+                .registration(this.generateRegistration())
+                .city(student.city())
+                .nationality(student.nationatily())
+                .ethnicity(student.ethnicity())
+                .phone(student.phone())
+                .address(student.address())
+                .numberHouse(student.numberHouse())
+                .active(true)
+                .access(true)
+                .build();
     }
 
     private String generateRandomUsername() {
@@ -111,8 +113,12 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public void deleteStudent(UUID id) {
-        studentRepository.deleteById(id);
+    public void setAsNotActive(UUID id) {
+        Student student = this.findById(id);
+        if (student.isActive()) {
+            student.setActive(false);
+            studentRepository.save(student);
+        }
     }
 }
 

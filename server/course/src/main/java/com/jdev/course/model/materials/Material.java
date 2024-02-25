@@ -26,7 +26,7 @@ public class Material {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String register;
 
     @Column(nullable = false)
