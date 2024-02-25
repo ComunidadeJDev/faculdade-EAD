@@ -10,11 +10,13 @@ import com.jdev.course.model.DTO.DisciplineUpdateDTO;
 import com.jdev.course.model.DTO.RemoveThemeFromDisciplineDTO;
 import com.jdev.course.model.Discipline;
 import com.jdev.course.model.enums.ThemesEnum;
+import com.jdev.course.model.materials.Material;
 import com.jdev.course.repository.DisciplineRepository;
 import com.jdev.course.utils.GenerateRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -108,9 +110,46 @@ public class DisciplineService {
         return module.orElseThrow(DisciplineNotFoundException::new);
     }
 
-    public void setWithNotActive(String registration) {
+    public void setAsNotActive(String registration) {
         Discipline discipline = this.findByDisciplineWithRegistration(registration);
-        discipline.setActive(false);
+        if (discipline.getActive()) {
+            discipline.setActive(false);
+            disciplineRepository.save(discipline);
+            this.setAllMaterialsAsNotActive(discipline);
+        }
+    }
+
+    public void setAsActive(String registration) {
+        Discipline discipline = this.findByDisciplineWithRegistration(registration);
+        if (!discipline.getActive()) {
+            discipline.setActive(true);
+            disciplineRepository.save(discipline);
+            this.setAllMaterialsAsActive(discipline);
+        }
+    }
+
+    // is in this service to avoid recursion problems
+    public void setAllMaterialsAsNotActive(Discipline discipline) {
+        List<Material> subjectMaterials = discipline.getMaterials();
+        List<Material> materialAsNotActive = new ArrayList<>();
+
+        for(Material material : subjectMaterials) {
+            material.setActive(false);
+            materialAsNotActive.add(material);
+        }
+        discipline.setMaterials(materialAsNotActive);
+        disciplineRepository.save(discipline);
+    }
+
+    public void setAllMaterialsAsActive(Discipline discipline) {
+        List<Material> subjectMaterials = discipline.getMaterials();
+        List<Material> ActiveMaterials = new ArrayList<>();
+
+        for(Material material : subjectMaterials) {
+            material.setActive(true);
+            ActiveMaterials.add(material);
+        }
+        discipline.setMaterials(ActiveMaterials);
         disciplineRepository.save(discipline);
     }
 

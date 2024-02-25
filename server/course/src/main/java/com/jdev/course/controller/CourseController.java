@@ -116,7 +116,13 @@ public class CourseController {
 
     @DeleteMapping("/discipline/disable/{registration}")
     public ResponseEntity<Object> disableDiscipline(@PathVariable String registration) {
-        disciplineService.setWithNotActive(registration);
+        disciplineService.setAsNotActive(registration);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/discipline/enable/{registration}")
+    public ResponseEntity<Object> enableDiscipline(@PathVariable String registration) {
+        disciplineService.setAsActive(registration);
         return ResponseEntity.noContent().build();
     }
 
@@ -165,8 +171,14 @@ public class CourseController {
     }
 
     @DeleteMapping("/material/disable/{register}")
-    public ResponseEntity<Object> setMaterialNotActive(@PathVariable String register) {
-        materialService.setWithNotActive(register);
+    public ResponseEntity<Object> setMaterialAsNotActive(@PathVariable String register) {
+        materialService.setAsNotActive(register);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/material/enable/{register}")
+    public ResponseEntity<Object> setMaterialAsActive(@PathVariable String register) {
+        materialService.setAsActive(register);
         return ResponseEntity.noContent().build();
     }
 }

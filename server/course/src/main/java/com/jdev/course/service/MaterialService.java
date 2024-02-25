@@ -79,10 +79,20 @@ public class MaterialService {
         materialRepository.save(material);
     }
 
-    public void setWithNotActive(String registration) {
+    public void setAsNotActive(String registration) {
         Material material = this.findByRegister(registration);
-        material.setActive(false);
-        materialRepository.save(material);
+        if (material.getActive()) {
+            material.setActive(false);
+            materialRepository.save(material);
+        }
+    }
+
+    public void setAsActive(String registration) {
+        Material material = this.findByRegister(registration);
+        if (!material.getActive()) {
+            material.setActive(true);
+            materialRepository.save(material);
+        }
     }
 
     public Material findByRegister(String register) {
