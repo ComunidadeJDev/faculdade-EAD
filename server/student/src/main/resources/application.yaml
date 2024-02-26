@@ -5,6 +5,11 @@ spring:
     multipart:
       max-file-size: 600MB
       max-request-size: 600MB
+  jpa:
+    properties:
+      hibernate:
+        ejb:
+          interceptor: org.springframework.orm.jpa.support.ClassicLoadTimeWeaver
 
 images-students-path: "C:/faculty/images-students"
 files-students-path: "C:/faculty/files-students"
