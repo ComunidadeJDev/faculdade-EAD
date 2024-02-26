@@ -77,7 +77,6 @@ class StudentServiceTest {
         assertEquals(USERNAME, response.get(0).getUsername());
         assertEquals(MAIL, response.get(0).getEmail());
         assertEquals(PASSWORD, response.get(0).getPassword());
-        assertEquals(SEMESTER, response.get(0).getSemester());
         assertEquals(REGISTRATION, response.get(0).getRegistration());
         assertEquals(CITY, response.get(0).getCity());
         assertEquals(NATIONALITY, response.get(0).getNationality());
@@ -101,7 +100,6 @@ class StudentServiceTest {
         assertEquals(USERNAME, response.getUsername());
         assertEquals(MAIL, response.getEmail());
         assertEquals(PASSWORD, response.getPassword());
-        assertEquals(SEMESTER, response.getSemester());
         assertEquals(REGISTRATION, response.getRegistration());
         assertEquals(CITY, response.getCity());
         assertEquals(NATIONALITY, response.getNationality());
@@ -145,8 +143,6 @@ class StudentServiceTest {
                     .email(MAIL)
                     .password(PASSWORD)
                     .cpf(CPF)
-                    .course(COURSE)
-                    .semester(SEMESTER)
                     .birthday(dateFormat.parse("2002-01-22"))
                     .registration(REGISTRATION)
                     .city(CITY)
