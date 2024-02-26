@@ -1,5 +1,5 @@
-import Header from "@/Components/Header/Header";
-import "@/app/global.sass";
+import Header from "@/app/(public)/Header/Header";
+import "@/public/global.sass";
 
 export default function Home() {
   return (
