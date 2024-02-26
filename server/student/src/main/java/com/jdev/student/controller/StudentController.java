@@ -72,6 +72,12 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/enable/{id}")
+    public ResponseEntity<Student> setAsActive(@PathVariable UUID id){
+        studentService.setAsActive(id);
+        return ResponseEntity.noContent().build();
+    }
+
     // -------------------------------------------- Files by Student --------------------------------------------
 
     //ADM

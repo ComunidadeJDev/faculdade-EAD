@@ -53,12 +53,6 @@ public class Student {
     @NotBlank
     private String cpf;
 
-    @ManyToMany(mappedBy = "student_id")
-    private Set<Course> course;
-
-    @Column(nullable = false)
-    private SemesterEnum semester;
-
     @Column(nullable = false)
     @NotNull
     private Date birthday;
@@ -110,4 +104,7 @@ public class Student {
 
     @Column(nullable = false)
     private boolean access;
+
+    @OneToOne(mappedBy = "student_id")
+    private Curriculum curriculum;
 }

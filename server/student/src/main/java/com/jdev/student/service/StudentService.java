@@ -21,14 +21,19 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private CurriculumService curriculumService;
+
     //admin
     public List<Student> findAllStudents() {
         return studentRepository.findAll();
     }
 
     public Student create(StudentRegistrationDTO studentDTO) {
-        Student studentSave = modelingNewStudent(studentDTO);
-        return studentRepository.save(studentSave);
+        Student studentForSave = modelingNewStudent(studentDTO);
+        Student studentSaved = studentRepository.save(studentForSave);
+        curriculumService.createCurriculum(studentSaved);
+        return studentSaved;
     }
 
     private Student modelingNewStudent(StudentRegistrationDTO student) {
@@ -38,8 +43,6 @@ public class StudentService {
                 .email(student.email())
                 .password(student.password())
                 .cpf(student.cpf())
-                .course(null)
-                .semester(SemesterEnum.PRIMEIRO)
                 .birthday(student.birthday())
                 .registration(this.generateRegistration())
                 .city(student.city())
@@ -48,7 +51,7 @@ public class StudentService {
                 .phone(student.phone())
                 .address(student.address())
                 .numberHouse(student.numberHouse())
-                .active(true)
+                .active(false)
                 .access(true)
                 .build();
     }
@@ -118,6 +121,14 @@ public class StudentService {
         if (student.isActive()) {
             student.setActive(false);
             studentRepository.save(student);
+        }
+    }
+
+    public void setAsActive(UUID id) {
+        Student student = this.findById(id);
+        if (!student.isActive()) {
+            student.setActive(true);
+            Student studentSaved = studentRepository.save(student);
         }
     }
 }
