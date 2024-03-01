@@ -26,30 +26,6 @@ public class Curriculum {
     @Column(nullable = false)
     private SemesterEnum semester;
 
-    @OneToOne(mappedBy = "curriculum1")
-    private SemesterDetails semester1;
-
-    @OneToOne(mappedBy = "curriculum2")
-    private SemesterDetails semester2;
-
-    @OneToOne(mappedBy = "curriculum3")
-    private SemesterDetails semester3;
-
-//    @OneToOne(mappedBy = "curriculum4")
-//    private SemesterDetails semester4;
-//
-//    @OneToOne(mappedBy = "curriculum5")
-//    private SemesterDetails semester5;
-
-//    @OneToOne(mappedBy = "curriculum6")
-//    private SemesterDetails semester6;
-//
-//    @OneToOne(mappedBy = "curriculum7")
-//    private SemesterDetails semester7;
-//
-//    @OneToOne(mappedBy = "curriculum8")
-//    private SemesterDetails semester8;
-
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "student_id")

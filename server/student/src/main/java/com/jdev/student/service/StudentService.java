@@ -8,6 +8,7 @@ import com.jdev.student.repository.StudentRepository;
 import com.jdev.student.service.exceptions.UserNotFoundException;
 import com.jdev.student.utils.GenerateNewName;
 import com.jdev.student.utils.GenerateRegister;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +32,7 @@ public class StudentService {
 
     public Student create(StudentRegistrationDTO studentDTO) {
         Student studentForSave = modelingNewStudent(studentDTO);
-        Student studentSaved = studentRepository.save(studentForSave);
-        curriculumService.createCurriculum(studentSaved);
-        return studentSaved;
+        return studentRepository.save(studentForSave);
     }
 
     private Student modelingNewStudent(StudentRegistrationDTO student) {
@@ -52,7 +51,7 @@ public class StudentService {
                 .address(student.address())
                 .numberHouse(student.numberHouse())
                 .active(false)
-                .access(true)
+                .access(false)
                 .build();
     }
 
@@ -128,8 +127,24 @@ public class StudentService {
         Student student = this.findById(id);
         if (!student.isActive()) {
             student.setActive(true);
-            Student studentSaved = studentRepository.save(student);
+            studentRepository.save(student);
         }
+    }
+
+    public void enableAccess(UUID id) {
+        Student student = this.findById(id);
+        if (!student.isAccess()) {
+            student.setAccess(true);
+            studentRepository.save(student);
+        }
+    }
+
+    @Transactional
+    public void registrationApproval(UUID id) {
+        Student student = this.findById(id);
+        this.enableAccess(id);
+        curriculumService.createCurriculum(student);
+        this.setAsActive(id);
     }
 }
 

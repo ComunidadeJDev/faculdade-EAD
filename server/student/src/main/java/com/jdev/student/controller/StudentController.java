@@ -13,6 +13,7 @@ import com.jdev.student.service.ImagesByStudentsService;
 import com.jdev.student.service.StudentService;
 import com.jdev.student.service.externalClasses.TeacherService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,6 +76,12 @@ public class StudentController {
     @PutMapping("/enable/{id}")
     public ResponseEntity<Student> setAsActive(@PathVariable UUID id){
         studentService.setAsActive(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/enable/access/{id}")
+    public ResponseEntity<Object> enableAccess(@PathVariable UUID id) {
+        studentService.registrationApproval(id);
         return ResponseEntity.noContent().build();
     }
 

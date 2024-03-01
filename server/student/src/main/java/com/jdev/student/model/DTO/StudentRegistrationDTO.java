@@ -16,9 +16,6 @@ public record StudentRegistrationDTO(
         String nationatily,
         EtinyEnum ethnicity,
         String phone,
-        MultipartFile cpfFile,
-        MultipartFile rgFile,
-        MultipartFile certificateOfCompletionFile,
         String address,
         String numberHouse
 ) {
