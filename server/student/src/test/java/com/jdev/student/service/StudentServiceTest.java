@@ -171,9 +171,6 @@ class StudentServiceTest {
                     NATIONALITY,
                     ETHNICITY,
                     PHONE,
-                    (MultipartFile) CPF_FILE,
-                    (MultipartFile) RG_FILE,
-                    (MultipartFile) CERTIFICATE,
                     ADDRESS,
                     NUMBER_HOUSE
             );
