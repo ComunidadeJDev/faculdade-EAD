@@ -1,9 +1,9 @@
 package com.jdev.student.service;
 
+import com.jdev.student.model.DTO.RegisterDocumentsDTO;
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.Student;
-import com.jdev.student.model.enums.SemesterEnum;
 import com.jdev.student.repository.StudentRepository;
 import com.jdev.student.service.exceptions.UserNotFoundException;
 import com.jdev.student.utils.GenerateNewName;
@@ -24,6 +24,9 @@ public class StudentService {
 
     @Autowired
     private CurriculumService curriculumService;
+
+    @Autowired
+    private FilesByStudentsService filesByStudentsService;
 
     //admin
     public List<Student> findAllStudents() {
