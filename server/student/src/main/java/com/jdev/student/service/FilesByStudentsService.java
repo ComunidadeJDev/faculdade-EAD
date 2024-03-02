@@ -45,7 +45,6 @@ public class FilesByStudentsService {
         for (int i = 0; i < files.size(); i++) {
             saveFile(files.get(i), documents.username(), fileTypes.get(i));
         }
-        // send documents for cordenador
     }
 
     public void saveFile(MultipartFile file, String username, FilesTypeEnum fileType) {

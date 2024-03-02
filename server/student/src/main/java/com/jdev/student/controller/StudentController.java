@@ -79,6 +79,12 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/enable/access/verify/{id}")
+    public ResponseEntity<Object> evaluateDocuments(@PathVariable UUID id) {
+        studentService.sendDocumentsToTheCoodinatorForAvailable(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PutMapping("/enable/access/{id}")
     public ResponseEntity<Object> enableAccess(@PathVariable UUID id) {
         studentService.registrationApproval(id);

@@ -149,5 +149,10 @@ public class StudentService {
         curriculumService.createCurriculum(student);
         this.setAsActive(id);
     }
+
+    public void sendDocumentsToTheCoodinatorForAvailable(UUID id) {
+        Student student = this.findById(id);
+        //send student to the coodinator for avaliable
+    }
 }
 
