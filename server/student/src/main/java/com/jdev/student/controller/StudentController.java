@@ -1,5 +1,6 @@
 package com.jdev.student.controller;
 
+import com.jdev.student.model.DTO.RegisterDocumentsDTO;
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.DTO.TeacherRegistrationDTO;
@@ -13,7 +14,6 @@ import com.jdev.student.service.ImagesByStudentsService;
 import com.jdev.student.service.StudentService;
 import com.jdev.student.service.externalClasses.TeacherService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -85,6 +85,8 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
+
+
     // -------------------------------------------- Files by Student --------------------------------------------
 
     //ADM
@@ -110,6 +112,16 @@ public class StudentController {
                                              FilesTypeEnum fileType) {
         filesByStudentsService.saveFile(file, username, fileType);
         return ResponseEntity.ok().body("file saved!");
+    }
+
+    @PostMapping("/files/documents/register")
+    public ResponseEntity<Object> registerDocuments(@RequestParam("cpf") MultipartFile cpf,
+                                                    @RequestParam("rg") MultipartFile rg,
+                                                    @RequestParam("completation") MultipartFile completation,
+                                                    String username) {
+        RegisterDocumentsDTO documentsDTO = new RegisterDocumentsDTO(username, cpf, rg, completation);
+        filesByStudentsService.registerDocumentsForAvailable(documentsDTO);
+        return ResponseEntity.noContent().build();
     }
 
     // -------------------------------------------- Images by Student --------------------------------------------

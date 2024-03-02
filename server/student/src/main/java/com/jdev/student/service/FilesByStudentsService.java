@@ -1,5 +1,6 @@
 package com.jdev.student.service;
 
+import com.jdev.student.model.DTO.RegisterDocumentsDTO;
 import com.jdev.student.model.FilesAndImages.FilesByStudents;
 import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.FilesTypeEnum;
@@ -37,6 +38,15 @@ public class FilesByStudentsService {
 
     @Value("${files-students-path}")
     private String filesPath;
+
+    public void registerDocumentsForAvailable(RegisterDocumentsDTO documents) {
+        List<MultipartFile> files = List.of(documents.rg(), documents.cpf(), documents.certificateOfCompletion());
+        List<FilesTypeEnum> fileTypes = List.of(FilesTypeEnum.RG, FilesTypeEnum.CPF, FilesTypeEnum.COMPLETION);
+        for (int i = 0; i < files.size(); i++) {
+            saveFile(files.get(i), documents.username(), fileTypes.get(i));
+        }
+        // send documents for cordenador
+    }
 
     public void saveFile(MultipartFile file, String username, FilesTypeEnum fileType) {
         if (FileTypeCheck.verifyIfIsAFile(file)) {
