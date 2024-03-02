@@ -2,6 +2,7 @@ package com.jdev.student.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jdev.student.model.enums.SemesterEnum;
+import com.jdev.student.model.externalClasses.Course;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.context.annotation.EnableMBeanExport;
