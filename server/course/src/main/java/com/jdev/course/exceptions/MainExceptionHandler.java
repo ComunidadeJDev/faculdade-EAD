@@ -272,4 +272,16 @@ public class MainExceptionHandler {
                 .build();
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ErrorSendCourseForStudentException.class)
+    public ResponseEntity<StandardError> errorSendCourseForStudentException(ErrorSendCourseForStudentException ex, HttpServletRequest request) {
+        StandardError error = StandardError.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .fieldError(ex.getLocalizedMessage())
+                .path(request.getRequestURI())
+                .error("ErrorSendCourseForStudentException")
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
