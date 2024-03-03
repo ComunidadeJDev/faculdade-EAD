@@ -15,8 +15,11 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String registration;
 
     @ManyToOne
     @JoinColumn(name = "student_id")

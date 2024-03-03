@@ -1,4 +1,4 @@
-package com.jdev.student.service.exceptions;
+package com.jdev.student.exceptions.customizeExceptions;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException() {

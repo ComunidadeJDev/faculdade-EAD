@@ -3,16 +3,15 @@ package com.jdev.student.controller;
 import com.jdev.student.model.DTO.RegisterDocumentsDTO;
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
-import com.jdev.student.model.DTO.TeacherRegistrationDTO;
 import com.jdev.student.model.FilesAndImages.FilesByStudents;
 import com.jdev.student.model.FilesAndImages.ImagesByStudents;
 import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.FilesTypeEnum;
-import com.jdev.student.model.externalClasses.Teacher;
+import com.jdev.student.model.externalClasses.Course;
 import com.jdev.student.service.FilesByStudentsService;
 import com.jdev.student.service.ImagesByStudentsService;
 import com.jdev.student.service.StudentService;
-import com.jdev.student.service.externalClasses.TeacherService;
+import com.jdev.student.service.externalClasses.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +36,7 @@ public class StudentController {
     private ImagesByStudentsService imagesByStudentsService;
 
     @Autowired
-    private TeacherService teacherService;
+    private CourseService courseService;
 
     // -------------------------------------------- Student --------------------------------------------
     @GetMapping
@@ -154,15 +153,10 @@ public class StudentController {
         return ResponseEntity.ok().body("image saved!");
     }
 
-    // -------------------------------------------- Teacher --------------------------------------------
+    // -------------------------------------------- Courses --------------------------------------------
 
-    @PostMapping("/teacher")
-    public ResponseEntity<Teacher> create(@RequestBody @Valid TeacherRegistrationDTO teacher){
-        return ResponseEntity.ok().body(teacherService.create(teacher));
-    }
-
-    @GetMapping("/teacher")
-    public ResponseEntity<List<Teacher>> findAllTeachers() {
-        return ResponseEntity.ok().body(teacherService.findAllTeachers());
+    @GetMapping("/course/list")
+    public ResponseEntity<List<Course>> findAllCourses() {
+        return ResponseEntity.ok().body(this.courseService.findAll());
     }
 }
