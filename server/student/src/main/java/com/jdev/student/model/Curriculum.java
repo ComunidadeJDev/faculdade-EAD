@@ -27,6 +27,10 @@ public class Curriculum {
     @Column(nullable = false)
     private SemesterEnum semester;
 
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
+
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "student_id")

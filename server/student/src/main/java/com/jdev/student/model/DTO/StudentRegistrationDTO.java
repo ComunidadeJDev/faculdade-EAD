@@ -17,6 +17,7 @@ public record StudentRegistrationDTO(
         EtinyEnum ethnicity,
         String phone,
         String address,
-        String numberHouse
+        String numberHouse,
+        String registrationCourse
 ) {
 }

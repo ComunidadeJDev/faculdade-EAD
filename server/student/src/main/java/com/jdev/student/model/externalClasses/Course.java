@@ -1,9 +1,12 @@
 package com.jdev.student.model.externalClasses;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jdev.student.model.Curriculum;
 import com.jdev.student.model.Student;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,8 +24,8 @@ public class Course {
     @Column(nullable = false)
     private String registration;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student_id;
+    @JsonIgnore
+    @OneToMany(mappedBy = "course")
+    private List<Curriculum> curriculum_id;
 
 }
