@@ -1,15 +1,10 @@
 package com.jdev.course.service;
 
-import com.jdev.course.exceptions.CusmotomizeException.CourseErrorException;
-import com.jdev.course.exceptions.CusmotomizeException.CourseNotFoundException;
-import com.jdev.course.exceptions.CusmotomizeException.CourseAlreadyExistsException;
-import com.jdev.course.exceptions.CusmotomizeException.DisciplineNotFoundException;
+import com.jdev.course.exceptions.CusmotomizeException.*;
+import com.jdev.course.infra.mqQueues.RequestCoursesForStudentPublisher;
 import com.jdev.course.model.Course;
 import com.jdev.course.model.CurriculumWith8Semesters;
-import com.jdev.course.model.DTO.AddDisciplineToTheCourseDTO;
-import com.jdev.course.model.DTO.CourseCreateDTO;
-import com.jdev.course.model.DTO.CourseUpdateDTO;
-import com.jdev.course.model.DTO.RemoveDisciplineToTheCourseDTO;
+import com.jdev.course.model.DTO.*;
 import com.jdev.course.model.Discipline;
 import com.jdev.course.model.enums.SemesterEnum;
 import com.jdev.course.repository.CourseRepository;
@@ -36,6 +31,9 @@ public class CourseService {
     @Autowired
     private DisciplineRepository disciplineRepository;
 
+    @Autowired
+    private RequestCoursesForStudentPublisher coursesForStudentPublisher;
+
     public List<Course> findAll() {
         return courseRepository.findAll();
     }
@@ -49,6 +47,7 @@ public class CourseService {
             Course courseForSave = this.modelingNewCourseForSave(courseDTO);
             Course courseSaved = this.courseRepository.save(courseForSave);
             this.addCurriculumToTheCourse(courseSaved);
+            this.sendCourseForStudent(courseSaved);
             return courseSaved;
         } else {
             throw new CourseAlreadyExistsException();
@@ -109,6 +108,18 @@ public class CourseService {
     public void addDisciplineUnit(Course course) {
         course.setQuantityDisciplines(course.getQuantityDisciplines() + 1);
         courseRepository.save(course);
+    }
+
+    public void sendCourseForStudent(Course course) {
+        DataCourseForSendToTheStudentDTO dataCourseForSend = new DataCourseForSendToTheStudentDTO(
+                course.getName(),
+                course.getRegistration()
+        );
+        try {
+            coursesForStudentPublisher.sendCourse(dataCourseForSend);
+        } catch (Exception ex) {
+            throw new ErrorSendCourseForStudentException(ex.getMessage());
+        }
     }
 
     //---------------------- need urgent refactoring ----------------------
