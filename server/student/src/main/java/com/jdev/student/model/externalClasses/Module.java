@@ -24,9 +24,6 @@ public class Module {   //verify
     @NotNull
     private Integer duration;
 
-    @OneToOne(mappedBy = "module_id")
-    private Teacher teachers;
-
     @OneToMany(mappedBy = "module_themes")
     private List<Themes> themes;
 

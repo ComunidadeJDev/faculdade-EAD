@@ -2,7 +2,7 @@ package com.jdev.student.service.externalClasses;
 
 import com.jdev.student.model.externalClasses.Module;
 import com.jdev.student.repository.ModuleRepository;
-import com.jdev.student.service.exceptions.ModuleNotFoundException;
+import com.jdev.student.exceptions.customizeExceptions.ModuleNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

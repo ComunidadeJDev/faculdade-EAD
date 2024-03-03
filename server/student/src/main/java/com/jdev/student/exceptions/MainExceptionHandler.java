@@ -1,8 +1,9 @@
 package com.jdev.student.exceptions;
 
-import com.jdev.student.service.exceptions.IOException;
-import com.jdev.student.service.exceptions.ImageNotFoundException;
-import com.jdev.student.service.exceptions.UserNotFoundException;
+import com.jdev.student.exceptions.customizeExceptions.ErrorReadResponseOfTheRequestException;
+import com.jdev.student.exceptions.customizeExceptions.IOException;
+import com.jdev.student.exceptions.customizeExceptions.ImageNotFoundException;
+import com.jdev.student.exceptions.customizeExceptions.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.hibernate.ObjectNotFoundException;
@@ -141,5 +142,16 @@ public class MainExceptionHandler {
                 request.getRequestURI(),
                 "ImageNotFoundException");
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ErrorReadResponseOfTheRequestException.class)
+    public ResponseEntity<StandardError> errorReadResponseOfTheRequestException(ErrorReadResponseOfTheRequestException ex, HttpServletRequest request) {
+        StandardError error = new StandardError(
+                LocalDateTime.now(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                ex.getMessage(),
+                request.getRequestURI(),
+                "ErrorReadResponseOfTheRequestException");
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

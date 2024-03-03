@@ -1,11 +1,10 @@
 package com.jdev.student.service;
 
-import com.jdev.student.model.DTO.RegisterDocumentsDTO;
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.Student;
 import com.jdev.student.repository.StudentRepository;
-import com.jdev.student.service.exceptions.UserNotFoundException;
+import com.jdev.student.exceptions.customizeExceptions.UserNotFoundException;
 import com.jdev.student.utils.GenerateNewName;
 import com.jdev.student.utils.GenerateRegister;
 import jakarta.transaction.Transactional;
