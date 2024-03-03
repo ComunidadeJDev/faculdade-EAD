@@ -1,5 +1,6 @@
 package com.jdev.student.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jdev.student.model.FilesAndImages.FilesByStudents;
 import com.jdev.student.model.FilesAndImages.ImagesByStudents;
 import com.jdev.student.model.enums.EtinyEnum;
@@ -104,6 +105,10 @@ public class Student {
 
     @Column(nullable = false)
     private boolean access;
+
+    @JsonIgnore
+    @Column(nullable = false)
+    private String registerCourse;
 
     @OneToOne(mappedBy = "student_id")
     private Curriculum curriculum;

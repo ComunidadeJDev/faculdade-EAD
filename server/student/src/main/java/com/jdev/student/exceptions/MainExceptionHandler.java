@@ -1,9 +1,6 @@
 package com.jdev.student.exceptions;
 
-import com.jdev.student.exceptions.customizeExceptions.ErrorReadResponseOfTheRequestException;
-import com.jdev.student.exceptions.customizeExceptions.IOException;
-import com.jdev.student.exceptions.customizeExceptions.ImageNotFoundException;
-import com.jdev.student.exceptions.customizeExceptions.UserNotFoundException;
+import com.jdev.student.exceptions.customizeExceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.hibernate.ObjectNotFoundException;
@@ -153,5 +150,16 @@ public class MainExceptionHandler {
                 request.getRequestURI(),
                 "ErrorReadResponseOfTheRequestException");
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(CourseNotFoundException.class)
+    public ResponseEntity<StandardError> courseNotFoundException(CourseNotFoundException ex, HttpServletRequest request) {
+        StandardError error = new StandardError(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                request.getRequestURI(),
+                "CourseNotFoundException");
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 }
