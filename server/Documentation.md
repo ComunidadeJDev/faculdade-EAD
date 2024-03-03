@@ -5,6 +5,12 @@
 - Folders to create before starting:
   - C:/faculty/images-students
   - C:/faculty/files-students
+ 
+- Create docker container rabbitmq of the course:
+  ```
+  docker run -it --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management 
+  ```
+  - create queue ```courses-for-student```
 
 # _ports_
 - Eureka interface: Http://localhost:8761
