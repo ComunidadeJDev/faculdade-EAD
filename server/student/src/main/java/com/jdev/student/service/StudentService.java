@@ -1,5 +1,6 @@
 package com.jdev.student.service;
 
+import com.jdev.student.exceptions.customizeExceptions.FileErrorException;
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.Student;
@@ -147,9 +148,13 @@ public class StudentService {
     @Transactional
     public void registrationApproval(UUID id) {
         Student student = this.findById(id);
-        this.enableAccess(id);
-        curriculumService.createCurriculum(student);
-        this.setAsActive(id);
+        if (student.getRgFile() != null && student.getCpfFile() != null && student.getCertificateOfCompletionFile() != null) {
+            this.enableAccess(id);
+            curriculumService.createCurriculum(student);
+            this.setAsActive(id);
+        } else {
+            throw new FileErrorException("the necessary documents are not properly registered");
+        }
     }
 
     public void sendDocumentsToTheCoodinatorForAvailable(UUID id) {
