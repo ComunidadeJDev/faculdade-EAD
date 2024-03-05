@@ -21,6 +21,11 @@ spring:
           predicates:
             - Path=/course/**
 
+        - id: authentication-ms
+          uri: lb://authentication-ms
+          predicates:
+            - Path=/auth/**
+
 eureka:
   client:
     service-url:

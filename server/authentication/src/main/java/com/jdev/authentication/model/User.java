@@ -1,5 +1,6 @@
 package com.jdev.authentication.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,6 +25,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String username;
 
+    @JsonIgnore
     @Setter
     @Column(nullable = false)
     private String password;

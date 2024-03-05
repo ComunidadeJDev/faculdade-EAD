@@ -45,6 +45,7 @@ public class SecurityConfiguration {
     public AuthenticationManager authenticationManager(UserDetailsService detailsService) {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(detailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return new ProviderManager(daoAuthenticationProvider);
     }
 
@@ -53,8 +54,8 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth-> auth
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/user/list/").hasRole("ADMIN")
+                        .requestMatchers("/auth/user/list/").hasRole("ADMIN")
+                        .requestMatchers("/auth/login").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
