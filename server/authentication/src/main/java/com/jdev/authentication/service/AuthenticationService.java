@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -35,9 +36,9 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    public User registerUser(String username, String password) {
+    public User registerUser(String username, String password, String role) {
         String encodedPassword = passwordEncoder.encode(password);
-        Role userRole = roleRepository.findByAuthority("USER").get();
+        Role userRole = roleRepository.findByAuthority(role).get();
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);
         return userRepository.save(new User(null, username, encodedPassword, authorities));
@@ -51,5 +52,9 @@ public class AuthenticationService {
         } catch (Exception ex) {
             return new LoginResponseDTO(null, ex.getMessage());
         }
+    }
+
+    public List<Role> findAllRoles() {
+        return roleRepository.findAll();
     }
 }

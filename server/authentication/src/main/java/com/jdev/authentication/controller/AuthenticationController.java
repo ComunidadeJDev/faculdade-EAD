@@ -2,6 +2,7 @@ package com.jdev.authentication.controller;
 
 import com.jdev.authentication.model.DTO.LoginResponseDTO;
 import com.jdev.authentication.model.DTO.RegistrationDTO;
+import com.jdev.authentication.model.Role;
 import com.jdev.authentication.model.User;
 import com.jdev.authentication.service.AuthenticationService;
 import com.jdev.authentication.service.UserService;
@@ -24,7 +25,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody RegistrationDTO body) {
-        User user = authenticationService.registerUser(body.username(), body.password());
+        User user = authenticationService.registerUser(body.username(), body.password(), body.role());
         return ResponseEntity.ok().body(user);
     }
 
@@ -41,5 +42,10 @@ public class AuthenticationController {
     @GetMapping("/test")
     public ResponseEntity<Object> test() {
         return ResponseEntity.ok().body("vc esta como usuário");
+    }
+
+    @GetMapping("/roles/list")
+    public ResponseEntity<List<Role>> findAllRoles() {
+        return ResponseEntity.ok().body(authenticationService.findAllRoles());
     }
 }
