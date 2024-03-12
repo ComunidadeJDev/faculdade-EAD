@@ -11,6 +11,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -36,6 +39,13 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
+    private final JwtDecoder jwtDecoder;
+
+    @Autowired
+    public AuthenticationService(JwtDecoder jwtDecoder) {
+        this.jwtDecoder = jwtDecoder;
+    }
+
     public User registerUser(String username, String password, String role) {
         String encodedPassword = passwordEncoder.encode(password);
         Role userRole = roleRepository.findByAuthority(role).get();
@@ -51,6 +61,16 @@ public class AuthenticationService {
             return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
         } catch (Exception ex) {
             return new LoginResponseDTO(null, ex.getMessage());
+        }
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            token = token.startsWith("Bearer ") ? token.substring(7) : token;
+            Jwt jwt = jwtDecoder.decode(token);
+            return true;
+        } catch (JwtException e) {
+            return false;
         }
     }
 

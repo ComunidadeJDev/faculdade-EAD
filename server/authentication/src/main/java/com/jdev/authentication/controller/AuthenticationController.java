@@ -7,6 +7,7 @@ import com.jdev.authentication.model.User;
 import com.jdev.authentication.service.AuthenticationService;
 import com.jdev.authentication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,15 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> loginUser(@RequestBody RegistrationDTO body) {
         return ResponseEntity.ok().body(authenticationService.loginUser(body.username(), body.password()));
+    }
+
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyToken(@RequestHeader("Authorization") String token) {
+        boolean isValid = authenticationService.validateToken(token);
+        if (isValid) {
+            return ResponseEntity.ok("authenticated");
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido ou expirado");
     }
 
     @GetMapping("/user/list")
