@@ -5,11 +5,15 @@ spring:
     multipart:
       max-file-size: 600MB
       max-request-size: 600MB
+  datasource:
+    username: postgres #change in production
+    url: jdbc:postgresql://localhost:5432/student
+    password: 1234 #change in production
   jpa:
-    properties:
-      hibernate:
-        ejb:
-          interceptor: org.springframework.orm.jpa.support.ClassicLoadTimeWeaver
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+
   rabbitmq:
     host: localhost
     port: 5672
