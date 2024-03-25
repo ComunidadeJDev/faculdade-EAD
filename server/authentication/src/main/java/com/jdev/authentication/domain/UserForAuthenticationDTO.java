@@ -4,6 +4,6 @@ public record UserForAuthenticationDTO(
         String name,
         String email,
         String password,
-        RoleEnum type
+        String type
 ) {
 }

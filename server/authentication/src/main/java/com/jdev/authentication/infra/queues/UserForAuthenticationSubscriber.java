@@ -11,39 +11,44 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.RoleNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Slf4j
 public class UserForAuthenticationSubscriber {
 
-    private UserService userService;
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
-    public UserForAuthenticationSubscriber(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userService = userService;
+    public UserForAuthenticationSubscriber(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @RabbitListener(queues = "${mq.queue.user-for-authentication}")
-    public void responseOfTheRequestUserForAuthentication(@Payload String payload) {
+    public void responseOfTheRequestUserForAuthentication(@Payload String payload) throws RoleNotFoundException {
         CreateUserEntity user = this.convertJsonInCourse(payload);
         UserEntity userEntity = modelingUserForSaveInDatabase(user);
 
         this.userRepository.save(userEntity);
     }
 
-    private UserEntity modelingUserForSaveInDatabase(CreateUserEntity user) {
-        return UserEntity.builder()
-                .name(user.name())
-                .email(user.email())
-                .password(passwordEncoder.encode(user.password()))
-                .role(user.role().toString())
-                .createdAt(LocalDateTime.now())
-                .build();
+    private UserEntity modelingUserForSaveInDatabase(CreateUserEntity user) throws RoleNotFoundException {
+        List<String> aceptedRoles = List.of("ADMIN", "STUDENT", "COORDINATOR", "TEACHER", "DIRECTOR", "FINANCIAL");
+            if (aceptedRoles.contains(user.role())) {
+                return UserEntity.builder()
+                        .name(user.name())
+                        .email(user.email())
+                        .password(passwordEncoder.encode(user.password()))
+                        .role(user.role())
+                        .createdAt(LocalDateTime.now())
+                        .build();
+            } else {
+                throw new RoleNotFoundException();
+            }
     }
 
     private CreateUserEntity convertJsonInCourse(String payload) {
