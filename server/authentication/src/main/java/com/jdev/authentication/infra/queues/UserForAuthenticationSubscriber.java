@@ -8,6 +8,7 @@ import com.jdev.authentication.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,10 +20,12 @@ public class UserForAuthenticationSubscriber {
 
     private UserService userService;
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public UserForAuthenticationSubscriber(UserService userService, UserRepository userRepository) {
+    public UserForAuthenticationSubscriber(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @RabbitListener(queues = "${mq.queue.user-for-authentication}")
@@ -37,7 +40,7 @@ public class UserForAuthenticationSubscriber {
         return UserEntity.builder()
                 .name(user.name())
                 .email(user.email())
-                .password(user.password())
+                .password(passwordEncoder.encode(user.password()))
                 .role(user.role().toString())
                 .createdAt(LocalDateTime.now())
                 .build();
