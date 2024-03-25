@@ -1,5 +1,6 @@
 package com.jdev.student.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.FilesAndImages.FilesByStudents;
 import com.jdev.student.model.FilesAndImages.ImagesByStudents;
@@ -65,6 +66,9 @@ class StudentServiceTest {
         startStudents();
     }
 
+    private void startStudents() {
+    }
+
     @Test
     void mustReturnAListOfStudents_whenCallingToFindAllStudents() {
         when(studentRepository.findAll()).thenReturn(List.of(student));
@@ -91,7 +95,7 @@ class StudentServiceTest {
     }
 
     @Test
-    void mustReturnANewStudent_whenCallingToCreate() {
+    void mustReturnANewStudent_whenCallingToCreate() throws JsonProcessingException {
         when(studentRepository.save(any())).thenReturn(student);
         Student response = studentService.create(studentRegistrationDTO);
         assertEquals(ID, response.getId().toString());
@@ -131,51 +135,5 @@ class StudentServiceTest {
 
     @Test
     void deleteStudent() {
-    }
-
-    void startStudents() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            this.student = Student.builder()
-                    .id(UUID.fromString(ID))
-                    .completeName(COMPLETE_NAME)
-                    .username(USERNAME)
-                    .email(MAIL)
-                    .password(PASSWORD)
-                    .cpf(CPF)
-                    .birthday(dateFormat.parse("2002-01-22"))
-                    .registration(REGISTRATION)
-                    .city(CITY)
-                    .nationality(NATIONALITY)
-                    .ethnicity(ETHNICITY)
-                    .phone(PHONE)
-                    .imageProfile(IMAGE_PROFILE)
-                    .cpfFile(CPF_FILE)
-                    .rgFile(RG_FILE)
-                    .certificateOfCompletionFile(CERTIFICATE)
-                    .address(ADDRESS)
-                    .numberHouse(NUMBER_HOUSE)
-                    .build();
-        } catch (Exception ex) {
-            throw new RuntimeException(ex.getMessage());
-        }
-
-        try {
-            studentRegistrationDTO = new StudentRegistrationDTO(
-                    COMPLETE_NAME,
-                    MAIL,
-                    PASSWORD,
-                    CPF,
-                    dateFormat.parse("2002-01-22"),
-                    CITY,
-                    NATIONALITY,
-                    ETHNICITY,
-                    PHONE,
-                    ADDRESS,
-                    NUMBER_HOUSE
-            );
-        } catch (Exception ex) {
-            throw new RuntimeException(ex.getMessage());
-        }
     }
 }

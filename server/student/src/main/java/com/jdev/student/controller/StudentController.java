@@ -1,5 +1,6 @@
 package com.jdev.student.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jdev.student.model.DTO.RegisterDocumentsDTO;
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
@@ -45,7 +46,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<Student> create(@RequestBody @Valid StudentRegistrationDTO student) {
+    public ResponseEntity<Student> create(@RequestBody @Valid StudentRegistrationDTO student) throws JsonProcessingException {
         return ResponseEntity.ok().body(studentService.create(student));
     }
 

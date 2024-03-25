@@ -1,13 +1,22 @@
 spring:
   application:
     name: authentication-ms
+  datasource:
+    username: postgres #change in production
+    url: jdbc:postgresql://localhost:5432/authentication #change in production
+    password: 1234 #change in production
+  jpa:
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
 
 server:
-  port: 0
+  port: 8082
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://user:user@localhost:8761/eureka/
-    instance:
-      instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+mq:
+  queue:
+    user-for-authentication: "user-for-authentication"
+
+aw:
+  auth:
+    provider-uri: "http://localhost:8082" #replace for automatic instance_id
