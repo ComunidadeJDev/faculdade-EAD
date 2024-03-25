@@ -9,6 +9,8 @@ import com.jdev.student.model.FilesAndImages.ImagesByStudents;
 import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.FilesTypeEnum;
 import com.jdev.student.model.externalClasses.Course;
+import com.jdev.student.security.accessInterface.CoordinatorAccess;
+import com.jdev.student.security.accessInterface.StudentAccess;
 import com.jdev.student.service.FilesByStudentsService;
 import com.jdev.student.service.ImagesByStudentsService;
 import com.jdev.student.service.StudentService;
@@ -41,6 +43,7 @@ public class StudentController {
 
     // -------------------------------------------- Student --------------------------------------------
     @GetMapping
+    @CoordinatorAccess
     public ResponseEntity<List<Student>> findAllStudents() {
         return ResponseEntity.status(HttpStatus.OK).body(studentService.findAllStudents());
     }
@@ -52,28 +55,33 @@ public class StudentController {
 
     //admin
     @GetMapping("/search/registration/{registration}")
+    @CoordinatorAccess
     public ResponseEntity<Student> findByRegistration(@PathVariable String registration) throws RuntimeException {
         return ResponseEntity.ok().body(studentService.findByRegistration(registration));
     }
 
     //admin
     @GetMapping("/search/id/{id}")
+    @CoordinatorAccess
     public ResponseEntity<Student> findById(@PathVariable UUID id) throws RuntimeException {
         return ResponseEntity.ok().body(studentService.findById(id));
     }
 
     @PutMapping("/update")
+    @CoordinatorAccess
     public ResponseEntity<Student> updateStudent(@RequestBody StudentUpdateDTO studentUpdate) {
         return ResponseEntity.ok().body(studentService.updateStudent(studentUpdate));
     }
  
     @DeleteMapping("/disable/{id}")
+    @CoordinatorAccess
     public ResponseEntity<Student> setAsNotActive(@PathVariable UUID id){
         studentService.setAsNotActive(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/enable/{id}")
+    @CoordinatorAccess
     public ResponseEntity<Student> setAsActive(@PathVariable UUID id){
         studentService.setAsActive(id);
         return ResponseEntity.noContent().build();
@@ -86,6 +94,7 @@ public class StudentController {
     }
 
     @PutMapping("/enable/access/{id}")
+    @CoordinatorAccess
     public ResponseEntity<Object> enableAccess(@PathVariable UUID id) {
         studentService.registrationApproval(id);
         return ResponseEntity.noContent().build();
@@ -102,6 +111,7 @@ public class StudentController {
     }
 
     @GetMapping("/files/{reference}")
+    @CoordinatorAccess
     public ResponseEntity<FilesByStudents> findByReferenceFile(@PathVariable String reference) {
         return ResponseEntity.ok().body(filesByStudentsService.findByReference(reference));
     }
@@ -149,6 +159,7 @@ public class StudentController {
     }
 
     @PostMapping("/images/upload")
+    @StudentAccess
     public ResponseEntity<Object> uploadImage(@RequestParam("image") MultipartFile image, String username) {
         imagesByStudentsService.saveImage(image, username);
         return ResponseEntity.ok().body("image saved!");

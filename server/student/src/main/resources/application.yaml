@@ -16,15 +16,15 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: guest
-    password: guest
+    username: guest #change in production
+    password: guest #change in production
     virtual-host: /
-
-security:
-  oauth2:
-    resourceserver:
-      jwt:
-        issuer-uri: http://localhost:8082/oauth2/jwks
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8082
+          jwk-set-uri: http://localhost:8082/oauth2/jwks
 
 mq:
   queue:
@@ -40,7 +40,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://user:user@localhost:8761/eureka/
+      defaultZone: http://user:user@localhost:8761/eureka/ #change in production
     instance:
       instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 

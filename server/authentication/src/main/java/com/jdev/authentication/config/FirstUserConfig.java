@@ -33,5 +33,14 @@ public class FirstUserConfig implements ApplicationRunner {
                         .role("ADMIN")
                         .build()
         );
+
+        userEntityRepository.save(
+                UserEntity.builder()
+                        .name("Coordinator")
+                        .email("coordinator@email.com")
+                        .password(passwordEncoder.encode("123456"))
+                        .role("COORDINATOR")
+                        .build()
+        );
     }
 }
