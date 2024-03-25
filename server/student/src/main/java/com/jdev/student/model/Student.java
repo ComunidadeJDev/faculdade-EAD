@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jdev.student.model.FilesAndImages.FilesByStudents;
 import com.jdev.student.model.FilesAndImages.ImagesByStudents;
 import com.jdev.student.model.enums.EtinyEnum;
+import com.jdev.student.model.enums.Role;
 import com.jdev.student.model.enums.SemesterEnum;
 import com.jdev.student.model.externalClasses.Course;
 import jakarta.persistence.*;
@@ -48,6 +49,9 @@ public class Student {
     @Column(nullable = false, length = 20)
     @NotBlank
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @CPF
     @Column(nullable = false, unique = true, length = 20)

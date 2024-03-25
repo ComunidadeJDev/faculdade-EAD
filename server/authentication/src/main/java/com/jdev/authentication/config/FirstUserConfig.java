@@ -1,6 +1,5 @@
 package com.jdev.authentication.config;
 
-import com.jdev.authentication.domain.RoleEnum;
 import com.jdev.authentication.domain.UserEntity;
 import com.jdev.authentication.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ public class FirstUserConfig implements ApplicationRunner {
                         .name("Administrador")
                         .email("admin@email.com")
                         .password(passwordEncoder.encode("123456"))
-                        .role(RoleEnum.ADMIN.toString())
+                        .role("ADMIN")
                         .build()
         );
     }

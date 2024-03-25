@@ -7,6 +7,7 @@ import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
 import com.jdev.student.model.DTO.UserForAuthenticationDTO;
 import com.jdev.student.model.Student;
+import com.jdev.student.model.enums.Role;
 import com.jdev.student.model.externalClasses.Course;
 import com.jdev.student.repository.StudentRepository;
 import com.jdev.student.exceptions.customizeExceptions.UserNotFoundException;
@@ -49,7 +50,7 @@ public class StudentService {
                         student.getCompleteName(),
                         student.getEmail(),
                         student.getPassword(),
-                        "STUDENT")
+                        Role.STUDENT.toString())
         );
         return student;
     }
@@ -60,6 +61,7 @@ public class StudentService {
                 .username(this.generateRandomUsername())
                 .email(student.email())
                 .password(student.password())
+                .role(Role.STUDENT)
                 .cpf(student.cpf())
                 .birthday(student.birthday())
                 .registration(this.generateRegistration())

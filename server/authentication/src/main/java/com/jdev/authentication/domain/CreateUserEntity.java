@@ -11,6 +11,6 @@ public record CreateUserEntity(
         @NotBlank
         String password,
         @NotBlank
-        RoleEnum role
+        String role
 ) {
 }

@@ -11,6 +11,14 @@ spring:
     username: guest #change in the future due to environment variables
     password: guest #change in the future due to environment variables
     virtual-host: /
+  datasource:
+    username: postgres #change in production
+    url: jdbc:postgresql://localhost:5432/course
+    password: 1234 #change in production
+  jpa:
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
 
 mq:
   queue:
