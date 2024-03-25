@@ -1,8 +1,11 @@
 package com.jdev.student.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jdev.student.exceptions.customizeExceptions.FileErrorException;
+import com.jdev.student.infra.mqQueue.UserForAuthenticationPublisher;
 import com.jdev.student.model.DTO.StudentRegistrationDTO;
 import com.jdev.student.model.DTO.StudentUpdateDTO;
+import com.jdev.student.model.DTO.UserForAuthenticationDTO;
 import com.jdev.student.model.Student;
 import com.jdev.student.model.externalClasses.Course;
 import com.jdev.student.repository.StudentRepository;
@@ -30,14 +33,25 @@ public class StudentService {
     @Autowired
     private FilesByStudentsService filesByStudentsService;
 
+    @Autowired
+    private UserForAuthenticationPublisher userForAuthenticationPublisher;
+
     //admin
     public List<Student> findAllStudents() {
         return studentRepository.findAll();
     }
 
-    public Student create(StudentRegistrationDTO studentDTO) {
+    public Student create(StudentRegistrationDTO studentDTO) throws JsonProcessingException {
         Student studentForSave = modelingNewStudent(studentDTO);
-        return studentRepository.save(studentForSave);
+        Student student = studentRepository.save(studentForSave);
+        userForAuthenticationPublisher.sendUserForCreateAuthentication(
+                new UserForAuthenticationDTO(
+                        student.getCompleteName(),
+                        student.getEmail(),
+                        student.getPassword(),
+                        "STUDENT")
+        );
+        return student;
     }
 
     private Student modelingNewStudent(StudentRegistrationDTO student) {

@@ -20,6 +20,7 @@ spring:
 mq:
   queue:
     courses-for-student: "courses-for-student"
+    user-for-authentication: "user-for-authentication"
 
 images-students-path: "C:/faculty/images-students"
 files-students-path: "C:/faculty/files-students"

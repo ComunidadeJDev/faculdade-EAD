@@ -1,31 +1,40 @@
 package com.jdev.authentication.service;
 
-import com.jdev.authentication.model.User;
+import com.jdev.authentication.domain.CreateUserEntity;
+import com.jdev.authentication.domain.UserEntity;
 import com.jdev.authentication.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
-    @Autowired
-    private PasswordEncoder encoder;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public List<User> findAll() {
+    @Transactional
+    public void createUserEntity(UserEntity user) {
+        userRepository.save(user);
+    }
+
+//    public UserEntity modelingUserEntity(CreateUserEntity userData) {
+//        return UserEntity.builder()
+//                .name(userData.name())
+//                .email(userData.email())
+//                .password(userData.password())
+//                .role(userData.role())
+//                .createdAt(LocalDateTime.now())
+//                .build();
+//    }
+
+    public List<UserEntity> findAll() {
         return userRepository.findAll();
     }
+
 }
