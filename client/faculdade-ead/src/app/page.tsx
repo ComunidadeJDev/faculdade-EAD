@@ -1,10 +1,10 @@
-import Header from "@/app/(public)/Header/Header";
-import "@/public/global.sass";
+import Header from "./Components/Header/page";
 
 export default function Home() {
   return (
     <main>
       <Header />
+      
     </main>
   );
 }
