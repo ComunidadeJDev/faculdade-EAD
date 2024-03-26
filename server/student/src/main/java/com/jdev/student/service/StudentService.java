@@ -113,7 +113,7 @@ public class StudentService {
     //admin
     public Student findById(UUID id) {
         Optional<Student> student = studentRepository.findById(id);
-        return student.orElseThrow(() -> new RuntimeException("student not found!"));
+        return student.orElseThrow(UserNotFoundException::new);
     }
 
     //admin

@@ -10,7 +10,9 @@ import com.jdev.student.model.Student;
 import com.jdev.student.model.enums.FilesTypeEnum;
 import com.jdev.student.model.externalClasses.Course;
 import com.jdev.student.security.accessInterface.CoordinatorAccess;
+import com.jdev.student.security.accessInterface.CoordinatorDirectorAccess;
 import com.jdev.student.security.accessInterface.StudentAccess;
+import com.jdev.student.security.accessInterface.StudentCoordinatorAccess;
 import com.jdev.student.service.FilesByStudentsService;
 import com.jdev.student.service.ImagesByStudentsService;
 import com.jdev.student.service.StudentService;
@@ -53,22 +55,20 @@ public class StudentController {
         return ResponseEntity.ok().body(studentService.create(student));
     }
 
-    //admin
     @GetMapping("/search/registration/{registration}")
     @CoordinatorAccess
     public ResponseEntity<Student> findByRegistration(@PathVariable String registration) throws RuntimeException {
         return ResponseEntity.ok().body(studentService.findByRegistration(registration));
     }
 
-    //admin
     @GetMapping("/search/id/{id}")
-    @CoordinatorAccess
+    @StudentAccess
     public ResponseEntity<Student> findById(@PathVariable UUID id) throws RuntimeException {
         return ResponseEntity.ok().body(studentService.findById(id));
     }
 
     @PutMapping("/update")
-    @CoordinatorAccess
+    @StudentCoordinatorAccess
     public ResponseEntity<Student> updateStudent(@RequestBody StudentUpdateDTO studentUpdate) {
         return ResponseEntity.ok().body(studentService.updateStudent(studentUpdate));
     }
@@ -88,6 +88,7 @@ public class StudentController {
     }
 
     @PutMapping("/enable/access/verify/{id}")
+    @StudentAccess
     public ResponseEntity<Object> evaluateDocuments(@PathVariable UUID id) {
         studentService.sendDocumentsToTheCoodinatorForAvailable(id);
         return ResponseEntity.noContent().build();
@@ -100,29 +101,29 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
-
-
     // -------------------------------------------- Files by Student --------------------------------------------
 
-    //ADM
     @GetMapping("/files")
+    @CoordinatorDirectorAccess
     public ResponseEntity<List<FilesByStudents>> findAllFiles() {
         return ResponseEntity.ok().body(filesByStudentsService.findAll());
     }
 
     @GetMapping("/files/{reference}")
-    @CoordinatorAccess
+    @StudentCoordinatorAccess
     public ResponseEntity<FilesByStudents> findByReferenceFile(@PathVariable String reference) {
         return ResponseEntity.ok().body(filesByStudentsService.findByReference(reference));
     }
 
     @DeleteMapping("/files/{reference}")
+    @CoordinatorAccess
     public ResponseEntity<Object> deleteByReferenceFile(@PathVariable String reference) {
         filesByStudentsService.deleteByReference(reference);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/files/upload")
+    @StudentAccess
     public ResponseEntity<Object> uploadFile(@RequestParam("file")MultipartFile file,
                                              String username,
                                              FilesTypeEnum fileType) {
@@ -143,16 +144,20 @@ public class StudentController {
     // -------------------------------------------- Images by Student --------------------------------------------
 
     @GetMapping("/images")
+    @CoordinatorAccess
     public ResponseEntity<List<ImagesByStudents>> findAllImages() {
         return ResponseEntity.ok().body(imagesByStudentsService.findAll());
     }
 
+
     @GetMapping("/images/{reference}")
+    @StudentAccess
     public ResponseEntity<ImagesByStudents> findByReferenceImage(@PathVariable String reference) {
         return ResponseEntity.ok().body(imagesByStudentsService.findByReference(reference));
     }
 
     @DeleteMapping("/images/{reference}")
+    @StudentCoordinatorAccess
     public ResponseEntity<Object> deleteByReferenceImage(@PathVariable String reference) {
         imagesByStudentsService.deleteByReference(reference);
         return ResponseEntity.noContent().build();

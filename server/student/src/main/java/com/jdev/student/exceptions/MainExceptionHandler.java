@@ -20,17 +20,17 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class MainExceptionHandler {
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<StandardError> runTimeException(RuntimeException ex, HttpServletRequest request) {
-        StandardError error = new StandardError(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage(),
-                request.getRequestURI(),
-                "RuntimeException"
-        );
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public ResponseEntity<StandardError> runTimeException(RuntimeException ex, HttpServletRequest request) {
+//        StandardError error = new StandardError(
+//                LocalDateTime.now(),
+//                HttpStatus.BAD_REQUEST.value(),
+//                ex.getMessage(),
+//                request.getRequestURI(),
+//                "RuntimeException"
+//        );
+//        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+//    }
 
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException ex, HttpServletRequest request) {
@@ -164,14 +164,14 @@ public class MainExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<StandardError> accessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
-        StandardError error = new StandardError(
-                LocalDateTime.now(),
-                HttpStatus.UNAUTHORIZED.value(),
-                ex.getMessage(),
-                request.getRequestURI(),
-                "AccessDeniedException");
-        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
-    }
+//    @ExceptionHandler(AccessDeniedException.class)
+//    public ResponseEntity<StandardError> accessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
+//        StandardError error = new StandardError(
+//                LocalDateTime.now(),
+//                HttpStatus.UNAUTHORIZED.value(),
+//                ex.getMessage(),
+//                request.getRequestURI(),
+//                "AccessDeniedException");
+//        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+//    }
 }
