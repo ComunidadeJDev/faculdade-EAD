@@ -2,6 +2,7 @@ package com.jdev.student.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,7 +26,9 @@ public class StudentSecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.POST, "/files/documents/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "student").permitAll()
+                            .anyRequest().authenticated())
                 .oauth2ResourceServer(resourceserver -> resourceserver
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
         return http.build();
