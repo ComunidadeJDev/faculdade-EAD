@@ -1,7 +1,7 @@
 # -- Documentation for Backend -- <br>
 
 
-# _inicial settings_:
+# ⚙️_inicial settings_:
 ### Folders to create before starting:
   - C:/faculty/images-students
   - C:/faculty/files-students
@@ -30,35 +30,112 @@
     - password: user
 - RabbitMQ interface: Http://localhost:15672:
     - user: guest
-    - password: guest
+    - password: guest<br><br>
+
+# 👤_Users default_
+### Administrador
+    Name: Administrador
+    Email: admin@email.com
+    Password: 123456
+    🔑ADMIN 
+    
+### Cordenador
+    Name: Coordinator
+    Email: coordinator@email.com
+    Password: 123456
+    🔑COORDINATOR 
  
-# _Student microservice_:
-# endpoints:
+# 🎓_Student microservice_:
+# 📌Endpoints:
 
-### * Find all students - (GET) host/student _ 200
+### 📌 Find all students - (GET) host/student
+    🟢Response status: 200
+    🔐Access permission: 
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find by registration - (GET) host/student/search/registration/{registration} _ 200
+### 📌 Find by registration - (GET) host/student/search/registration/{registration}
+    🟢Response status: 200
+    🔐Access permission: 
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find by Id - (GET) host/student/search/id/{id}
+### 📌 Find by Id - (GET) host/student/search/id/{id}
+    🟢Response status: 200
+    🔐Access permission: 
+        🔑 STUDENT
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find all files - (GET) host/files _ 200
+### 📌 Find all files - (GET) host/files
+    🟢Response status: 200
+    🔐Access permission: 
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find file by reference - (GET) host/files/{reference-file} _ 200
+### 📌 Find file by reference - (GET) host/files/{reference-file}
+    🟢Response status: 200
+    🔐Access permission: 
+        🔑 STUDENT
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Delete file by reference - (DELETE) host/files/{reference-file} _ 204
+### 📌 Delete file by reference - (DELETE) host/files/{reference-file}
+    🟢Response status: 204
+    🔐Access permission: 
+        🔑 STUDENT
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find all images - (GET) host/images _ 200
+### 📌 Find all images - (GET) host/student/images
+    🟢Response status: 200
+    🔐Access permission:
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find image by reference - (GET) host/student/images/{reference-file} _ 200
+### 📌 Find image by reference - (GET) host/student/images/{reference-file}
+    🟢Response status: 200
+    🔐Access permission: 
+        🔑 STUDENT
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Delete image by reference - (GET) host/student/images/{reference-file} _ 200
+### 📌 Delete image by reference - (GET) host/student/images/{reference-file}
+    🟢Response status: 200
+    🔐Access permission: 
+        🔑 STUDENT
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Create student - (POST) host/student _ 201
+### * Create student - (POST) host/student
+    🟢Response status: 201
+    🔐Access permission: 
+        🔑 ALL PERMISSION
 
-### * Enable access and create curriculum - (PUT) host/student/enable/access/{id} _ 200
+### * Enable access and create curriculum - (PUT) host/student/enable/access/{id}
+    🟢Response status: 200
+    🔐Access permission: 
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find all courses - (GET) host/student/course/list _ 200
+### * Find all courses - (GET) host/student/course/list
 ```
+🟢Response status: 200
+🔐Access permission: 
+    🔑 ADMIN 
+    🔑 COORDINATOR
+    🔑 DIRECTOR
+
 {
     "completeName": "Pedro Alves Rodrigues",
     "email": "pedro@gmail.com",
@@ -73,8 +150,15 @@
     "numberHouse": 64
 }
 ```
-### * Update student - (PUT) host/student/update _ 200
+### * Update student - (PUT) host/student/update
 ```
+🟢Response status: 200
+🔐Access permission: 
+    🔑 ADMIN 
+    🔑 COORDINATOR
+    🔑 DIRECTOR
+
+
 {
     "completeName": "samuel Cruz Rodrigues",
     "registration": "b959efd0-2",
@@ -89,25 +173,49 @@
     "numberHouse": 64
 }
 ```
-### * Upload files - (POST) host/student/upload/file _ 201
+### * Upload files - (POST) host/student/upload/file
 ```
+🟢Response status: 200
+🔐Access permission: 
+    🔑 ADMIN 
+    🔑 COORDINATOR
+    🔑 DIRECTOR
+
 KEY                    TYPE                 VALUE
 file                   file                 directory to file
 username               text                 {username student}
 fileType               text                 {CPF || RG || COMPLETATION}
 ```
-### * Upload image profile - (POST) host/student/upload/image _ 201
+### * Upload image profile - (POST) host/student/upload/image
 ```
+🟢Response status: 201
+🔐Access permission: 
+    🔑 STUDENT
+
 KEY                    TYPE                 VALUE
 file                   file                 directory to file
 username               text                 {username student}
 ```
-### * Disable student - (DELETE) host/student/delete/{id} _ 204
+### * Disable student - (DELETE) host/student/delete/{id}
+    🟢Response status: 204
+    🔐Access permission: 
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Enable student - (PUT) host/student/enable/{id} _ 204
+### * Enable student - (PUT) host/student/enable/{id}
+    🟢Response status: 204
+    🔐Access permission: 
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Register documents for avaliation - (Post) host/student/files/documents/register _ 204
+### * Register documents for avaliation - (Post) host/student/files/documents/register
 ```
+🟢Response status: 204
+🔐Access permission: 
+    🔑 STUDENT
+
 KEY                    TYPE                 VALUE
 username               text                 {username student}
 cpf                    file                 directory to file
@@ -115,4 +223,7 @@ rg                     file                 directory to file
 completation           file                 directory to file
 ```
 
-### * Send documents to the coordinator - (PUT) host/student/enable/access/verify/{id} _ 204
+### * Send documents to the coordinator - (PUT) host/student/enable/access/verify/{id}
+    🟢Response status: 204
+    🔐Access permission: 
+        🔑 STUDENT
