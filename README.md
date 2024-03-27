@@ -1,5 +1,5 @@
 # Faculdade EAD
-A documentação de cada setor, tanto o backend, tanto o frontend fica dentro das pastas específicas de cada um:
+## ⚠️ A documentação de cada setor, tanto o backend, tanto o frontend fica dentro das pastas específicas de cada um: ⚠️
 - (Client) front-end
 - (Server) back-end
 
