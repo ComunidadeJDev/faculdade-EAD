@@ -34,11 +34,13 @@
 
 # 👤_Users default_
 ### Administrador
+    Name: Administrador
     Email: admin@email.com
     Password: 123456
     🔑ADMIN 
     
-### Coordinator
+### Cordenador
+    Name: Coordinator
     Email: coordinator@email.com
     Password: 123456
     🔑COORDINATOR 
