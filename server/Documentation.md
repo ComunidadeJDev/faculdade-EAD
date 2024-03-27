@@ -35,21 +35,65 @@
 # _Student microservice_:
 # endpoints:
 
-### * Find all students - (GET) host/student _ 200
+### 📌 Find all students - (GET) host/student
+    ⚙️Response status: 200
+    🔐Access permission: 
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find by registration - (GET) host/student/search/registration/{registration} _ 200
+### 📌 Find by registration - (GET) host/student/search/registration/{registration}
+    ⚙️Response status: 200
+    🔐Access permission: 
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find by Id - (GET) host/student/search/id/{id}
+### 📌 Find by Id - (GET) host/student/search/id/{id}
+    ⚙️Response status: 200
+    🔐Access permission: 
+        🔑 STUDENT
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find all files - (GET) host/files _ 200
+### 📌 Find all files - (GET) host/files
+    ⚙️Response status: 200
+    🔐Access permission: 
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find file by reference - (GET) host/files/{reference-file} _ 200
+### 📌 Find file by reference - (GET) host/files/{reference-file}
+    ⚙️Response status: 200
+    🔐Access permission: 
+        🔑 STUDENT
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Delete file by reference - (DELETE) host/files/{reference-file} _ 204
+### 📌 Delete file by reference - (DELETE) host/files/{reference-file}
+    ⚙️Response status: 204
+    🔐Access permission: 
+        🔑 STUDENT
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find all images - (GET) host/images _ 200
+### 📌 Find all images - (GET) host/student/images
+    ⚙️Response status: 200
+    🔐Access permission:
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
-### * Find image by reference - (GET) host/student/images/{reference-file} _ 200
+### 📌 Find image by reference - (GET) host/student/images/{reference-file}
+    ⚙️Response status: 200
+    🔐Access permission: 
+        🔑 STUDENT
+        🔑 ADMIN 
+        🔑 COORDINATOR
+        🔑 DIRECTOR
 
 ### * Delete image by reference - (GET) host/student/images/{reference-file} _ 200
 
